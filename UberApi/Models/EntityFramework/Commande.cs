@@ -11,7 +11,7 @@ public partial class Commande
 {
     [Key]
     [Column("cmd_id")]
-    public int Idcommande { get; set; }
+    public int IdCommande { get; set; }
 
     [Column("pnr_id")]
     public int IdPanier { get; set; }
@@ -35,7 +35,7 @@ public partial class Commande
     [Column("cmd_heurecreation", TypeName = "date")]
     public DateTime HeureCreation { get; set; }
 
-    [Column("cmd_heurecommande", TypeName = "date")]
+    [Column("cmd_heure", TypeName = "date")]
     public DateTime HeureCommande { get; set; }
 
     [Column("cmd_estlivraison")]
