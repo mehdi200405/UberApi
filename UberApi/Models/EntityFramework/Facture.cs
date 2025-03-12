@@ -11,15 +11,15 @@ public partial class Facture
 {
     [Key]
     [Column("fac_id")]
-    public int Idfacture { get; set; }
+    public int IdFacture { get; set; }
 
     [Column("res_idreservation")]
-    public int? Idreservation { get; set; }
+    public int? IdReservation { get; set; }
 
-    [Column("cmd_idcommande")]
-    public int? Idcommande { get; set; }
+    [Column("cmd_id")]
+    public int? IdCommande { get; set; }
 
-    [Column("pa_idpays")]
+    [Column("pys_idpays")]
     public int IdPays { get; set; }
 
     [Column("clt_idclient")]

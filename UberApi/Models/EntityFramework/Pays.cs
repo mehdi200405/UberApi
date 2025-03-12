@@ -6,28 +6,28 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[Table("t_e_pays_pa")]
+[Table("t_e_pays_pys")]
 [Index("Nompays", Name = "uq_nompays", IsUnique = true)]
 public partial class Pays
 {
     [Key]
-    [Column("pa_id")]
+    [Column("pys_id")]
     public int IdPays { get; set; }
 
-    [Column("pa_nom")]
+    [Column("pys_nom")]
     [StringLength(50)]
     public string NomPays { get; set; } = null!;
 
-    [Column("pa_pourcentagetva")]
+    [Column("pys_pourcentagetva")]
     [Precision(4, 2)]
     public decimal? PourcentageTva { get; set; }
 
-    [InverseProperty("IdpaysNavigation")]
+    [InverseProperty("IdPaysNavigation")]
     public virtual ICollection<CodePostal> CodePostals { get; set; } = new List<CodePostal>();
 
-    [InverseProperty("IdpaysNavigation")]
+    [InverseProperty("IdPaysNavigation")]
     public virtual ICollection<Facture> Factures { get; set; } = new List<Facture>();
 
-    [InverseProperty("IdpaysNavigation")]
+    [InverseProperty("IdPaysNavigation")]
     public virtual ICollection<Ville> Villes { get; set; } = new List<Ville>();
 }
