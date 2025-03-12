@@ -8,7 +8,7 @@ namespace UberApi.Models.EntityFramework;
 
 [Table("livreur")]
 [Index("Iban", Name = "uq_livreur_iban", IsUnique = true)]
-[Index("Emailuser", Name = "uq_livreur_mail", IsUnique = true)]
+[Index("EmailUser", Name = "uq_livreur_mail", IsUnique = true)]
 public partial class Livreur
 {
     [Key]
@@ -18,20 +18,20 @@ public partial class Livreur
     [Column("identreprise")]
     public int Identreprise { get; set; }
 
-    [Column("idadresse")]
-    public int? Idadresse { get; set; }
+    [Column("IdAdresse")]
+    public int? IdAdresse { get; set; }
 
     [Column("genreuser")]
     [StringLength(20)]
     public string Genreuser { get; set; } = null!;
 
-    [Column("nomuser")]
+    [Column("NomUser")]
     [StringLength(50)]
-    public string Nomuser { get; set; } = null!;
+    public string NomUser { get; set; } = null!;
 
-    [Column("prenomuser")]
+    [Column("PrenomUser")]
     [StringLength(50)]
-    public string Prenomuser { get; set; } = null!;
+    public string PrenomUser { get; set; } = null!;
 
     [Column("datenaissance")]
     public DateOnly Datenaissance { get; set; }
@@ -40,13 +40,13 @@ public partial class Livreur
     [StringLength(20)]
     public string Telephone { get; set; } = null!;
 
-    [Column("emailuser")]
+    [Column("EmailUser")]
     [StringLength(200)]
-    public string Emailuser { get; set; } = null!;
+    public string EmailUser { get; set; } = null!;
 
-    [Column("motdepasseuser")]
+    [Column("MotDePasseUser")]
     [StringLength(200)]
-    public string Motdepasseuser { get; set; } = null!;
+    public string MotDePasseUser { get; set; } = null!;
 
     [Column("iban")]
     [StringLength(30)]
