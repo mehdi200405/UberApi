@@ -13,8 +13,8 @@ public partial class Entreprise
     [Column("identreprise")]
     public int Identreprise { get; set; }
 
-    [Column("idadresse")]
-    public int Idadresse { get; set; }
+    [Column("IdAdresse")]
+    public int IdAdresse { get; set; }
 
     [Column("siretentreprise")]
     [StringLength(20)]
@@ -34,7 +34,7 @@ public partial class Entreprise
     [InverseProperty("IdentrepriseNavigation")]
     public virtual ICollection<Coursier> Coursiers { get; set; } = new List<Coursier>();
 
-    [ForeignKey("Idadresse")]
+    [ForeignKey("IdAdresse")]
     [InverseProperty("Entreprises")]
-    public virtual Adresse IdadresseNavigation { get; set; } = null!;
+    public virtual Adresse IdAdresseNavigation { get; set; } = null!;
 }

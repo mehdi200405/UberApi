@@ -22,8 +22,8 @@ public partial class Commande
     [Column("idcb")]
     public int? Idcb { get; set; }
 
-    [Column("idadresse")]
-    public int Idadresse { get; set; }
+    [Column("IdAdresse")]
+    public int IdAdresse { get; set; }
 
     [Column("prixcommande")]
     [Precision(5, 2)]

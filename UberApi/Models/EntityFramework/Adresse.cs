@@ -28,7 +28,7 @@ public partial class Adresse
     [StringLength(100)]
     public string? Longitude { get; set; }
 
-    [InverseProperty("IdadresseNavigation")]
+    [InverseProperty("IdAdresseNavigation")]
     public virtual ICollection<Client> Clients { get; set; } = new List<Client>();
 
     [InverseProperty("AdrIdadresseNavigation")]
@@ -37,22 +37,22 @@ public partial class Adresse
     [InverseProperty("IdadresseNavigation")]
     public virtual ICollection<Course> CourseIdAdresseNavigations { get; set; } = new List<Course>();
 
-    [InverseProperty("IdadresseNavigation")]
+    [InverseProperty("IdAdresseNavigation")]
     public virtual ICollection<Coursier> Coursiers { get; set; } = new List<Coursier>();
 
-    [InverseProperty("IdadresseNavigation")]
+    [InverseProperty("IdAdresseNavigation")]
     public virtual ICollection<Entreprise> Entreprises { get; set; } = new List<Entreprise>();
 
-    [InverseProperty("IdadresseNavigation")]
+    [InverseProperty("IdAdresseNavigation")]
     public virtual ICollection<Etablissement> Etablissements { get; set; } = new List<Etablissement>();
 
     [ForeignKey("Idville")]
     [InverseProperty("Adresses")]
     public virtual Ville? IdVilleNavigation { get; set; }
 
-    [InverseProperty("IdadresseNavigation")]
+    [InverseProperty("IdAdresseNavigation")]
     public virtual ICollection<LieuFavori> LieuFavoris { get; set; } = new List<LieuFavori>();
 
-    [InverseProperty("IdadresseNavigation")]
+    [InverseProperty("IdAdresseNavigation")]
     public virtual ICollection<Velo> Velos { get; set; } = new List<Velo>();
 }

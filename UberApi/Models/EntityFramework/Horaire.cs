@@ -13,8 +13,8 @@ public partial class Horaire
     [Column("idhoraires")]
     public int Idhoraires { get; set; }
 
-    [Column("idetablissement")]
-    public int? Idetablissement { get; set; }
+    [Column("IdEtablissement")]
+    public int? IdEtablissement { get; set; }
 
     [Column("idcoursier")]
     public int? Idcoursier { get; set; }
@@ -36,9 +36,9 @@ public partial class Horaire
     [InverseProperty("Horaires")]
     public virtual Coursier? IdcoursierNavigation { get; set; }
 
-    [ForeignKey("Idetablissement")]
+    [ForeignKey("IdEtablissement")]
     [InverseProperty("Horaires")]
-    public virtual Etablissement? IdetablissementNavigation { get; set; }
+    public virtual Etablissement? IdEtablissementNavigation { get; set; }
 
     [ForeignKey("Idlivreur")]
     [InverseProperty("Horaires")]

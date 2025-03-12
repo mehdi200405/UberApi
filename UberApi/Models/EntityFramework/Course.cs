@@ -19,14 +19,14 @@ public partial class Course
     [Column("idcb")]
     public int Idcb { get; set; }
 
-    [Column("idadresse")]
-    public int Idadresse { get; set; }
+    [Column("IdAdresse")]
+    public int IdAdresse { get; set; }
 
     [Column("idreservation")]
     public int Idreservation { get; set; }
 
-    [Column("adr_idadresse")]
-    public int AdrIdadresse { get; set; }
+    [Column("adr_IdAdresse")]
+    public int AdrIdAdresse { get; set; }
 
     [Column("idprestation")]
     public int Idprestation { get; set; }
@@ -64,13 +64,13 @@ public partial class Course
     [Column("temps")]
     public int? Temps { get; set; }
 
-    [ForeignKey("AdrIdadresse")]
-    [InverseProperty("CourseAdrIdadresseNavigations")]
-    public virtual Adresse AdrIdadresseNavigation { get; set; } = null!;
+    [ForeignKey("AdrIdAdresse")]
+    [InverseProperty("CourseAdrIdAdresseNavigations")]
+    public virtual Adresse AdrIdAdresseNavigation { get; set; } = null!;
 
-    [ForeignKey("Idadresse")]
-    [InverseProperty("CourseIdadresseNavigations")]
-    public virtual Adresse IdadresseNavigation { get; set; } = null!;
+    [ForeignKey("IdAdresse")]
+    [InverseProperty("CourseIdAdresseNavigations")]
+    public virtual Adresse IdAdresseNavigation { get; set; } = null!;
 
     [ForeignKey("Idcb")]
     [InverseProperty("Courses")]
