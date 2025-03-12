@@ -16,7 +16,7 @@ public partial class Horaire
     [Column("etb_id")]
     public int? IdEtablissement { get; set; }
 
-    [Column("cour_id")]
+    [Column("crr_id")]
     public int? IdCoursier { get; set; }
 
     [Column("livr_id")]
