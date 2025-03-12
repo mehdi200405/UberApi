@@ -13,13 +13,13 @@ public partial class Facture
     [Column("fac_id")]
     public int IdFacture { get; set; }
 
-    [Column("res_idreservation")]
+    [Column("res_id")]
     public int? IdReservation { get; set; }
 
     [Column("cmd_id")]
     public int? IdCommande { get; set; }
 
-    [Column("pys_idpays")]
+    [Column("pys_id")]
     public int IdPays { get; set; }
 
     [Column("clt_idclient")]
@@ -35,19 +35,19 @@ public partial class Facture
     [Column("fac_quantite")]
     public int? Quantite { get; set; }
 
-    [ForeignKey("Idclient")]
+    [ForeignKey("IdClient")]
     [InverseProperty("Factures")]
     public virtual Client IdClientNavigation { get; set; } = null!;
 
-    [ForeignKey("Idcommande")]
+    [ForeignKey("IdCommande")]
     [InverseProperty("Factures")]
     public virtual Commande? IdCommandeNavigation { get; set; }
 
-    [ForeignKey("Idpays")]
+    [ForeignKey("IdPays")]
     [InverseProperty("Factures")]
     public virtual Pays IdPaysNavigation { get; set; } = null!;
 
-    [ForeignKey("Idreservation")]
+    [ForeignKey("IdReservation")]
     [InverseProperty("Factures")]
     public virtual Reservation? IdReservationNavigation { get; set; }
 }

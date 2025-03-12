@@ -13,7 +13,7 @@ public partial class Reservation
     [Column("res_id")]
     public int IdReservation { get; set; }
 
-    [Column("clt_idclient")]
+    [Column("clt_id")]
     public int IdClient { get; set; }
 
     [Column("res_date")]
@@ -26,16 +26,16 @@ public partial class Reservation
     [StringLength(100)]
     public string? PourQui { get; set; }
 
-    [InverseProperty("IdreservationNavigation")]
+    [InverseProperty("IdReservationNavigation")]
     public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
 
-    [InverseProperty("IdreservationNavigation")]
+    [InverseProperty("IdReservationNavigation")]
     public virtual ICollection<Facture> Factures { get; set; } = new List<Facture>();
 
     [ForeignKey("IdClient")]
     [InverseProperty("Reservations")]
     public virtual Client IdClientNavigation { get; set; } = null!;
 
-    [InverseProperty("IdreservationVeloNavigation")]
+    [InverseProperty("IdReservationVeloNavigation")]
     public virtual ICollection<VeloReservation> VeloReservations { get; set; } = new List<VeloReservation>();
 }
