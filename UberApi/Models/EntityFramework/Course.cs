@@ -6,62 +6,62 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[Table("course")]
+[Table("t_e_course_crs")]
 public partial class Course
 {
     [Key]
-    [Column("idcourse")]
-    public int Idcourse { get; set; }
+    [Column("crs_id")]
+    public int IdCourse { get; set; }
 
-    [Column("idcoursier")]
-    public int? Idcoursier { get; set; }
+    [Column("id_crr")]
+    public int? IdCoursier { get; set; }
 
-    [Column("idcb")]
-    public int Idcb { get; set; }
+    [Column("cb_id")]
+    public int IdCb { get; set; }
 
-    [Column("IdAdresse")]
+    [Column("adr_id")]
     public int IdAdresse { get; set; }
 
-    [Column("idreservation")]
-    public int Idreservation { get; set; }
+    [Column("res_id")]
+    public int IdReservation { get; set; }
 
-    [Column("adr_IdAdresse")]
+    [Column("adr_adr_adresse")]
     public int AdrIdAdresse { get; set; }
 
-    [Column("idprestation")]
-    public int Idprestation { get; set; }
+    [Column("tpn_id")]
+    public int IdPrestation { get; set; }
 
-    [Column("datecourse")]
-    public DateOnly Datecourse { get; set; }
+    [Column("crs_date")]
+    public DateOnly DateCourse { get; set; }
 
-    [Column("heurecourse")]
-    public TimeOnly Heurecourse { get; set; }
+    [Column("crs_heure")]
+    public TimeOnly HeureCourse { get; set; }
 
-    [Column("prixcourse")]
+    [Column("crs_prix")]
     [Precision(8, 2)]
-    public decimal Prixcourse { get; set; }
+    public decimal PrixCourse { get; set; }
 
-    [Column("statutcourse")]
+    [Column("crs_statut")]
     [StringLength(20)]
-    public string Statutcourse { get; set; } = null!;
+    public string StatutCourse { get; set; } = null!;
 
-    [Column("notecourse")]
+    [Column("crs_note")]
     [Precision(2, 1)]
-    public decimal? Notecourse { get; set; }
+    public decimal? NoteCourse { get; set; }
 
-    [Column("commentairecourse")]
+    [Column("crs_commentaire")]
     [StringLength(1500)]
-    public string? Commentairecourse { get; set; }
+    public string? CommentaireCourse { get; set; }
 
-    [Column("pourboire")]
+    [Column("crs_pourboire")]
     [Precision(8, 2)]
     public decimal? Pourboire { get; set; }
 
-    [Column("distance")]
+    [Column("crs_distance")]
     [Precision(8, 2)]
     public decimal? Distance { get; set; }
 
-    [Column("temps")]
+    [Column("crs_temps")]
     public int? Temps { get; set; }
 
     [ForeignKey("AdrIdAdresse")]
@@ -72,19 +72,19 @@ public partial class Course
     [InverseProperty("CourseIdAdresseNavigations")]
     public virtual Adresse IdAdresseNavigation { get; set; } = null!;
 
-    [ForeignKey("Idcb")]
+    [ForeignKey("IdCb")]
     [InverseProperty("Courses")]
-    public virtual CarteBancaire IdcbNavigation { get; set; } = null!;
+    public virtual CarteBancaire IdCbNavigation { get; set; } = null!;
 
-    [ForeignKey("Idcoursier")]
+    [ForeignKey("IdCoursier")]
     [InverseProperty("Courses")]
-    public virtual Coursier? IdcoursierNavigation { get; set; }
+    public virtual Coursier? IdCoursierNavigation { get; set; }
 
-    [ForeignKey("Idprestation")]
+    [ForeignKey("IdPrestation")]
     [InverseProperty("Courses")]
-    public virtual TypePrestation IdprestationNavigation { get; set; } = null!;
+    public virtual TypePrestation IdPrestationNavigation { get; set; } = null!;
 
-    [ForeignKey("Idreservation")]
+    [ForeignKey("IdPeservation")]
     [InverseProperty("Courses")]
-    public virtual Reservation IdreservationNavigation { get; set; } = null!;
+    public virtual Reservation IdReservationNavigation { get; set; } = null!;
 }
