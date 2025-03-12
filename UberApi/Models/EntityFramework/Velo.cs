@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace UberApi.Models.EntityFramework;
 
 [Table("t_e_velo_vel")]
-[Index("Numerovelo", Name = "uq_velo_numero", IsUnique = true)]
+[Index("NumeroVelo", Name = "uq_velo_numero", IsUnique = true)]
 public partial class Velo
 {
     [Key]

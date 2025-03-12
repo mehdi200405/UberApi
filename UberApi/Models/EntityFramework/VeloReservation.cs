@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[PrimaryKey("IdreservationVelo", "IdVelo")]
+[PrimaryKey("IdReservationVelo", "IdVelo")]
 [Table("t_e_velo_reservation_velr")]
 public partial class VeloReservation
 {
@@ -15,7 +15,7 @@ public partial class VeloReservation
     public int IdReservationVelo { get; set; }
 
     [Key]
-    [Column("vel_idvelo")]
+    [Column("vel_id")]
     public int IdVelo { get; set; }
 
     [Column("velr_dureereservation")]
