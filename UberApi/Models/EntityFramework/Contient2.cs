@@ -6,33 +6,33 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[PrimaryKey("Idpanier", "Idproduit")]
-[Table("contient_2")]
+[PrimaryKey(nameof(IdPanier), nameof(IdProduit))]
+[Table("t_j_contient_2_c2")]
 public partial class Contient2
 {
     [Key]
-    [Column("idpanier")]
-    public int Idpanier { get; set; }
+    [Column("pnr_id")]
+    public int IdPanier { get; set; }
 
     [Key]
-    [Column("idproduit")]
-    public int Idproduit { get; set; }
+    [Column("pdt_id")]
+    public int IdProduit { get; set; }
 
-    [Column("IdEtablissement")]
+    [Column("etb_id")]
     public int IdEtablissement { get; set; }
 
-    [Column("quantite")]
+    [Column("c2_quantite")]
     public int Quantite { get; set; }
 
-    [ForeignKey("IdEtablissement")]
+    [ForeignKey("etb_id")]
     [InverseProperty("Contient2s")]
     public virtual Etablissement IdEtablissementNavigation { get; set; } = null!;
 
-    [ForeignKey("Idpanier")]
+    [ForeignKey("pnr_id")]
     [InverseProperty("Contient2s")]
     public virtual Panier IdpanierNavigation { get; set; } = null!;
 
-    [ForeignKey("Idproduit")]
+    [ForeignKey("pdt_id")]
     [InverseProperty("Contient2s")]
     public virtual Produit IdproduitNavigation { get; set; } = null!;
 }

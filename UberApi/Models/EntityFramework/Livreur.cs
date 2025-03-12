@@ -6,62 +6,58 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[Table("livreur")]
+[Table("t_e_livreur_livr")]
 [Index("Iban", Name = "uq_livreur_iban", IsUnique = true)]
 [Index("EmailUser", Name = "uq_livreur_mail", IsUnique = true)]
 public partial class Livreur
 {
     [Key]
-    [Column("idlivreur")]
-    public int Idlivreur { get; set; }
+    [Column("livr_id")]
+    public int IdLivreur { get; set; }
 
-    [Column("identreprise")]
-    public int Identreprise { get; set; }
+    [Column("entr_id")]
+    public int IdEntreprise { get; set; }
 
-    [Column("IdAdresse")]
+    [Column("adr_id")]
     public int? IdAdresse { get; set; }
 
-    [Column("genreuser")]
+    [Column("livr_genreuser")]
     [StringLength(20)]
-    public string Genreuser { get; set; } = null!;
+    public string GenreUser { get; set; } = null!;
 
-    [Column("NomUser")]
+    [Column("livr_nomuser")]
     [StringLength(50)]
     public string NomUser { get; set; } = null!;
 
-    [Column("PrenomUser")]
+    [Column("livr_prenomuser")]
     [StringLength(50)]
     public string PrenomUser { get; set; } = null!;
 
-    [Column("datenaissance")]
-    public DateOnly Datenaissance { get; set; }
+    [Column("livr_datenaissance")]
+    public DateOnly DateNaissance { get; set; }
 
-    [Column("telephone")]
+    [Column("livr_telephone")]
     [StringLength(20)]
     public string Telephone { get; set; } = null!;
 
-    [Column("EmailUser")]
+    [Column("livr_emailuser")]
     [StringLength(200)]
     public string EmailUser { get; set; } = null!;
 
-    [Column("MotDePasseUser")]
+    [Column("livr_motdepasseUser")]
     [StringLength(200)]
     public string MotDePasseUser { get; set; } = null!;
 
-    [Column("iban")]
+    [Column("livr_iban")]
     [StringLength(30)]
     public string? Iban { get; set; }
-
-    [Column("datedebutactivite")]
-    public DateOnly? Datedebutactivite { get; set; }
-
-    [Column("notemoyenne")]
+    [Column("livr_datedebutactivite")]
+    public DateOnly? DateDebutActivite { get; set; }
+    [Column("livr_notemoyenne")]
     [Precision(2, 1)]
-    public decimal? Notemoyenne { get; set; }
-
-    [InverseProperty("IdlivreurNavigation")]
+    public decimal? NoteMoyenne { get; set; }
+    [InverseProperty("cmd_id")]
     public virtual ICollection<Commande> Commandes { get; set; } = new List<Commande>();
-
-    [InverseProperty("IdlivreurNavigation")]
+    [InverseProperty("hor_id")]
     public virtual ICollection<Horaire> Horaires { get; set; } = new List<Horaire>();
 }

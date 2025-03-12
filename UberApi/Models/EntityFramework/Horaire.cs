@@ -10,16 +10,16 @@ namespace UberApi.Models.EntityFramework;
 public partial class Horaire
 {
     [Key]
-    [Column("hor_idhoraires")]
+    [Column("hor_id")]
     public int IdHoraires { get; set; }
 
-    [Column("eta_idetablissement")]
+    [Column("etb_id")]
     public int? IdEtablissement { get; set; }
 
-    [Column("cour_idcoursier")]
+    [Column("cour_id")]
     public int? IdCoursier { get; set; }
 
-    [Column("livr_idlivreur")]
+    [Column("livr_id")]
     public int? IdLivreur { get; set; }
 
     [Column("hor_joursemaine")]
@@ -32,15 +32,15 @@ public partial class Horaire
     [Column("hor_heurefin", TypeName = "time with time zone")]
     public DateTimeOffset? HeureFin { get; set; }
 
-    [ForeignKey("cour_idcoursier")]
+    [ForeignKey("cour_id")]
     [InverseProperty("Horaires")]
     public virtual Coursier? IdCoursierNavigation { get; set; }
 
-    [ForeignKey("eta_idetablissement")]
+    [ForeignKey("eta_id")]
     [InverseProperty("Horaires")]
     public virtual Etablissement? IdEtablissementNavigation { get; set; }
 
-    [ForeignKey("livr_idlivreur")]
+    [ForeignKey("livr_id")]
     [InverseProperty("Horaires")]
     public virtual Livreur? IdLivreurNavigation { get; set; }
 }

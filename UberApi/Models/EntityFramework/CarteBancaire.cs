@@ -6,35 +6,35 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[Table("carte_bancaire")]
+[Table("t_e_carteBancaire_ctbr")]
 [Index("Numerocb", Name = "carte_bancaire_numerocb_key", IsUnique = true)]
 public partial class CarteBancaire
 {
     [Key]
-    [Column("idcb")]
-    public int Idcb { get; set; }
+    [Column("cb_id")]
+    public int IdCb { get; set; }
 
-    [Column("numerocb")]
-    public string Numerocb { get; set; } = null!;
+    [Column("cb_numerocb")]
+    public string NumeroCb { get; set; } = null!;
 
-    [Column("dateexpirecb")]
-    public DateOnly Dateexpirecb { get; set; }
+    [Column("cb_date")]
+    public DateOnly DateexpireCb { get; set; }
 
-    [Column("cryptogramme")]
+    [Column("cb_cryptogramme")]
     public string Cryptogramme { get; set; } = null!;
 
-    [Column("typecarte")]
+    [Column("cb_typecarte")]
     [StringLength(30)]
-    public string Typecarte { get; set; } = null!;
+    public string TypeCarte { get; set; } = null!;
 
-    [Column("typereseaux")]
+    [Column("cb_typereseaux")]
     [StringLength(30)]
-    public string Typereseaux { get; set; } = null!;
+    public string TypeReseaux { get; set; } = null!;
 
-    [InverseProperty("IdcbNavigation")]
+    [InverseProperty("IdCbNavigation")]
     public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
 
-    [ForeignKey("Idcb")]
+    [ForeignKey("IdCb")]
     [InverseProperty("Idcbs")]
-    public virtual ICollection<Client> Idclients { get; set; } = new List<Client>();
+    public virtual ICollection<Client> IdClients { get; set; } = new List<Client>();
 }
