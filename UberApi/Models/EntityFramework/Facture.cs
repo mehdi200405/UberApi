@@ -6,33 +6,33 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[Table("facture")]
+[Table("t_e_facture_fac")]
 public partial class Facture
 {
     [Key]
-    [Column("idfacture")]
+    [Column("fac_id")]
     public int Idfacture { get; set; }
 
-    [Column("idreservation")]
+    [Column("res_idreservation")]
     public int? Idreservation { get; set; }
 
-    [Column("idcommande")]
+    [Column("cmd_idcommande")]
     public int? Idcommande { get; set; }
 
-    [Column("idpays")]
+    [Column("pa_idpays")]
     public int Idpays { get; set; }
 
-    [Column("idclient")]
+    [Column("clt_idclient")]
     public int Idclient { get; set; }
 
-    [Column("montantreglement")]
+    [Column("fac_montantreglement")]
     [Precision(5, 2)]
     public decimal? Montantreglement { get; set; }
 
-    [Column("datefacture")]
+    [Column("fac_datefacture")]
     public DateOnly? Datefacture { get; set; }
 
-    [Column("quantite")]
+    [Column("fac_quantite")]
     public int? Quantite { get; set; }
 
     [ForeignKey("Idclient")]
@@ -45,7 +45,7 @@ public partial class Facture
 
     [ForeignKey("Idpays")]
     [InverseProperty("Factures")]
-    public virtual Pay IdpaysNavigation { get; set; } = null!;
+    public virtual Pays IdpaysNavigation { get; set; } = null!;
 
     [ForeignKey("Idreservation")]
     [InverseProperty("Factures")]

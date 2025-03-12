@@ -41,8 +41,6 @@ public partial class Etablissement
     [Column("etb_aemporter")]
     public bool? Aemporter { get; set; }
 
-    // NON MODIFIE EN DESSOUS
-
     [InverseProperty("IdEtablissementNavigation")]
     public virtual ICollection<Contient2> Contient2s { get; set; } = new List<Contient2>();
 
@@ -62,9 +60,9 @@ public partial class Etablissement
 
     [ForeignKey("IdEtablissement")]
     [InverseProperty("IdEtablissements")]
-    public virtual ICollection<CategoriePrestation> Idcategorieprestations { get; set; } = new List<CategoriePrestation>();
+    public virtual ICollection<CategoriePrestation> IdCategoriePrestations { get; set; } = new List<CategoriePrestation>();
 
     [ForeignKey("IdEtablissement")]
     [InverseProperty("IdEtablissements")]
-    public virtual ICollection<Produit> Idproduits { get; set; } = new List<Produit>();
+    public virtual ICollection<Produit> IdProduits { get; set; } = new List<Produit>();
 }
