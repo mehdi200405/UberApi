@@ -6,32 +6,32 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[Table("entreprise")]
+[Table("t_e_entreprise_ent")]
 public partial class Entreprise
 {
     [Key]
-    [Column("identreprise")]
-    public int Identreprise { get; set; }
+    [Column("ent_id")]
+    public int IdEntreprise { get; set; }
 
-    [Column("IdAdresse")]
+    [Column("adr_id")]
     public int IdAdresse { get; set; }
 
-    [Column("siretentreprise")]
+    [Column("ent_siret")]
     [StringLength(20)]
-    public string Siretentreprise { get; set; } = null!;
+    public string SiretEntreprise { get; set; } = null!;
 
-    [Column("nomentreprise")]
+    [Column("ent_nom")]
     [StringLength(50)]
-    public string Nomentreprise { get; set; } = null!;
+    public string NomEntreprise { get; set; } = null!;
 
-    [Column("taille")]
+    [Column("ent_taille")]
     [StringLength(30)]
     public string Taille { get; set; } = null!;
 
-    [InverseProperty("IdentrepriseNavigation")]
+    [InverseProperty("IdEntrepriseNavigation")]
     public virtual ICollection<Client> Clients { get; set; } = new List<Client>();
 
-    [InverseProperty("IdentrepriseNavigation")]
+    [InverseProperty("IdEntrepriseNavigation")]
     public virtual ICollection<Coursier> Coursiers { get; set; } = new List<Coursier>();
 
     [ForeignKey("IdAdresse")]

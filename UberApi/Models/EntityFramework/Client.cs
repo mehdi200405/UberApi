@@ -93,5 +93,5 @@ public partial class Client
 
     [ForeignKey("IdClient")]
     [InverseProperty("IdClients")]
-    public virtual ICollection<CarteBancaire> Idcbs { get; set; } = new List<CarteBancaire>();
+    public virtual ICollection<CarteBancaire> IdCbs { get; set; } = new List<CarteBancaire>();
 }

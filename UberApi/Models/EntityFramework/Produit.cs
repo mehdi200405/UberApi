@@ -6,37 +6,37 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[Table("produit")]
+[Table("t_e_produit_pdt")]
 public partial class Produit
 {
     [Key]
-    [Column("idproduit")]
-    public int Idproduit { get; set; }
+    [Column("pdt_id")]
+    public int IdProduit { get; set; }
 
-    [Column("nomproduit")]
+    [Column("pdt_nom")]
     [StringLength(200)]
-    public string? Nomproduit { get; set; }
+    public string? NomProduit { get; set; }
 
-    [Column("prixproduit")]
+    [Column("pdt_prix")]
     [Precision(5, 2)]
-    public decimal? Prixproduit { get; set; }
+    public decimal? PrixProduit { get; set; }
 
-    [Column("imageproduit")]
+    [Column("pdt_image")]
     [StringLength(300)]
-    public string? Imageproduit { get; set; }
+    public string? ImageProduit { get; set; }
 
-    [Column("description")]
+    [Column("pdt_description")]
     [StringLength(1500)]
     public string? Description { get; set; }
 
-    [InverseProperty("IdproduitNavigation")]
+    [InverseProperty("IdProduitNavigation")]
     public virtual ICollection<Contient2> Contient2s { get; set; } = new List<Contient2>();
 
-    [ForeignKey("Idproduit")]
+    [ForeignKey("IdProduit")]
     [InverseProperty("IdProduits")]
-    public virtual ICollection<CategorieProduit> Idcategories { get; set; } = new List<CategorieProduit>();
+    public virtual ICollection<CategorieProduit> IdCategories { get; set; } = new List<CategorieProduit>();
 
-    [ForeignKey("Idproduit")]
+    [ForeignKey("IdProduit")]
     [InverseProperty("IdProduits")]
     public virtual ICollection<Etablissement> IdEtablissements { get; set; } = new List<Etablissement>();
 }

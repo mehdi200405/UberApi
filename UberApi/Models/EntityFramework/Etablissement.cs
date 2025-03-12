@@ -48,7 +48,7 @@ public partial class Etablissement
     public virtual ICollection<GestionEtablissement> GestionEtablissements { get; set; } = new List<GestionEtablissement>();
 
     [InverseProperty("IdEtablissementNavigation")]
-    public virtual ICollection<Horaire> Horaires { get; set; } = new List<Horaire>();
+    public virtual ICollection<Horaires> Horaires { get; set; } = new List<Horaires>();
 
     [ForeignKey("IdAdresse")]
     [InverseProperty("Etablissements")]

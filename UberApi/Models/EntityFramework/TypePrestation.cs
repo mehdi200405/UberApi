@@ -6,29 +6,29 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[Table("type_prestation")]
+[Table("t_e_type_prestation_tpn")]
 public partial class TypePrestation
 {
     [Key]
-    [Column("idprestation")]
-    public int Idprestation { get; set; }
+    [Column("tpn_id")]
+    public int IdPrestation { get; set; }
 
-    [Column("libelleprestation")]
+    [Column("tpn_libelleprestation")]
     [StringLength(50)]
-    public string? Libelleprestation { get; set; }
+    public string? LibellePrestation { get; set; }
 
-    [Column("descriptionprestation")]
+    [Column("tpn_descriptionprestation")]
     [StringLength(500)]
-    public string? Descriptionprestation { get; set; }
+    public string? DescriptionPrestation { get; set; }
 
-    [Column("imageprestation")]
+    [Column("tpn_imageprestation")]
     [StringLength(300)]
-    public string? Imageprestation { get; set; }
+    public string? ImagePrestation { get; set; }
 
-    [InverseProperty("IdprestationNavigation")]
+    [InverseProperty("crs_id")]
     public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
 
-    [ForeignKey("Idprestation")]
-    [InverseProperty("Idprestations")]
-    public virtual ICollection<Vehicule> Idvehicules { get; set; } = new List<Vehicule>();
+    [ForeignKey("vcl_id")]
+    [InverseProperty("IdPrestations")]
+    public virtual ICollection<Vehicule> IdVehicules { get; set; } = new List<Vehicule>();
 }

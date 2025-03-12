@@ -6,35 +6,35 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[Table("entretien")]
+[Table("t_e_entretien_ett")]
 public partial class Entretien
 {
     [Key]
-    [Column("identretien")]
-    public int Identretien { get; set; }
+    [Column("ett_id")]
+    public int IdEntretien { get; set; }
 
-    [Column("idcoursier")]
-    public int Idcoursier { get; set; }
+    [Column("crr_id")]
+    public int IdCoursier { get; set; }
 
-    [Column("dateentretien", TypeName = "timestamp without time zone")]
-    public DateTime? Dateentretien { get; set; }
+    [Column("ett_date", TypeName = "timestamp without time zone")]
+    public DateTime? DateEntretien { get; set; }
 
-    [Column("status")]
+    [Column("ett_status")]
     [StringLength(20)]
     public string Status { get; set; } = null!;
 
-    [Column("resultat")]
+    [Column("ett_resultat")]
     [StringLength(20)]
     public string? Resultat { get; set; }
 
-    [Column("rdvlogistiquedate", TypeName = "timestamp without time zone")]
-    public DateTime? Rdvlogistiquedate { get; set; }
+    [Column("ett_rdvlogistiquedate", TypeName = "timestamp without time zone")]
+    public DateTime? RdvLogistiqueDate { get; set; }
 
-    [Column("rdvlogistiquelieu")]
+    [Column("ett_rdvlogistiquelieu")]
     [StringLength(255)]
-    public string? Rdvlogistiquelieu { get; set; }
+    public string? RdvLogistiqueLieu { get; set; }
 
-    [ForeignKey("Idcoursier")]
+    [ForeignKey("IdCoursier")]
     [InverseProperty("Entretiens")]
-    public virtual Coursier IdcoursierNavigation { get; set; } = null!;
+    public virtual Coursier IdCoursierNavigation { get; set; } = null!;
 }

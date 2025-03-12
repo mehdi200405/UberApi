@@ -45,7 +45,7 @@ public partial class S221UberContext : DbContext
 
     public virtual DbSet<GestionEtablissement> GestionEtablissements { get; set; }
 
-    public virtual DbSet<Horaire> Horaires { get; set; }
+    public virtual DbSet<Horaires> Horaires { get; set; }
 
     public virtual DbSet<Job> Jobs { get; set; }
 
@@ -350,7 +350,7 @@ public partial class S221UberContext : DbContext
             entity.HasOne(d => d.IdresponsableNavigation).WithMany(p => p.GestionEtablissements).HasConstraintName("fk_gestion_responsable");
         });
 
-        modelBuilder.Entity<Horaire>(entity =>
+        modelBuilder.Entity<Horaires>(entity =>
         {
             entity.HasKey(e => e.Idhoraires).HasName("pk_horaires");
 
@@ -574,9 +574,9 @@ public partial class S221UberContext : DbContext
 
         modelBuilder.Entity<Velo>(entity =>
         {
-            entity.HasKey(e => e.IdVelo).HasName("pk_velo");
+            entity.HasKey(e => e.Idvelo).HasName("pk_velo");
 
-            entity.Property(e => e.IdVelo).HasDefaultValueSql("nextval('velo_id_seq'::regclass)");
+            entity.Property(e => e.Idvelo).HasDefaultValueSql("nextval('velo_id_seq'::regclass)");
 
             entity.HasOne(d => d.IdAdresseNavigation).WithMany(p => p.Velos)
                 .OnDelete(DeleteBehavior.Restrict)
@@ -585,7 +585,7 @@ public partial class S221UberContext : DbContext
 
         modelBuilder.Entity<VeloReservation>(entity =>
         {
-            entity.HasKey(e => new { e.IdreservationVelo, e.IdVelo }).HasName("pk_velo_reservation");
+            entity.HasKey(e => new { e.IdreservationVelo, e.Idvelo }).HasName("pk_velo_reservation");
 
             entity.Property(e => e.IdreservationVelo).HasDefaultValueSql("nextval('velo_reservation_id_seq'::regclass)");
 
