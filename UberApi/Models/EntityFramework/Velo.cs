@@ -15,13 +15,13 @@ public partial class Velo
     public int Idvelo { get; set; }
 
     [Column("adr_idadresse")]
-    public int Idadresse { get; set; }
+    public int IdAdresse { get; set; }
 
     [Column("vel_numero")]
-    public int Numerovelo { get; set; }
+    public int NumeroVelo { get; set; }
 
     [Column("vel_estdisponible")]
-    public bool Estdisponible { get; set; }
+    public bool EstDisponible { get; set; }
 
     [ForeignKey("IdAdresse")]
     [InverseProperty("Velos")]
