@@ -1,4 +1,3 @@
-
 namespace UberApi
 {
     public class Program
