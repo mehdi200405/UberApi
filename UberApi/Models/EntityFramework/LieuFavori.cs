@@ -10,24 +10,24 @@ namespace UberApi.Models.EntityFramework;
 public partial class LieuFavori
 {
     [Key]
-    [Column("idlieufavori")]
+    [Column("lfs_id")]
     public int IdLieuFavori { get; set; }
 
-    [Column("idclient")]
-    public int Idclient { get; set; }
+    [Column("clt_id")]
+    public int IdClient { get; set; }
 
-    [Column("IdAdresse")]
+    [Column("adr_id")]
     public int IdAdresse { get; set; }
 
-    [Column("nomlieu")]
+    [Column("lfs_nom")]
     [StringLength(100)]
-    public string Nomlieu { get; set; } = null!;
+    public string NomLieu { get; set; } = null!;
 
     [ForeignKey("IdAdresse")]
     [InverseProperty("LieuFavoris")]
     public virtual Adresse IdAdresseNavigation { get; set; } = null!;
 
-    [ForeignKey("Idclient")]
+    [ForeignKey("IdClient")]
     [InverseProperty("LieuFavoris")]
-    public virtual Client IdclientNavigation { get; set; } = null!;
+    public virtual Client IdClientNavigation { get; set; } = null!;
 }
