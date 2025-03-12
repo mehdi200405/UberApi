@@ -13,17 +13,17 @@ public partial class Ville
     [Column("vil_id")]
     public int IdVille { get; set; }
 
-    [Column("pa_idpays")]
+    [Column("pys_id")]
     public int? IdPays { get; set; }
 
-    [Column("cp_idcodepostal")]
+    [Column("cp_id")]
     public int? IdCodePostal { get; set; }
 
     [Column("vil_nom")]
     [StringLength(50)]
     public string NomVille { get; set; } = null!;
 
-    [InverseProperty("IdvilleNavigation")]
+    [InverseProperty("IdVilleNavigation")]
     public virtual ICollection<Adresse> Adresses { get; set; } = new List<Adresse>();
 
     [ForeignKey("IdCodePostal")]

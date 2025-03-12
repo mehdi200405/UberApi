@@ -7,14 +7,14 @@ using Microsoft.EntityFrameworkCore;
 namespace UberApi.Models.EntityFramework;
 
 [Table("t_e_code_postal_cp")]
-[Index("Codepostal", Name = "uq_codepostal", IsUnique = true)]
+[Index("CP", Name = "uq_cp", IsUnique = true)]
 public partial class CodePostal
 {
     [Key]
     [Column("cp_id")]
     public int IdCodePostal { get; set; }
 
-    [Column("pa_idpays")]
+    [Column("pys_id")]
     public int? IdPays { get; set; }
 
     [Column("cp_cp")]

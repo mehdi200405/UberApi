@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace UberApi.Models.EntityFramework;
 
 [PrimaryKey(nameof(IdPanier), nameof(IdProduit))]
-[Table("t_j_contient_2_c2")]
+[Table("t_j_contient2_c2")]
 public partial class Contient2
 {
     [Key]
