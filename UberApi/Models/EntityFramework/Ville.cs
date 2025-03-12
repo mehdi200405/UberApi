@@ -26,11 +26,11 @@ public partial class Ville
     [InverseProperty("IdvilleNavigation")]
     public virtual ICollection<Adresse> Adresses { get; set; } = new List<Adresse>();
 
-    [ForeignKey("Idcodepostal")]
+    [ForeignKey("IdCodePostal")]
     [InverseProperty("Villes")]
     public virtual CodePostal? IdCodePostalNavigation { get; set; }
 
-    [ForeignKey("Idpays")]
+    [ForeignKey("IdPays")]
     [InverseProperty("Villes")]
     public virtual Pays? IdPaysNavigation { get; set; }
 }

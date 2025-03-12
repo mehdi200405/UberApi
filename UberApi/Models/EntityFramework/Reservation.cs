@@ -32,7 +32,7 @@ public partial class Reservation
     [InverseProperty("IdreservationNavigation")]
     public virtual ICollection<Facture> Factures { get; set; } = new List<Facture>();
 
-    [ForeignKey("Idclient")]
+    [ForeignKey("IdClient")]
     [InverseProperty("Reservations")]
     public virtual Client IdClientNavigation { get; set; } = null!;
 
