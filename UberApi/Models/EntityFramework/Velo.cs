@@ -27,6 +27,6 @@ public partial class Velo
     [InverseProperty("Velos")]
     public virtual Adresse IdAdresseNavigation { get; set; } = null!;
 
-    [InverseProperty("IdveloNavigation")]
+    [InverseProperty("IdVeloNavigation")]
     public virtual ICollection<VeloReservation> VeloReservations { get; set; } = new List<VeloReservation>();
 }

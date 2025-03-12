@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[Table("t_e_reglement_salaire_rsa")]
+[Table("t_e_reglementsalaire_rsa")]
 public partial class ReglementSalaire
 {
     [Key]

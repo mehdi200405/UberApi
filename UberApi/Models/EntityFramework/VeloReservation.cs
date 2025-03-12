@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace UberApi.Models.EntityFramework;
 
 [PrimaryKey("IdReservationVelo", "IdVelo")]
-[Table("t_e_velo_reservation_velr")]
+[Table("t_e_veloreservation_velr")]
 public partial class VeloReservation
 {
     [Key]

@@ -24,15 +24,15 @@ public partial class Contient2
     [Column("c2_quantite")]
     public int Quantite { get; set; }
 
-    [ForeignKey("etb_id")]
+    [ForeignKey("IdEtablissement")]
     [InverseProperty("Contient2s")]
     public virtual Etablissement IdEtablissementNavigation { get; set; } = null!;
 
-    [ForeignKey("pnr_id")]
+    [ForeignKey("IdPanier")]
     [InverseProperty("Contient2s")]
     public virtual Panier IdPanierNavigation { get; set; } = null!;
 
-    [ForeignKey("pdt_id")]
+    [ForeignKey("IdProduit")]
     [InverseProperty("Contient2s")]
     public virtual Produit IdProduitNavigation { get; set; } = null!;
 }

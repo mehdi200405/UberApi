@@ -59,13 +59,13 @@ public partial class Vehicule
     public string? DemandeModification { get; set; }
 
     [Column("vcl_demandemodificationeffectue")]
-    public bool DemandeModificationeffectue { get; set; }
+    public bool DemandeModificationEffectue { get; set; }
 
-    [ForeignKey("vcl_idc")]
-    [InverseProperty("IdCoursierNavigation")]
+    [ForeignKey("IdCoursier")]
+    [InverseProperty("Vehicules")]
     public virtual Coursier IdCoursierNavigation { get; set; } = null!;
 
-    [ForeignKey("vcl_id")]
-    [InverseProperty("IdPrestations")]
+    [ForeignKey("IdVehicule")]
+    [InverseProperty("IdVehicules")]
     public virtual ICollection<TypePrestation> IdPrestations { get; set; } = new List<TypePrestation>();
 }

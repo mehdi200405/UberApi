@@ -32,8 +32,8 @@ public partial class Client
     [StringLength(50)]
     public string PrenomUser { get; set; } = null!;
 
-    [Column("clt_datenaissance", TypeName = "date")]
-    public DateTime DateNaissance { get; set; }
+    [Column("clt_datenaissance")]
+    public DateOnly DateNaissance { get; set; }
 
     [Column("clt_telephone")]
     [StringLength(20)]

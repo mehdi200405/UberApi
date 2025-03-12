@@ -45,13 +45,13 @@ public partial class Coursier
     [StringLength(200)]
     public string EmailUser { get; set; } = null!;
 
-    [Column("crr_MotDePasseUser")]
+    [Column("crr_motdepasseuser")]
     [StringLength(200)]
     public string MotDePasseUser { get; set; } = null!;
 
     [Column("crr_numerocartevtc")]
     [StringLength(12)]
-    public string NumeroCartevtc { get; set; } = null!;
+    public string NumeroCarteVtc { get; set; } = null!;
 
     [Column("crr_iban")]
     [StringLength(30)]

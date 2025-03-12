@@ -39,7 +39,7 @@ public partial class Etablissement
     public bool? Livraison { get; set; }
 
     [Column("etb_aemporter")]
-    public bool? Aemporter { get; set; }
+    public bool? AEmporter { get; set; }
 
     [InverseProperty("IdEtablissementNavigation")]
     public virtual ICollection<Contient2> Contient2s { get; set; } = new List<Contient2>();

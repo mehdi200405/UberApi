@@ -47,13 +47,12 @@ public partial class S221UberContext : DbContext
 
     public virtual DbSet<Horaires> Horaires { get; set; }
 
-    public virtual DbSet<Job> Jobs { get; set; }
+    
 
     public virtual DbSet<LieuFavori> LieuFavoris { get; set; }
 
     public virtual DbSet<Livreur> Livreurs { get; set; }
 
-    public virtual DbSet<Migration> Migrations { get; set; }
 
     public virtual DbSet<Otp> Otps { get; set; }
 
@@ -61,15 +60,9 @@ public partial class S221UberContext : DbContext
 
     public virtual DbSet<Pays> Pays { get; set; }
 
-    public virtual DbSet<PersonalAccessToken> PersonalAccessTokens { get; set; }
 
     public virtual DbSet<Produit> Produits { get; set; }
 
-    public virtual DbSet<PulseAggregate> PulseAggregates { get; set; }
-
-    public virtual DbSet<PulseEntry> PulseEntries { get; set; }
-
-    public virtual DbSet<PulseValue> PulseValues { get; set; }
 
     public virtual DbSet<ReglementSalaire> ReglementSalaires { get; set; }
 
@@ -475,26 +468,7 @@ public partial class S221UberContext : DbContext
                     });
         });
 
-        modelBuilder.Entity<PulseAggregate>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("pulse_aggregates_pkey");
 
-            entity.Property(e => e.KeyHash).HasComputedColumnSql("(md5(key))::uuid", true);
-        });
-
-        modelBuilder.Entity<PulseEntry>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("pulse_entries_pkey");
-
-            entity.Property(e => e.KeyHash).HasComputedColumnSql("(md5(key))::uuid", true);
-        });
-
-        modelBuilder.Entity<PulseValue>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("pulse_values_pkey");
-
-            entity.Property(e => e.KeyHash).HasComputedColumnSql("(md5(key))::uuid", true);
-        });
 
         modelBuilder.Entity<ReglementSalaire>(entity =>
         {

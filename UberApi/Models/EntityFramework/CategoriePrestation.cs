@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[Table("t_e_categorie_prestation_cpr")]
+[Table("t_e_categorieprestation_cpr")]
 public partial class CategoriePrestation
 {
     [Key]

@@ -6,12 +6,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[Table("t_e_gestion_etablissement_ges")]
+[Table("t_e_gestionetablissement_ges")]
 public partial class GestionEtablissement
 {
     [Key]
     [Column("ges_id")]
-    public int Idgestion { get; set; }
+    public int IdGestion { get; set; }
 
     [Column("etb_id")]
     public int IdEtablissement { get; set; }
@@ -25,5 +25,5 @@ public partial class GestionEtablissement
 
     [ForeignKey("IdResponsable")]
     [InverseProperty("GestionEtablissements")]
-    public virtual ResponsableEnseigne IdresponsableNavigation { get; set; } = null!;
+    public virtual ResponsableEnseigne IdResponsableNavigation { get; set; } = null!;
 }

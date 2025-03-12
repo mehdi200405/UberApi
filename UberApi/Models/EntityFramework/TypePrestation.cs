@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[Table("t_e_type_prestation_tpn")]
+[Table("t_e_typeprestation_tpn")]
 public partial class TypePrestation
 {
     [Key]
@@ -25,10 +25,10 @@ public partial class TypePrestation
     [StringLength(300)]
     public string? ImagePrestation { get; set; }
 
-    [InverseProperty("crs_id")]
+    [InverseProperty("IdPrestationNavigation")]
     public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
 
-    [ForeignKey("vcl_id")]
+    [ForeignKey("IdPrestation")]
     [InverseProperty("IdPrestations")]
     public virtual ICollection<Vehicule> IdVehicules { get; set; } = new List<Vehicule>();
 }

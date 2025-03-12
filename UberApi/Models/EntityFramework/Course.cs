@@ -13,7 +13,7 @@ public partial class Course
     [Column("crs_id")]
     public int IdCourse { get; set; }
 
-    [Column("id_crr")]
+    [Column("crr_id")]
     public int? IdCoursier { get; set; }
 
     [Column("cb_id")]

@@ -32,15 +32,15 @@ public partial class Horaires
     [Column("hor_heurefin", TypeName = "time with time zone")]
     public DateTimeOffset? HeureFin { get; set; }
 
-    [ForeignKey("cour_id")]
+    [ForeignKey("IdCoursier")]
     [InverseProperty("Horaires")]
     public virtual Coursier? IdCoursierNavigation { get; set; }
 
-    [ForeignKey("eta_id")]
+    [ForeignKey("IdEtablissement")]
     [InverseProperty("Horaires")]
     public virtual Etablissement? IdEtablissementNavigation { get; set; }
 
-    [ForeignKey("livr_id")]
+    [ForeignKey("IdLivreur")]
     [InverseProperty("Horaires")]
     public virtual Livreur? IdLivreurNavigation { get; set; }
 }

@@ -29,7 +29,7 @@ public partial class Otp
     [Column("otp_utilise")]
     public bool? Utilise { get; set; }
 
-    [ForeignKey("Idclient")]
+    [ForeignKey("IdClient")]
     [InverseProperty("Otps")]
-    public virtual Client IdclientNavigation { get; set; } = null!;
+    public virtual Client IdClientNavigation { get; set; } = null!;
 }

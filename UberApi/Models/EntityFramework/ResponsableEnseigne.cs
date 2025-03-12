@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[Table("t_e_responsable_enseigne_rse")]
+[Table("t_e_responsableenseigne_rse")]
 [Index("EmailUser", Name = "uq_responsable_email", IsUnique = true)]
 public partial class ResponsableEnseigne
 {
@@ -34,6 +34,6 @@ public partial class ResponsableEnseigne
     [StringLength(200)]
     public string MotDePasseUser { get; set; } = null!;
 
-    [InverseProperty("IdresponsableNavigation")]
+    [InverseProperty("IdResponsableNavigation")]
     public virtual ICollection<GestionEtablissement> GestionEtablissements { get; set; } = new List<GestionEtablissement>();
 }

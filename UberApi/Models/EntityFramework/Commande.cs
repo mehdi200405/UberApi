@@ -45,7 +45,7 @@ public partial class Commande
     [StringLength(40)]
     public string StatutCommande { get; set; } = null!;
 
-    [Column("cmd_refusdemande")]
+    [Column("cmd_refusdemandee")]
     public bool RefusDemandee { get; set; }
 
     [Column("cmd_remboursementeffectue")]
