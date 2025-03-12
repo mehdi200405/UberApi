@@ -30,9 +30,9 @@ public partial class Contient2
 
     [ForeignKey("pnr_id")]
     [InverseProperty("Contient2s")]
-    public virtual Panier IdpanierNavigation { get; set; } = null!;
+    public virtual Panier IdPanierNavigation { get; set; } = null!;
 
     [ForeignKey("pdt_id")]
     [InverseProperty("Contient2s")]
-    public virtual Produit IdproduitNavigation { get; set; } = null!;
+    public virtual Produit IdProduitNavigation { get; set; } = null!;
 }
