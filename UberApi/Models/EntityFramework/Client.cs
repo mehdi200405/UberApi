@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace UberApi.Models.EntityFramework;
 
 [Table("client")]
-[Index("Emailuser", Name = "uq_client_mail", IsUnique = true)]
+[Index("EmailUser", Name = "uq_client_mail", IsUnique = true)]
 public partial class Client
 {
     [Key]
@@ -17,20 +17,20 @@ public partial class Client
     [Column("identreprise")]
     public int? Identreprise { get; set; }
 
-    [Column("idadresse")]
-    public int? Idadresse { get; set; }
+    [Column("IdAdresse")]
+    public int? IdAdresse { get; set; }
 
     [Column("genreuser")]
     [StringLength(20)]
     public string Genreuser { get; set; } = null!;
 
-    [Column("nomuser")]
+    [Column("NomUser")]
     [StringLength(50)]
-    public string Nomuser { get; set; } = null!;
+    public string NomUser { get; set; } = null!;
 
-    [Column("prenomuser")]
+    [Column("PrenomUser")]
     [StringLength(50)]
-    public string Prenomuser { get; set; } = null!;
+    public string PrenomUser { get; set; } = null!;
 
     [Column("datenaissance")]
     public DateOnly Datenaissance { get; set; }
@@ -39,13 +39,13 @@ public partial class Client
     [StringLength(20)]
     public string Telephone { get; set; } = null!;
 
-    [Column("emailuser")]
+    [Column("EmailUser")]
     [StringLength(200)]
-    public string Emailuser { get; set; } = null!;
+    public string EmailUser { get; set; } = null!;
 
-    [Column("motdepasseuser")]
+    [Column("MotDePasseUser")]
     [StringLength(200)]
-    public string Motdepasseuser { get; set; } = null!;
+    public string MotDePasseUser { get; set; } = null!;
 
     [Column("photoprofile")]
     [StringLength(300)]
@@ -70,9 +70,9 @@ public partial class Client
     [InverseProperty("IdclientNavigation")]
     public virtual ICollection<Facture> Factures { get; set; } = new List<Facture>();
 
-    [ForeignKey("Idadresse")]
+    [ForeignKey("IdAdresse")]
     [InverseProperty("Clients")]
-    public virtual Adresse? IdadresseNavigation { get; set; }
+    public virtual Adresse? IdAdresseNavigation { get; set; }
 
     [ForeignKey("Identreprise")]
     [InverseProperty("Clients")]
