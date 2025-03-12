@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[PrimaryKey("IdreservationVelo", "Idvelo")]
+[PrimaryKey("IdreservationVelo", "IdVelo")]
 [Table("t_e_velo_reservation_velr")]
 public partial class VeloReservation
 {
@@ -25,11 +25,11 @@ public partial class VeloReservation
     [Precision(6, 2)]
     public decimal PrixReservation { get; set; }
 
-    [ForeignKey("IdreservationVelo")]
+    [ForeignKey("IdReservationVelo")]
     [InverseProperty("VeloReservations")]
     public virtual Reservation IdReservationVeloNavigation { get; set; } = null!;
 
-    [ForeignKey("Idvelo")]
+    [ForeignKey("IdVelo")]
     [InverseProperty("VeloReservations")]
     public virtual Velo IdVeloNavigation { get; set; } = null!;
 }

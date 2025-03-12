@@ -12,7 +12,7 @@ public partial class Velo
 {
     [Key]
     [Column("vel_id")]
-    public int Idvelo { get; set; }
+    public int IdVelo { get; set; }
 
     [Column("adr_idadresse")]
     public int IdAdresse { get; set; }
