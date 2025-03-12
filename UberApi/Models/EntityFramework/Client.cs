@@ -6,91 +6,91 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[Table("client")]
-[Index("Emailuser", Name = "uq_client_mail", IsUnique = true)]
+[Table("t_e_client_clt")]
+[Index("EmailUser", Name = "uq_client_mail", IsUnique = true)]
 public partial class Client
 {
     [Key]
-    [Column("idclient")]
-    public int Idclient { get; set; }
+    [Column("clt_id")]
+    public int IdClient { get; set; }
 
-    [Column("identreprise")]
-    public int? Identreprise { get; set; }
+    [Column("ent_id")]
+    public int? IdEntreprise { get; set; }
 
-    [Column("idadresse")]
-    public int? Idadresse { get; set; }
+    [Column("adr_id")]
+    public int? IdAdresse { get; set; }
 
-    [Column("genreuser")]
+    [Column("clt_genre")]
     [StringLength(20)]
-    public string Genreuser { get; set; } = null!;
+    public string GenreUser { get; set; } = null!;
 
-    [Column("nomuser")]
+    [Column("clt_nom")]
     [StringLength(50)]
-    public string Nomuser { get; set; } = null!;
+    public string NomUser { get; set; } = null!;
 
-    [Column("prenomuser")]
+    [Column("clt_prenom")]
     [StringLength(50)]
-    public string Prenomuser { get; set; } = null!;
+    public string PrenomUser { get; set; } = null!;
 
-    [Column("datenaissance")]
-    public DateOnly Datenaissance { get; set; }
+    [Column("clt_datenaissance")]
+    public DateTime DateNaissance { get; set; }
 
-    [Column("telephone")]
+    [Column("clt_telephone")]
     [StringLength(20)]
     public string Telephone { get; set; } = null!;
 
-    [Column("emailuser")]
+    [Column("clt_email")]
     [StringLength(200)]
-    public string Emailuser { get; set; } = null!;
+    public string EmailUser { get; set; } = null!;
 
-    [Column("motdepasseuser")]
+    [Column("clt_motdepasse")]
     [StringLength(200)]
-    public string Motdepasseuser { get; set; } = null!;
+    public string MotDePasseUser { get; set; } = null!;
 
-    [Column("photoprofile")]
+    [Column("clt_photoprofile")]
     [StringLength(300)]
-    public string? Photoprofile { get; set; }
+    public string? PhotoProfile { get; set; }
 
-    [Column("souhaiterecevoirbonplan")]
-    public bool? Souhaiterecevoirbonplan { get; set; }
+    [Column("clt_souhaiterecevoirbonplan")]
+    public bool? SouhaiteRecevoirBonPlan { get; set; }
 
-    [Column("mfa_activee")]
+    [Column("clt_mfaactivee")]
     public bool? MfaActivee { get; set; }
 
-    [Column("typeclient")]
+    [Column("clt_type")]
     [StringLength(20)]
-    public string Typeclient { get; set; } = null!;
+    public string TypeClient { get; set; } = null!;
 
-    [Column("last_connexion", TypeName = "timestamp without time zone")]
+    [Column("clt_lastconnexion", TypeName = "date")]
     public DateTime? LastConnexion { get; set; }
 
-    [Column("demande_suppression")]
+    [Column("clt_demandesuppression")]
     public bool? DemandeSuppression { get; set; }
 
-    [InverseProperty("IdclientNavigation")]
+    [InverseProperty("IdClientNavigation")]
     public virtual ICollection<Facture> Factures { get; set; } = new List<Facture>();
 
-    [ForeignKey("Idadresse")]
+    [ForeignKey("IdAdresse")]
     [InverseProperty("Clients")]
-    public virtual Adresse? IdadresseNavigation { get; set; }
+    public virtual Adresse? IdAdresseNavigation { get; set; }
 
-    [ForeignKey("Identreprise")]
+    [ForeignKey("IdEntreprise")]
     [InverseProperty("Clients")]
-    public virtual Entreprise? IdentrepriseNavigation { get; set; }
+    public virtual Entreprise? IdEntrepriseNavigation { get; set; }
 
-    [InverseProperty("IdclientNavigation")]
+    [InverseProperty("IdClientNavigation")]
     public virtual ICollection<LieuFavori> LieuFavoris { get; set; } = new List<LieuFavori>();
 
-    [InverseProperty("IdclientNavigation")]
+    [InverseProperty("IdClientNavigation")]
     public virtual ICollection<Otp> Otps { get; set; } = new List<Otp>();
 
-    [InverseProperty("IdclientNavigation")]
+    [InverseProperty("IdClientNavigation")]
     public virtual ICollection<Panier> Paniers { get; set; } = new List<Panier>();
 
-    [InverseProperty("IdclientNavigation")]
+    [InverseProperty("IdClientNavigation")]
     public virtual ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
 
-    [ForeignKey("Idclient")]
-    [InverseProperty("Idclients")]
+    [ForeignKey("IdClient")]
+    [InverseProperty("IdClients")]
     public virtual ICollection<CarteBancaire> Idcbs { get; set; } = new List<CarteBancaire>();
 }

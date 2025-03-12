@@ -164,18 +164,18 @@ public partial class S221UberContext : DbContext
 
         modelBuilder.Entity<Client>(entity =>
         {
-            entity.HasKey(e => e.Idclient).HasName("pk_client");
+            entity.HasKey(e => e.IdClient).HasName("pk_client");
 
-            entity.Property(e => e.Idclient).HasDefaultValueSql("nextval('client_id_seq'::regclass)");
+            entity.Property(e => e.IdClient).HasDefaultValueSql("nextval('client_id_seq'::regclass)");
             entity.Property(e => e.DemandeSuppression).HasDefaultValue(false);
             entity.Property(e => e.LastConnexion).HasDefaultValueSql("now()");
             entity.Property(e => e.MfaActivee).HasDefaultValue(false);
 
-            entity.HasOne(d => d.IdadresseNavigation).WithMany(p => p.Clients)
+            entity.HasOne(d => d.IdAdresseNavigation).WithMany(p => p.Clients)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_client_adresse");
 
-            entity.HasOne(d => d.IdentrepriseNavigation).WithMany(p => p.Clients)
+            entity.HasOne(d => d.IdEntrepriseNavigation).WithMany(p => p.Clients)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_client_entreprise");
         });
