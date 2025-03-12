@@ -11,11 +11,11 @@ public partial class CategorieProduit
 {
     [Key]
     [Column("cpt_id")]
-    public int Idcategorie { get; set; }
+    public int IdCategorie { get; set; }
 
-    [Column("_cpt_nomcategorie")]
+    [Column("cpt_nomcategorie")]
     [StringLength(100)]
-    public string? Nomcategorie { get; set; }
+    public string? NomCategorie { get; set; }
 
     [ForeignKey("IdCategorie")]
     [InverseProperty("IdCategories")]
