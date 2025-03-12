@@ -13,7 +13,7 @@ public partial class CategorieProduit
     [Column("cpt_id")]
     public int IdCategorie { get; set; }
 
-    [Column("cpt_nomcategorie")]
+    [Column("cpt_nom")]
     [StringLength(100)]
     public string? NomCategorie { get; set; }
 
