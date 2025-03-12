@@ -6,41 +6,41 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[Table("horaires")]
+[Table("t_e_horaire_hor")]
 public partial class Horaire
 {
     [Key]
-    [Column("idhoraires")]
-    public int Idhoraires { get; set; }
+    [Column("hor_idhoraires")]
+    public int IdHoraires { get; set; }
 
-    [Column("IdEtablissement")]
+    [Column("eta_idetablissement")]
     public int? IdEtablissement { get; set; }
 
-    [Column("idcoursier")]
-    public int? Idcoursier { get; set; }
+    [Column("cour_idcoursier")]
+    public int? IdCoursier { get; set; }
 
-    [Column("idlivreur")]
-    public int? Idlivreur { get; set; }
+    [Column("livr_idlivreur")]
+    public int? IdLivreur { get; set; }
 
-    [Column("joursemaine")]
+    [Column("hor_joursemaine")]
     [StringLength(9)]
-    public string Joursemaine { get; set; } = null!;
+    public string JourSemaine { get; set; } = null!;
 
-    [Column("heuredebut", TypeName = "time with time zone")]
-    public DateTimeOffset? Heuredebut { get; set; }
+    [Column("hor_heuredebut", TypeName = "time with time zone")]
+    public DateTimeOffset? HeureDebut { get; set; }
 
-    [Column("heurefin", TypeName = "time with time zone")]
-    public DateTimeOffset? Heurefin { get; set; }
+    [Column("hor_heurefin", TypeName = "time with time zone")]
+    public DateTimeOffset? HeureFin { get; set; }
 
-    [ForeignKey("Idcoursier")]
+    [ForeignKey("cour_idcoursier")]
     [InverseProperty("Horaires")]
-    public virtual Coursier? IdcoursierNavigation { get; set; }
+    public virtual Coursier? IdCoursierNavigation { get; set; }
 
-    [ForeignKey("IdEtablissement")]
+    [ForeignKey("eta_idetablissement")]
     [InverseProperty("Horaires")]
     public virtual Etablissement? IdEtablissementNavigation { get; set; }
 
-    [ForeignKey("Idlivreur")]
+    [ForeignKey("livr_idlivreur")]
     [InverseProperty("Horaires")]
-    public virtual Livreur? IdlivreurNavigation { get; set; }
+    public virtual Livreur? IdLivreurNavigation { get; set; }
 }
