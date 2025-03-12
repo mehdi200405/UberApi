@@ -7,18 +7,18 @@ using Microsoft.EntityFrameworkCore;
 namespace UberApi.Models.EntityFramework;
 
 [Table("t_e_carteBancaire_ctbr")]
-[Index("Numerocb", Name = "carte_bancaire_numerocb_key", IsUnique = true)]
+[Index("NumeroCb", Name = "carte_bancaire_numerocb_key", IsUnique = true)]
 public partial class CarteBancaire
 {
     [Key]
     [Column("cb_id")]
     public int IdCb { get; set; }
 
-    [Column("cb_numerocb")]
+    [Column("cb_numero")]
     public string NumeroCb { get; set; } = null!;
 
-    [Column("cb_date")]
-    public DateOnly DateexpireCb { get; set; }
+    [Column("cb_dateexpire")]
+    public DateOnly DateExpireCb { get; set; }
 
     [Column("cb_cryptogramme")]
     public string Cryptogramme { get; set; } = null!;
@@ -35,6 +35,6 @@ public partial class CarteBancaire
     public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
 
     [ForeignKey("IdCb")]
-    [InverseProperty("Idcbs")]
+    [InverseProperty("IdCbs")]
     public virtual ICollection<Client> IdClients { get; set; } = new List<Client>();
 }
