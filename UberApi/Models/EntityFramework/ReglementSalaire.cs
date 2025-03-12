@@ -6,24 +6,24 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[Table("reglement_salaire")]
+[Table("t_e_reglement_salaire_rsa")]
 public partial class ReglementSalaire
 {
     [Key]
-    [Column("idreglement")]
-    public int Idreglement { get; set; }
+    [Column("rsa_id")]
+    public int IdReglement { get; set; }
 
-    [Column("idcoursier")]
-    public int? Idcoursier { get; set; }
+    [Column("crr_id")]
+    public int? IdCoursier { get; set; }
 
-    [Column("idlivreur")]
-    public int? Idlivreur { get; set; }
+    [Column("livr_id")]
+    public int? IdLivreur { get; set; }
 
-    [Column("montantreglement")]
+    [Column("rsa_montantreglement")]
     [Precision(6, 2)]
-    public decimal? Montantreglement { get; set; }
+    public decimal? MontantReglement { get; set; }
 
-    [ForeignKey("Idcoursier")]
+    [ForeignKey("IdCoursier")]
     [InverseProperty("ReglementSalaires")]
-    public virtual Coursier? IdcoursierNavigation { get; set; }
+    public virtual Coursier? IdCoursierNavigation { get; set; }
 }
