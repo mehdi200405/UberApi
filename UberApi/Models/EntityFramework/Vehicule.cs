@@ -21,7 +21,7 @@ public partial class Vehicule
     [StringLength(9)]
     public string Immatriculation { get; set; } = null!;
 
-    [Column("vcl_Marque")]
+    [Column("vcl_marque")]
     [StringLength(50)]
     public string? Marque { get; set; }
 
@@ -56,16 +56,16 @@ public partial class Vehicule
     public string StatusProcessusLogistique { get; set; } = null!;
 
     [Column("vcl_demandemodification")]
-    public string? Demandemodification { get; set; }
+    public string? DemandeModification { get; set; }
 
     [Column("vcl_demandemodificationeffectue")]
-    public bool Demandemodificationeffectue { get; set; }
+    public bool DemandeModificationeffectue { get; set; }
 
-    [ForeignKey("vcl_Idcoursier")]
-    [InverseProperty("vcl_Vehicules")]
-    public virtual Coursier IdcoursierNavigation { get; set; } = null!;
+    [ForeignKey("vcl_idcoursier")]
+    [InverseProperty("IdCoursierNavigation")]
+    public virtual Coursier IdCoursierNavigation { get; set; } = null!;
 
     [ForeignKey("vcl_idvehicule")]
-    [InverseProperty("vcl_idvehicules")]
-    public virtual ICollection<TypePrestation> Idprestations { get; set; } = new List<TypePrestation>();
+    [InverseProperty("IdPrestations")]
+    public virtual ICollection<TypePrestation> IdPrestations { get; set; } = new List<TypePrestation>();
 }
