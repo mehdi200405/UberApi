@@ -6,59 +6,59 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[Table("commande")]
+[Table("t_e_commande_cmd")]
 public partial class Commande
 {
     [Key]
-    [Column("idcommande")]
+    [Column("cmd_id")]
     public int Idcommande { get; set; }
 
-    [Column("idpanier")]
-    public int Idpanier { get; set; }
+    [Column("pnr_id")]
+    public int IdPanier { get; set; }
 
-    [Column("idlivreur")]
-    public int? Idlivreur { get; set; }
+    [Column("livr_id")]
+    public int? IdLivreur { get; set; }
 
-    [Column("idcb")]
-    public int? Idcb { get; set; }
+    [Column("cb_id")]
+    public int? IdCb { get; set; }
 
-    [Column("IdAdresse")]
+    [Column("adr_id")]
     public int IdAdresse { get; set; }
 
-    [Column("prixcommande")]
+    [Column("cmd_prix")]
     [Precision(5, 2)]
-    public decimal Prixcommande { get; set; }
+    public decimal PrixCommande { get; set; }
 
-    [Column("tempscommande")]
-    public int Tempscommande { get; set; }
+    [Column("cmd_temps")]
+    public int TempsCommande { get; set; }
 
-    [Column("heurecreation", TypeName = "timestamp without time zone")]
-    public DateTime Heurecreation { get; set; }
+    [Column("cmd_heurecreation", TypeName = "date")]
+    public DateTime HeureCreation { get; set; }
 
-    [Column("heurecommande", TypeName = "timestamp without time zone")]
-    public DateTime Heurecommande { get; set; }
+    [Column("cmd_heurecommande", TypeName = "date")]
+    public DateTime HeureCommande { get; set; }
 
-    [Column("estlivraison")]
-    public bool Estlivraison { get; set; }
+    [Column("cmd_estlivraison")]
+    public bool EstLivraison { get; set; }
 
-    [Column("statutcommande")]
+    [Column("cmd_statut")]
     [StringLength(40)]
-    public string Statutcommande { get; set; } = null!;
+    public string StatutCommande { get; set; } = null!;
 
-    [Column("refus_demandee")]
+    [Column("cmd_refusdemande")]
     public bool RefusDemandee { get; set; }
 
-    [Column("remboursement_effectue")]
+    [Column("cmd_remboursementeffectue")]
     public bool RemboursementEffectue { get; set; }
 
-    [InverseProperty("IdcommandeNavigation")]
+    [InverseProperty("IdCommandeNavigation")]
     public virtual ICollection<Facture> Factures { get; set; } = new List<Facture>();
 
-    [ForeignKey("Idlivreur")]
+    [ForeignKey("IdLivreur")]
     [InverseProperty("Commandes")]
-    public virtual Livreur? IdlivreurNavigation { get; set; }
+    public virtual Livreur? IdLivreurNavigation { get; set; }
 
-    [ForeignKey("Idpanier")]
+    [ForeignKey("IdPanier")]
     [InverseProperty("Commandes")]
-    public virtual Panier IdpanierNavigation { get; set; } = null!;
+    public virtual Panier IdPanierNavigation { get; set; } = null!;
 }
