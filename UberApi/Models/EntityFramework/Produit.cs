@@ -33,10 +33,10 @@ public partial class Produit
     public virtual ICollection<Contient2> Contient2s { get; set; } = new List<Contient2>();
 
     [ForeignKey("Idproduit")]
-    [InverseProperty("Idproduits")]
+    [InverseProperty("isProduits")]
     public virtual ICollection<CategorieProduit> Idcategories { get; set; } = new List<CategorieProduit>();
 
     [ForeignKey("Idproduit")]
-    [InverseProperty("Idproduits")]
+    [InverseProperty("isProduits")]
     public virtual ICollection<Etablissement> IdEtablissements { get; set; } = new List<Etablissement>();
 }

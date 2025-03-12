@@ -26,6 +26,6 @@ public partial class CategoriePrestation
     public string? ImageCategoriePrestation { get; set; }
 
     [ForeignKey("IdCategoriePrestation")]
-    [InverseProperty("Idcategorieprestations")]
+    [InverseProperty("IdCategoriePrestations")]
     public virtual ICollection<Etablissement> IdEtablissements { get; set; } = new List<Etablissement>();
 }

@@ -135,7 +135,7 @@ public partial class S221UberContext : DbContext
 
             entity.Property(e => e.IdCategoriePrestation).HasDefaultValueSql("nextval('categorie_prestation_id_seq'::regclass)");
 
-            entity.HasMany(d => d.IdEtablissements).WithMany(p => p.Idcategorieprestations)
+            entity.HasMany(d => d.IdEtablissements).WithMany(p => p.IdCategoriePrestations)
                 .UsingEntity<Dictionary<string, object>>(
                     "ACommeCategorie",
                     r => r.HasOne<Etablissement>().WithMany()
@@ -432,7 +432,7 @@ public partial class S221UberContext : DbContext
 
             entity.Property(e => e.Idproduit).HasDefaultValueSql("nextval('produit_id_seq'::regclass)");
 
-            entity.HasMany(d => d.Idcategories).WithMany(p => p.Idproduits)
+            entity.HasMany(d => d.Idcategories).WithMany(p => p.isProduits)
                 .UsingEntity<Dictionary<string, object>>(
                     "ProduitCategorie",
                     r => r.HasOne<CategorieProduit>().WithMany()
@@ -451,7 +451,7 @@ public partial class S221UberContext : DbContext
                         j.IndexerProperty<int>("Idcategorie").HasColumnName("idcategorie");
                     });
 
-            entity.HasMany(d => d.IdEtablissements).WithMany(p => p.Idproduits)
+            entity.HasMany(d => d.IdEtablissements).WithMany(p => p.isProduits)
                 .UsingEntity<Dictionary<string, object>>(
                     "EstSitueA2",
                     r => r.HasOne<Etablissement>().WithMany()
