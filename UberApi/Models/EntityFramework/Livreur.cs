@@ -51,13 +51,17 @@ public partial class Livreur
     [Column("livr_iban")]
     [StringLength(30)]
     public string? Iban { get; set; }
+
     [Column("livr_datedebutactivite")]
     public DateOnly? DateDebutActivite { get; set; }
+
     [Column("livr_notemoyenne")]
     [Precision(2, 1)]
     public decimal? NoteMoyenne { get; set; }
+
     [InverseProperty("IdLivreur")]
     public virtual ICollection<Commande> Commandes { get; set; } = new List<Commande>();
+
     [InverseProperty("IdPanier")]
-    public virtual ICollection<Horaire> Horaires { get; set; } = new List<Horaire>();
+    public virtual ICollection<Horaires> Horaires { get; set; } = new List<Horaires>();
 }

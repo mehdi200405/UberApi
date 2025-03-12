@@ -6,8 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[Table("t_e_horaire_hor")]
-public partial class Horaire
+[Table("t_e_horaires_hor")]
+public partial class Horaires
 {
     [Key]
     [Column("hor_id")]

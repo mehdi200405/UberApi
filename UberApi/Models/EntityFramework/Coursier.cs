@@ -6,84 +6,84 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[Table("t_e_coursier_crr")]
+[Table("coursier")]
 [Index("Iban", Name = "uq_coursier_iban", IsUnique = true)]
 [Index("EmailUser", Name = "uq_coursier_mail", IsUnique = true)]
-[Index("NumeroCartevtc", Name = "uq_coursier_numcarte", IsUnique = true)]
+[Index("Numerocartevtc", Name = "uq_coursier_numcarte", IsUnique = true)]
 public partial class Coursier
 {
     [Key]
-    [Column("crr_id")]
-    public int IdCoursier { get; set; }
+    [Column("idcoursier")]
+    public int Idcoursier { get; set; }
 
-    [Column("ent_id")]
-    public int IdEntreprise { get; set; }
+    [Column("identreprise")]
+    public int Identreprise { get; set; }
 
-    [Column("adr_id")]
+    [Column("IdAdresse")]
     public int? IdAdresse { get; set; }
 
-    [Column("crr_genreuser")]
+    [Column("genreuser")]
     [StringLength(20)]
-    public string GenreUser { get; set; } = null!;
+    public string Genreuser { get; set; } = null!;
 
-    [Column("crr_nomuser")]
+    [Column("NomUser")]
     [StringLength(50)]
     public string NomUser { get; set; } = null!;
 
-    [Column("crr_prenomuser")]
+    [Column("PrenomUser")]
     [StringLength(50)]
     public string PrenomUser { get; set; } = null!;
 
-    [Column("crr_datenaissance")]
-    public DateOnly DateNaissance { get; set; }
+    [Column("datenaissance")]
+    public DateOnly Datenaissance { get; set; }
 
-    [Column("crr_telephone")]
+    [Column("telephone")]
     [StringLength(20)]
     public string Telephone { get; set; } = null!;
 
-    [Column("crr_emailuser")]
+    [Column("EmailUser")]
     [StringLength(200)]
     public string EmailUser { get; set; } = null!;
 
-    [Column("crr_MotDePasseUser")]
+    [Column("MotDePasseUser")]
     [StringLength(200)]
     public string MotDePasseUser { get; set; } = null!;
 
-    [Column("crr_numerocartevtc")]
+    [Column("numerocartevtc")]
     [StringLength(12)]
-    public string NumeroCartevtc { get; set; } = null!;
+    public string Numerocartevtc { get; set; } = null!;
 
-    [Column("crr_iban")]
+    [Column("iban")]
     [StringLength(30)]
     public string? Iban { get; set; }
 
-    [Column("crr_datedebutactivite")]
-    public DateOnly? DateDebutActivite { get; set; }
+    [Column("datedebutactivite")]
+    public DateOnly? Datedebutactivite { get; set; }
 
-    [Column("crr_notemoyenne")]
+    [Column("notemoyenne")]
     [Precision(2, 1)]
-    public decimal? NoteMoyenne { get; set; }
+    public decimal? Notemoyenne { get; set; }
 
-    [InverseProperty("IdCoursierNavigation")]
+    [InverseProperty("IdcoursierNavigation")]
     public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
 
-    [InverseProperty("IdCoursierNavigation")]
+    [InverseProperty("IdcoursierNavigation")]
     public virtual ICollection<Entretien> Entretiens { get; set; } = new List<Entretien>();
 
-    [InverseProperty("IdCoursierNavigation")]
-    public virtual ICollection<Horaire> Horaires { get; set; } = new List<Horaire>();
+    [InverseProperty("IdcoursierNavigation")]
+    public virtual ICollection<Horaires> Horaires { get; set; } = new List<Horaires>();
 
     [ForeignKey("IdAdresse")]
     [InverseProperty("Coursiers")]
     public virtual Adresse? IdAdresseNavigation { get; set; }
 
-    [ForeignKey("IdEntreprise")]
+    [ForeignKey("Identreprise")]
     [InverseProperty("Coursiers")]
-    public virtual Entreprise IdEntrepriseNavigation { get; set; } = null!;
+    public virtual Entreprise IdentrepriseNavigation { get; set; } = null!;
 
-    [InverseProperty("IdCoursierNavigation")]
+    [InverseProperty("IdcoursierNavigation")]
     public virtual ICollection<ReglementSalaire> ReglementSalaires { get; set; } = new List<ReglementSalaire>();
 
-    [InverseProperty("IdCoursierNavigation")]
+    [InverseProperty("IdcoursierNavigation")]
     public virtual ICollection<Vehicule> Vehicules { get; set; } = new List<Vehicule>();
 }
