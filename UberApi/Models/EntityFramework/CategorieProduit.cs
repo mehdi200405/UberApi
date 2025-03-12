@@ -6,18 +6,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[Table("categorie_produit")]
+[Table("t_e_categorieproduit_cpt")]
 public partial class CategorieProduit
 {
     [Key]
-    [Column("idcategorie")]
+    [Column("cpt_id")]
     public int Idcategorie { get; set; }
 
-    [Column("nomcategorie")]
+    [Column("_cpt_nomcategorie")]
     [StringLength(100)]
     public string? Nomcategorie { get; set; }
 
-    [ForeignKey("Idcategorie")]
-    [InverseProperty("Idcategories")]
+    [ForeignKey("IdCategorie")]
+    [InverseProperty("IdCategories")]
     public virtual ICollection<Produit> IdProduits { get; set; } = new List<Produit>();
 }
