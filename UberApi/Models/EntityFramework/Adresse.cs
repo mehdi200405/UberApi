@@ -13,7 +13,7 @@ public partial class Adresse
     [Column("adr_id")]
     public int IdAdresse { get; set; }
 
-    [Column("vle_id")]
+    [Column("vil_id")]
     public int? IdVille { get; set; }
 
     [Column("adr_libelle")]
@@ -34,7 +34,7 @@ public partial class Adresse
     [InverseProperty("AdrIdadresseNavigation")]
     public virtual ICollection<Course> CourseAdrIdAdresseNavigations { get; set; } = new List<Course>();
 
-    [InverseProperty("IdadresseNavigation")]
+    [InverseProperty("IdAdresseNavigation")]
     public virtual ICollection<Course> CourseIdAdresseNavigations { get; set; } = new List<Course>();
 
     [InverseProperty("IdAdresseNavigation")]
@@ -46,7 +46,7 @@ public partial class Adresse
     [InverseProperty("IdAdresseNavigation")]
     public virtual ICollection<Etablissement> Etablissements { get; set; } = new List<Etablissement>();
 
-    [ForeignKey("Idville")]
+    [ForeignKey("IdVille")]
     [InverseProperty("Adresses")]
     public virtual Ville? IdVilleNavigation { get; set; }
 
