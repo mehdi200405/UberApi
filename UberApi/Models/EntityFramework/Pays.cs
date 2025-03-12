@@ -6,19 +6,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[Table("pays")]
+[Table("t_e_pays_pa")]
 [Index("Nompays", Name = "uq_nompays", IsUnique = true)]
-public partial class Pay
+public partial class Pays
 {
     [Key]
-    [Column("idpays")]
+    [Column("pa_id")]
     public int Idpays { get; set; }
 
-    [Column("nompays")]
+    [Column("pa_nom")]
     [StringLength(50)]
     public string Nompays { get; set; } = null!;
 
-    [Column("pourcentagetva")]
+    [Column("pa_pourcentagetva")]
     [Precision(4, 2)]
     public decimal? Pourcentagetva { get; set; }
 

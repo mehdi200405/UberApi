@@ -6,23 +6,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[Table("reservation")]
+[Table("t_e_reservation_res")]
 public partial class Reservation
 {
     [Key]
-    [Column("idreservation")]
+    [Column("res_id")]
     public int Idreservation { get; set; }
 
-    [Column("idclient")]
+    [Column("clt_idclient")]
     public int Idclient { get; set; }
 
-    [Column("datereservation")]
+    [Column("res_date")]
     public DateOnly? Datereservation { get; set; }
 
-    [Column("heurereservation")]
+    [Column("res_heure")]
     public TimeOnly? Heurereservation { get; set; }
 
-    [Column("pourqui")]
+    [Column("res_pourqui")]
     [StringLength(100)]
     public string? Pourqui { get; set; }
 

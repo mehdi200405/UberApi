@@ -32,11 +32,12 @@ public partial class Client
     [StringLength(50)]
     public string PrenomUser { get; set; } = null!;
 
-    [Column("clt_datenaissance")]
+    [Column("clt_datenaissance", TypeName = "date")]
     public DateTime DateNaissance { get; set; }
 
     [Column("clt_telephone")]
     [StringLength(20)]
+    [RegularExpression(@"^0[0-9]{9}$", ErrorMessage = "Le numéro de téléphone doit contenir 10 chiffres")]
     public string Telephone { get; set; } = null!;
 
     [Column("clt_email")]
