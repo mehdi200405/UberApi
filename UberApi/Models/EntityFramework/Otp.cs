@@ -6,27 +6,27 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[Table("otp")]
+[Table("t_e_otp_otp")]
 public partial class Otp
 {
     [Key]
-    [Column("idotp")]
-    public int Idotp { get; set; }
+    [Column("otp_id")]
+    public int IdOtp { get; set; }
 
-    [Column("idclient")]
-    public int Idclient { get; set; }
+    [Column("clt_id")]
+    public int IdClient { get; set; }
 
-    [Column("codeotp")]
+    [Column("otp_code")]
     [StringLength(6)]
-    public string Codeotp { get; set; } = null!;
+    public string CodeOtp { get; set; } = null!;
 
-    [Column("dategeneration", TypeName = "timestamp without time zone")]
-    public DateTime Dategeneration { get; set; }
+    [Column("otp_dategeneration", TypeName = "timestamp without time zone")]
+    public DateTime DateGeneration { get; set; }
 
-    [Column("dateexpiration", TypeName = "timestamp without time zone")]
-    public DateTime Dateexpiration { get; set; }
+    [Column("otp_dateexpiration", TypeName = "timestamp without time zone")]
+    public DateTime DateExpiration { get; set; }
 
-    [Column("utilise")]
+    [Column("otp_utilise")]
     public bool? Utilise { get; set; }
 
     [ForeignKey("Idclient")]
