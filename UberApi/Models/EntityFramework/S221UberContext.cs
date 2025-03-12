@@ -59,7 +59,10 @@ public partial class S221UberContext : DbContext
 
     public virtual DbSet<Panier> Paniers { get; set; }
 
-    public virtual DbSet<Pay> Pays { get; set; }
+    public virtual DbSet<Pays> Pays { get; set; }
+
+    public virtual DbSet<PersonalAccessToken> PersonalAccessTokens { get; set; }
+
     public virtual DbSet<Produit> Produits { get; set; }
 
     public virtual DbSet<PulseAggregate> PulseAggregates { get; set; }
@@ -419,11 +422,16 @@ public partial class S221UberContext : DbContext
                 .HasConstraintName("fk_panier_client");
         });
 
-        modelBuilder.Entity<Pay>(entity =>
+        modelBuilder.Entity<Pays>(entity =>
         {
             entity.HasKey(e => e.Idpays).HasName("pk_pays");
 
             entity.Property(e => e.Idpays).HasDefaultValueSql("nextval('pays_id_seq'::regclass)");
+        });
+
+        modelBuilder.Entity<PersonalAccessToken>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("personal_access_tokens_pkey");
         });
 
         modelBuilder.Entity<Produit>(entity =>

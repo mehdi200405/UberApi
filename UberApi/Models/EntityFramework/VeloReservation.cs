@@ -7,21 +7,21 @@ using Microsoft.EntityFrameworkCore;
 namespace UberApi.Models.EntityFramework;
 
 [PrimaryKey("IdreservationVelo", "Idvelo")]
-[Table("velo_reservation")]
+[Table("t_e_velo_reservation_velr")]
 public partial class VeloReservation
 {
     [Key]
-    [Column("idreservation_velo")]
+    [Column("velr_id")]
     public int IdreservationVelo { get; set; }
 
     [Key]
-    [Column("idvelo")]
+    [Column("vel_idvelo")]
     public int Idvelo { get; set; }
 
-    [Column("dureereservation")]
+    [Column("velr_dureereservation")]
     public int Dureereservation { get; set; }
 
-    [Column("prixreservation")]
+    [Column("velr_prixreservation")]
     [Precision(6, 2)]
     public decimal Prixreservation { get; set; }
 

@@ -6,20 +6,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[Table("ville")]
+[Table("t_e_ville_vil")]
 public partial class Ville
 {
     [Key]
-    [Column("idville")]
+    [Column("vil_id")]
     public int Idville { get; set; }
 
-    [Column("idpays")]
+    [Column("pa_idpays")]
     public int? Idpays { get; set; }
 
-    [Column("idcodepostal")]
+    [Column("cp_idcodepostal")]
     public int? Idcodepostal { get; set; }
 
-    [Column("nomville")]
+    [Column("vil_nom")]
     [StringLength(50)]
     public string Nomville { get; set; } = null!;
 
@@ -32,5 +32,5 @@ public partial class Ville
 
     [ForeignKey("Idpays")]
     [InverseProperty("Villes")]
-    public virtual Pay? IdpaysNavigation { get; set; }
+    public virtual Pays? IdpaysNavigation { get; set; }
 }

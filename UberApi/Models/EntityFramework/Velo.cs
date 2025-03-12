@@ -6,21 +6,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[Table("velo")]
+[Table("t_e_velo_vel")]
 [Index("Numerovelo", Name = "uq_velo_numero", IsUnique = true)]
 public partial class Velo
 {
     [Key]
-    [Column("idvelo")]
+    [Column("vel_id")]
     public int Idvelo { get; set; }
 
-    [Column("idadresse")]
+    [Column("adr_idadresse")]
     public int Idadresse { get; set; }
 
-    [Column("numerovelo")]
+    [Column("vel_numero")]
     public int Numerovelo { get; set; }
 
-    [Column("estdisponible")]
+    [Column("vel_estdisponible")]
     public bool Estdisponible { get; set; }
 
     [ForeignKey("Idadresse")]
