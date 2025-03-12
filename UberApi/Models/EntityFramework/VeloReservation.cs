@@ -12,24 +12,24 @@ public partial class VeloReservation
 {
     [Key]
     [Column("velr_id")]
-    public int IdreservationVelo { get; set; }
+    public int IdReservationVelo { get; set; }
 
     [Key]
     [Column("vel_idvelo")]
-    public int Idvelo { get; set; }
+    public int IdVelo { get; set; }
 
     [Column("velr_dureereservation")]
-    public int Dureereservation { get; set; }
+    public int DureeReservation { get; set; }
 
     [Column("velr_prixreservation")]
     [Precision(6, 2)]
-    public decimal Prixreservation { get; set; }
+    public decimal PrixReservation { get; set; }
 
     [ForeignKey("IdreservationVelo")]
     [InverseProperty("VeloReservations")]
-    public virtual Reservation IdreservationVeloNavigation { get; set; } = null!;
+    public virtual Reservation IdReservationVeloNavigation { get; set; } = null!;
 
     [ForeignKey("Idvelo")]
     [InverseProperty("VeloReservations")]
-    public virtual Velo IdveloNavigation { get; set; } = null!;
+    public virtual Velo IdVeloNavigation { get; set; } = null!;
 }

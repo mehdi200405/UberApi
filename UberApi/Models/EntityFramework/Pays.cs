@@ -12,15 +12,15 @@ public partial class Pays
 {
     [Key]
     [Column("pa_id")]
-    public int Idpays { get; set; }
+    public int IdPays { get; set; }
 
     [Column("pa_nom")]
     [StringLength(50)]
-    public string Nompays { get; set; } = null!;
+    public string NomPays { get; set; } = null!;
 
     [Column("pa_pourcentagetva")]
     [Precision(4, 2)]
-    public decimal? Pourcentagetva { get; set; }
+    public decimal? PourcentageTva { get; set; }
 
     [InverseProperty("IdpaysNavigation")]
     public virtual ICollection<CodePostal> CodePostals { get; set; } = new List<CodePostal>();
