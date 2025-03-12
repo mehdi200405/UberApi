@@ -37,6 +37,7 @@ public partial class Client
 
     [Column("clt_telephone")]
     [StringLength(20)]
+    [RegularExpression(@"^0[0-9]{9}$", ErrorMessage = "Le numéro de téléphone doit contenir 10 chiffres")]
     public string Telephone { get; set; } = null!;
 
     [Column("clt_email")]
