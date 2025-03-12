@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[Table("t_e_restaurateur")]
+[Table("t_e_restaurateur_rst")]
 [Index("EmailUser", Name = "uq_restaurateur_mail", IsUnique = true)]
 public partial class Restaurateur
 {
