@@ -6,12 +6,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[Table("lieu_favori")]
+[Table("t_e_lieufavori_lfs")]
 public partial class LieuFavori
 {
     [Key]
     [Column("idlieufavori")]
-    public int Idlieufavori { get; set; }
+    public int IdLieuFavori { get; set; }
 
     [Column("idclient")]
     public int Idclient { get; set; }
