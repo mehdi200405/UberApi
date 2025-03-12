@@ -22,7 +22,7 @@ public partial class Facture
     [Column("pys_id")]
     public int IdPays { get; set; }
 
-    [Column("clt_idclient")]
+    [Column("clt_id")]
     public int IdClient { get; set; }
 
     [Column("fac_montantreglement")]
