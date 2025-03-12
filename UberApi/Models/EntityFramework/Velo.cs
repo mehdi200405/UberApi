@@ -23,9 +23,9 @@ public partial class Velo
     [Column("vel_estdisponible")]
     public bool Estdisponible { get; set; }
 
-    [ForeignKey("Idadresse")]
+    [ForeignKey("IdAdresse")]
     [InverseProperty("Velos")]
-    public virtual Adresse IdadresseNavigation { get; set; } = null!;
+    public virtual Adresse IdAdresseNavigation { get; set; } = null!;
 
     [InverseProperty("IdveloNavigation")]
     public virtual ICollection<VeloReservation> VeloReservations { get; set; } = new List<VeloReservation>();

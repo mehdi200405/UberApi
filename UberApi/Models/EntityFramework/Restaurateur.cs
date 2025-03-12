@@ -6,34 +6,34 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[Table("restaurateur")]
-[Index("Emailuser", Name = "uq_restaurateur_mail", IsUnique = true)]
+[Table("t_e_restaurateur")]
+[Index("EmailUser", Name = "uq_restaurateur_mail", IsUnique = true)]
 public partial class Restaurateur
 {
     [Key]
-    [Column("idrestaurateur")]
-    public int Idrestaurateur { get; set; }
+    [Column("rst_id")]
+    public int IdRestaurateur { get; set; }
 
-    [Column("nomuser")]
+    [Column("rst_nom")]
     [StringLength(50)]
-    public string Nomuser { get; set; } = null!;
+    public string NomUser { get; set; } = null!;
 
-    [Column("prenomuser")]
+    [Column("rst_prenom")]
     [StringLength(50)]
-    public string Prenomuser { get; set; } = null!;
+    public string PrenomUser { get; set; } = null!;
 
-    [Column("telephone")]
+    [Column("rst_telephone")]
     [StringLength(20)]
     public string Telephone { get; set; } = null!;
 
-    [Column("emailuser")]
+    [Column("rst_email")]
     [StringLength(200)]
-    public string Emailuser { get; set; } = null!;
+    public string EmailUser { get; set; } = null!;
 
-    [Column("motdepasseuser")]
+    [Column("rst_motdepasse")]
     [StringLength(200)]
-    public string Motdepasseuser { get; set; } = null!;
+    public string MotDePasseUser { get; set; } = null!;
 
-    [InverseProperty("IdrestaurateurNavigation")]
+    [InverseProperty("IdRestaurateurNavigation")]
     public virtual ICollection<Etablissement> Etablissements { get; set; } = new List<Etablissement>();
 }

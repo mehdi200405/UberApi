@@ -6,26 +6,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[Table("categorie_prestation")]
+[Table("t_e_categorie_prestation_cpr")]
 public partial class CategoriePrestation
 {
     [Key]
-    [Column("idcategorieprestation")]
-    public int Idcategorieprestation { get; set; }
+    [Column("cpr_id")]
+    public int IdCategoriePrestation { get; set; }
 
-    [Column("libellecategorieprestation")]
+    [Column("cpr_libelle")]
     [StringLength(50)]
-    public string? Libellecategorieprestation { get; set; }
+    public string? LibelleCategoriePrestation { get; set; }
 
-    [Column("descriptioncategorieprestation")]
+    [Column("cpr_description")]
     [StringLength(500)]
-    public string? Descriptioncategorieprestation { get; set; }
+    public string? DescriptionCategoriePrestation { get; set; }
 
-    [Column("imagecategorieprestation")]
+    [Column("cpr_image")]
     [StringLength(300)]
-    public string? Imagecategorieprestation { get; set; }
+    public string? ImageCategoriePrestation { get; set; }
 
-    [ForeignKey("Idcategorieprestation")]
+    [ForeignKey("IdCategoriePrestation")]
     [InverseProperty("Idcategorieprestations")]
-    public virtual ICollection<Etablissement> Idetablissements { get; set; } = new List<Etablissement>();
+    public virtual ICollection<Etablissement> IdEtablissements { get; set; } = new List<Etablissement>();
 }

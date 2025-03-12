@@ -16,16 +16,16 @@ public partial class LieuFavori
     [Column("idclient")]
     public int Idclient { get; set; }
 
-    [Column("idadresse")]
-    public int Idadresse { get; set; }
+    [Column("IdAdresse")]
+    public int IdAdresse { get; set; }
 
     [Column("nomlieu")]
     [StringLength(100)]
     public string Nomlieu { get; set; } = null!;
 
-    [ForeignKey("Idadresse")]
+    [ForeignKey("IdAdresse")]
     [InverseProperty("LieuFavoris")]
-    public virtual Adresse IdadresseNavigation { get; set; } = null!;
+    public virtual Adresse IdAdresseNavigation { get; set; } = null!;
 
     [ForeignKey("Idclient")]
     [InverseProperty("LieuFavoris")]

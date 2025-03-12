@@ -97,9 +97,9 @@ public partial class S221UberContext : DbContext
     {
         modelBuilder.Entity<Adresse>(entity =>
         {
-            entity.HasKey(e => e.Idadresse).HasName("pk_adresse");
+            entity.HasKey(e => e.IdAdresse).HasName("pk_adresse");
 
-            entity.Property(e => e.Idadresse).HasDefaultValueSql("nextval('adresse_id_seq'::regclass)");
+            entity.Property(e => e.IdAdresse).HasDefaultValueSql("nextval('adresse_id_seq'::regclass)");
 
             entity.HasOne(d => d.IdvilleNavigation).WithMany(p => p.Adresses)
                 .OnDelete(DeleteBehavior.Restrict)
@@ -134,27 +134,27 @@ public partial class S221UberContext : DbContext
 
         modelBuilder.Entity<CategoriePrestation>(entity =>
         {
-            entity.HasKey(e => e.Idcategorieprestation).HasName("pk_categorie_prestation");
+            entity.HasKey(e => e.IdCategoriePrestation).HasName("pk_categorie_prestation");
 
-            entity.Property(e => e.Idcategorieprestation).HasDefaultValueSql("nextval('categorie_prestation_id_seq'::regclass)");
+            entity.Property(e => e.IdCategoriePrestation).HasDefaultValueSql("nextval('categorie_prestation_id_seq'::regclass)");
 
-            entity.HasMany(d => d.Idetablissements).WithMany(p => p.Idcategorieprestations)
+            entity.HasMany(d => d.IdEtablissements).WithMany(p => p.Idcategorieprestations)
                 .UsingEntity<Dictionary<string, object>>(
                     "ACommeCategorie",
                     r => r.HasOne<Etablissement>().WithMany()
-                        .HasForeignKey("Idetablissement")
+                        .HasForeignKey("IdEtablissement")
                         .OnDelete(DeleteBehavior.Restrict)
                         .HasConstraintName("fk_a_comme_categorie_etablissement"),
                     l => l.HasOne<CategoriePrestation>().WithMany()
-                        .HasForeignKey("Idcategorieprestation")
+                        .HasForeignKey("IdCategoriePrestation")
                         .OnDelete(DeleteBehavior.Restrict)
                         .HasConstraintName("fk_a_comme_categorie_categorie"),
                     j =>
                     {
-                        j.HasKey("Idcategorieprestation", "Idetablissement").HasName("pk_a_comme_categorie");
+                        j.HasKey("IdCategoriePrestation", "IdEtablissement").HasName("pk_a_comme_categorie");
                         j.ToTable("a_comme_categorie");
-                        j.IndexerProperty<int>("Idcategorieprestation").HasColumnName("idcategorieprestation");
-                        j.IndexerProperty<int>("Idetablissement").HasColumnName("idetablissement");
+                        j.IndexerProperty<int>("IdCategoriePrestation").HasColumnName("idcategorieprestation");
+                        j.IndexerProperty<int>("IdEtablissement").HasColumnName("IdEtablissement");
                     });
         });
 
@@ -167,18 +167,18 @@ public partial class S221UberContext : DbContext
 
         modelBuilder.Entity<Client>(entity =>
         {
-            entity.HasKey(e => e.Idclient).HasName("pk_client");
+            entity.HasKey(e => e.IdClient).HasName("pk_client");
 
-            entity.Property(e => e.Idclient).HasDefaultValueSql("nextval('client_id_seq'::regclass)");
+            entity.Property(e => e.IdClient).HasDefaultValueSql("nextval('client_id_seq'::regclass)");
             entity.Property(e => e.DemandeSuppression).HasDefaultValue(false);
             entity.Property(e => e.LastConnexion).HasDefaultValueSql("now()");
             entity.Property(e => e.MfaActivee).HasDefaultValue(false);
 
-            entity.HasOne(d => d.IdadresseNavigation).WithMany(p => p.Clients)
+            entity.HasOne(d => d.IdAdresseNavigation).WithMany(p => p.Clients)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_client_adresse");
 
-            entity.HasOne(d => d.IdentrepriseNavigation).WithMany(p => p.Clients)
+            entity.HasOne(d => d.IdEntrepriseNavigation).WithMany(p => p.Clients)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_client_entreprise");
         });
@@ -220,7 +220,7 @@ public partial class S221UberContext : DbContext
 
             entity.Property(e => e.Quantite).HasDefaultValue(1);
 
-            entity.HasOne(d => d.IdetablissementNavigation).WithMany(p => p.Contient2s)
+            entity.HasOne(d => d.IdEtablissementNavigation).WithMany(p => p.Contient2s)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_contient2_etablissement");
 
@@ -239,11 +239,11 @@ public partial class S221UberContext : DbContext
 
             entity.Property(e => e.Idcourse).HasDefaultValueSql("nextval('course_id_seq'::regclass)");
 
-            entity.HasOne(d => d.AdrIdadresseNavigation).WithMany(p => p.CourseAdrIdadresseNavigations)
+            entity.HasOne(d => d.AdrIdAdresseNavigation).WithMany(p => p.CourseAdrIdAdresseNavigations)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_course_adresse_depart");
 
-            entity.HasOne(d => d.IdadresseNavigation).WithMany(p => p.CourseIdadresseNavigations)
+            entity.HasOne(d => d.IdAdresseNavigation).WithMany(p => p.CourseIdAdresseNavigations)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_course_adresse_arrivee");
 
@@ -271,7 +271,7 @@ public partial class S221UberContext : DbContext
             entity.Property(e => e.Idcoursier).HasDefaultValueSql("nextval('coursier_id_seq'::regclass)");
             entity.Property(e => e.Numerocartevtc).IsFixedLength();
 
-            entity.HasOne(d => d.IdadresseNavigation).WithMany(p => p.Coursiers)
+            entity.HasOne(d => d.IdAdresseNavigation).WithMany(p => p.Coursiers)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_coursier_adresse");
 
@@ -286,7 +286,7 @@ public partial class S221UberContext : DbContext
 
             entity.Property(e => e.Identreprise).HasDefaultValueSql("nextval('entreprise_id_seq'::regclass)");
 
-            entity.HasOne(d => d.IdadresseNavigation).WithMany(p => p.Entreprises)
+            entity.HasOne(d => d.IdAdresseNavigation).WithMany(p => p.Entreprises)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_entreprise_adresse");
         });
@@ -305,15 +305,15 @@ public partial class S221UberContext : DbContext
 
         modelBuilder.Entity<Etablissement>(entity =>
         {
-            entity.HasKey(e => e.Idetablissement).HasName("pk_etablissement");
+            entity.HasKey(e => e.IdEtablissement).HasName("pk_etablissement");
 
-            entity.Property(e => e.Idetablissement).HasDefaultValueSql("nextval('etablissement_id_seq'::regclass)");
+            entity.Property(e => e.IdEtablissement).HasDefaultValueSql("nextval('etablissement_id_seq'::regclass)");
 
-            entity.HasOne(d => d.IdadresseNavigation).WithMany(p => p.Etablissements)
+            entity.HasOne(d => d.IdAdresseNavigation).WithMany(p => p.Etablissements)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_etablissement_adresse");
 
-            entity.HasOne(d => d.IdrestaurateurNavigation).WithMany(p => p.Etablissements).HasConstraintName("fk_etablissement_restaurateur");
+            entity.HasOne(d => d.IdRestaurateurNavigation).WithMany(p => p.Etablissements).HasConstraintName("fk_etablissement_restaurateur");
         });
 
         modelBuilder.Entity<Facture>(entity =>
@@ -345,7 +345,7 @@ public partial class S221UberContext : DbContext
 
             entity.Property(e => e.Idgestion).HasDefaultValueSql("nextval('gestion_etablissement_id_seq'::regclass)");
 
-            entity.HasOne(d => d.IdetablissementNavigation).WithMany(p => p.GestionEtablissements).HasConstraintName("fk_gestion_etablissement");
+            entity.HasOne(d => d.IdEtablissementNavigation).WithMany(p => p.GestionEtablissements).HasConstraintName("fk_gestion_etablissement");
 
             entity.HasOne(d => d.IdresponsableNavigation).WithMany(p => p.GestionEtablissements).HasConstraintName("fk_gestion_responsable");
         });
@@ -360,7 +360,7 @@ public partial class S221UberContext : DbContext
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("fk_horaires_coursier");
 
-            entity.HasOne(d => d.IdetablissementNavigation).WithMany(p => p.Horaires)
+            entity.HasOne(d => d.IdEtablissementNavigation).WithMany(p => p.Horaires)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("fk_horaires_etablissement");
 
@@ -380,7 +380,7 @@ public partial class S221UberContext : DbContext
 
             entity.Property(e => e.Idlieufavori).HasDefaultValueSql("nextval('lieu_favori_id_seq'::regclass)");
 
-            entity.HasOne(d => d.IdadresseNavigation).WithMany(p => p.LieuFavoris).HasConstraintName("fk_lieu_favori_adresse");
+            entity.HasOne(d => d.IdAdresseNavigation).WithMany(p => p.LieuFavoris).HasConstraintName("fk_lieu_favori_adresse");
 
             entity.HasOne(d => d.IdclientNavigation).WithMany(p => p.LieuFavoris).HasConstraintName("fk_lieu_favori_client");
         });
@@ -459,11 +459,11 @@ public partial class S221UberContext : DbContext
                         j.IndexerProperty<int>("Idcategorie").HasColumnName("idcategorie");
                     });
 
-            entity.HasMany(d => d.Idetablissements).WithMany(p => p.Idproduits)
+            entity.HasMany(d => d.IdEtablissements).WithMany(p => p.Idproduits)
                 .UsingEntity<Dictionary<string, object>>(
                     "EstSitueA2",
                     r => r.HasOne<Etablissement>().WithMany()
-                        .HasForeignKey("Idetablissement")
+                        .HasForeignKey("IdEtablissement")
                         .OnDelete(DeleteBehavior.Restrict)
                         .HasConstraintName("fk_est_situe2_etablissement"),
                     l => l.HasOne<Produit>().WithMany()
@@ -472,10 +472,10 @@ public partial class S221UberContext : DbContext
                         .HasConstraintName("fk_est_situe2_produit"),
                     j =>
                     {
-                        j.HasKey("Idproduit", "Idetablissement").HasName("pk_est_situe_a_2");
+                        j.HasKey("Idproduit", "IdEtablissement").HasName("pk_est_situe_a_2");
                         j.ToTable("est_situe_a_2");
                         j.IndexerProperty<int>("Idproduit").HasColumnName("idproduit");
-                        j.IndexerProperty<int>("Idetablissement").HasColumnName("idetablissement");
+                        j.IndexerProperty<int>("IdEtablissement").HasColumnName("IdEtablissement");
                     });
         });
 
@@ -524,16 +524,16 @@ public partial class S221UberContext : DbContext
 
         modelBuilder.Entity<ResponsableEnseigne>(entity =>
         {
-            entity.HasKey(e => e.Idresponsable).HasName("pk_responsable_enseigne");
+            entity.HasKey(e => e.IdResponsable).HasName("pk_responsable_enseigne");
 
-            entity.Property(e => e.Idresponsable).HasDefaultValueSql("nextval('responsable_enseigne_id_seq'::regclass)");
+            entity.Property(e => e.IdResponsable).HasDefaultValueSql("nextval('responsable_enseigne_id_seq'::regclass)");
         });
 
         modelBuilder.Entity<Restaurateur>(entity =>
         {
-            entity.HasKey(e => e.Idrestaurateur).HasName("pk_restaurateur");
+            entity.HasKey(e => e.IdRestaurateur).HasName("pk_restaurateur");
 
-            entity.Property(e => e.Idrestaurateur).HasDefaultValueSql("nextval('restaurateur_id_seq'::regclass)");
+            entity.Property(e => e.IdRestaurateur).HasDefaultValueSql("nextval('restaurateur_id_seq'::regclass)");
         });
 
         modelBuilder.Entity<TypePrestation>(entity =>
@@ -582,7 +582,7 @@ public partial class S221UberContext : DbContext
 
             entity.Property(e => e.Idvelo).HasDefaultValueSql("nextval('velo_id_seq'::regclass)");
 
-            entity.HasOne(d => d.IdadresseNavigation).WithMany(p => p.Velos)
+            entity.HasOne(d => d.IdAdresseNavigation).WithMany(p => p.Velos)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_velo_adresse");
         });
