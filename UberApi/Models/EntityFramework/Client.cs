@@ -1,79 +1,96 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 
-namespace UberApi.Models.EntityFramework
+namespace UberApi.Models.EntityFramework;
+
+[Table("client")]
+[Index("Emailuser", Name = "uq_client_mail", IsUnique = true)]
+public partial class Client
 {
-    [PrimaryKey("IdEntreprise", "IdClient", "IdAdresse")]
-    [Table("t_e_client_clt")]
-    public class Client
-    {
-        [Key]
-        [Column("clt_id")]
-        public int IdClient { get; set; }
+    [Key]
+    [Column("idclient")]
+    public int Idclient { get; set; }
 
-        [Column("ent_id")]
-        public int IdEntreprise { get; set; }
+    [Column("identreprise")]
+    public int? Identreprise { get; set; }
 
+    [Column("idadresse")]
+    public int? Idadresse { get; set; }
 
-        [Column("clt_adresse")]
-        public int IdAdresse { get; set; }
+    [Column("genreuser")]
+    [StringLength(20)]
+    public string Genreuser { get; set; } = null!;
 
-        [Column("clt_genre")]
-        [StringLength(20)]
-        public string GenreUser { get; set; }
+    [Column("nomuser")]
+    [StringLength(50)]
+    public string Nomuser { get; set; } = null!;
 
-        [Column("clt_nom")]
-        [StringLength(50)]
-        public string NomUser { get; set; }
+    [Column("prenomuser")]
+    [StringLength(50)]
+    public string Prenomuser { get; set; } = null!;
 
-        [Column("clt_prenom")]
-        [StringLength(50)]
-        public string PrenomUser { get; set; }
+    [Column("datenaissance")]
+    public DateOnly Datenaissance { get; set; }
 
-        [Required]
-        [Column("clt_datenaissance", TypeName = "date")]
-        public DateTime? DateNaissance { get; set; }
+    [Column("telephone")]
+    [StringLength(20)]
+    public string Telephone { get; set; } = null!;
 
-        [Column("clt_telephone", TypeName = "char(10)")]
-        [RegularExpression(@"^0[0-9]{9}$", ErrorMessage = "Le numéro de téléphone doit contenir 10 chiffres")]
-        public string? Telephone { get; set; }
+    [Column("emailuser")]
+    [StringLength(200)]
+    public string Emailuser { get; set; } = null!;
 
+    [Column("motdepasseuser")]
+    [StringLength(200)]
+    public string Motdepasseuser { get; set; } = null!;
 
-        [Required]
-        [Column("clt_mail")]
-        [EmailAddress]
-        [StringLength(200, MinimumLength = 6, ErrorMessage = "La longueur d’un email doit être comprise entre 6 et 200 caractères.")]
-        public string EmailUser { get; set; } = null!;
+    [Column("photoprofile")]
+    [StringLength(300)]
+    public string? Photoprofile { get; set; }
 
+    [Column("souhaiterecevoirbonplan")]
+    public bool? Souhaiterecevoirbonplan { get; set; }
 
-        [Column("clt_motdepasse")]
-        [StringLength(64)]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?"":{}|<>]).{12,20}$", ErrorMessage = "Le mot de passe doit contenir entre 12 et 20 caractères avec 1 lettre majuscule, 1 lettre minuscule, 1 chiffre et 1 caractère spéciale.")]
-        public string MotDePasseUser { get; set; } = null!;
+    [Column("mfa_activee")]
+    public bool? MfaActivee { get; set; }
 
+    [Column("typeclient")]
+    [StringLength(20)]
+    public string Typeclient { get; set; } = null!;
 
+    [Column("last_connexion", TypeName = "timestamp without time zone")]
+    public DateTime? LastConnexion { get; set; }
 
+    [Column("demande_suppression")]
+    public bool? DemandeSuppression { get; set; }
 
-        [Column("clt_photo")]
-        [StringLength(300)]
-        public string? PhotoProfile { get; set; }
+    [InverseProperty("IdclientNavigation")]
+    public virtual ICollection<Facture> Factures { get; set; } = new List<Facture>();
 
+    [ForeignKey("Idadresse")]
+    [InverseProperty("Clients")]
+    public virtual Adresse? IdadresseNavigation { get; set; }
 
-        [Column("clt_souhaiterecevoirbonplan")]
-        public bool SouhaiteRecevoirBonPlan { get; set; }
+    [ForeignKey("Identreprise")]
+    [InverseProperty("Clients")]
+    public virtual Entreprise? IdentrepriseNavigation { get; set; }
 
+    [InverseProperty("IdclientNavigation")]
+    public virtual ICollection<LieuFavori> LieuFavoris { get; set; } = new List<LieuFavori>();
 
-        [Column("clt_mfa")]
-        public bool MFA_Activee { get; set; }
+    [InverseProperty("IdclientNavigation")]
+    public virtual ICollection<Otp> Otps { get; set; } = new List<Otp>();
 
+    [InverseProperty("IdclientNavigation")]
+    public virtual ICollection<Panier> Paniers { get; set; } = new List<Panier>();
 
-        [Column("clt_type")]
-        [StringLength(20)]
-        public string? TypeClient { get; set; }
+    [InverseProperty("IdclientNavigation")]
+    public virtual ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
 
-
-
-    }
+    [ForeignKey("Idclient")]
+    [InverseProperty("Idclients")]
+    public virtual ICollection<CarteBancaire> Idcbs { get; set; } = new List<CarteBancaire>();
 }
