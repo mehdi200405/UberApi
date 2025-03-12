@@ -10,7 +10,7 @@ namespace UberApi.Models.EntityFramework;
 public partial class TypePrestation
 {
     [Key]
-    [Column("tpn_idprestation")]
+    [Column("tpn_id")]
     public int IdPrestation { get; set; }
 
     [Column("tpn_libelleprestation")]
@@ -29,6 +29,6 @@ public partial class TypePrestation
     public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
 
     [ForeignKey("vcl_id")]
-    [InverseProperty("Idprestations")]
-    public virtual ICollection<Vehicule> Idvehicules { get; set; } = new List<Vehicule>();
+    [InverseProperty("IdPrestations")]
+    public virtual ICollection<Vehicule> IdVehicules { get; set; } = new List<Vehicule>();
 }
