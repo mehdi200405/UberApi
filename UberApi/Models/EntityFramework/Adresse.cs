@@ -6,25 +6,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[Table("adresse")]
+[Table("t_e_adresse_adr")]
 public partial class Adresse
 {
     [Key]
-    [Column("idadresse")]
-    public int Idadresse { get; set; }
+    [Column("adr_id")]
+    public int IdAdresse { get; set; }
 
-    [Column("idville")]
-    public int? Idville { get; set; }
+    [Column("vle_id")]
+    public int? IdVille { get; set; }
 
-    [Column("libelleadresse")]
+    [Column("adr_libelle")]
     [StringLength(100)]
-    public string Libelleadresse { get; set; } = null!;
+    public string LibelleAdresse { get; set; } = null!;
 
-    [Column("latitude")]
+    [Column("adr_latitude")]
     [StringLength(100)]
     public string? Latitude { get; set; }
 
-    [Column("longitude")]
+    [Column("adr_longitude")]
     [StringLength(100)]
     public string? Longitude { get; set; }
 
@@ -32,10 +32,10 @@ public partial class Adresse
     public virtual ICollection<Client> Clients { get; set; } = new List<Client>();
 
     [InverseProperty("AdrIdadresseNavigation")]
-    public virtual ICollection<Course> CourseAdrIdadresseNavigations { get; set; } = new List<Course>();
+    public virtual ICollection<Course> CourseAdrIdAdresseNavigations { get; set; } = new List<Course>();
 
     [InverseProperty("IdadresseNavigation")]
-    public virtual ICollection<Course> CourseIdadresseNavigations { get; set; } = new List<Course>();
+    public virtual ICollection<Course> CourseIdAdresseNavigations { get; set; } = new List<Course>();
 
     [InverseProperty("IdadresseNavigation")]
     public virtual ICollection<Coursier> Coursiers { get; set; } = new List<Coursier>();
@@ -48,7 +48,7 @@ public partial class Adresse
 
     [ForeignKey("Idville")]
     [InverseProperty("Adresses")]
-    public virtual Ville? IdvilleNavigation { get; set; }
+    public virtual Ville? IdVilleNavigation { get; set; }
 
     [InverseProperty("IdadresseNavigation")]
     public virtual ICollection<LieuFavori> LieuFavoris { get; set; } = new List<LieuFavori>();
