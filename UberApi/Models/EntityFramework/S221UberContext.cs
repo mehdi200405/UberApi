@@ -369,10 +369,6 @@ public partial class S221UberContext : DbContext
                 .HasConstraintName("fk_horaires_livreur");
         });
 
-        modelBuilder.Entity<Job>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("jobs_pkey");
-        });
 
         modelBuilder.Entity<LieuFavori>(entity =>
         {
