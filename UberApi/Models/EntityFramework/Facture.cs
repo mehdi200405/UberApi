@@ -20,34 +20,34 @@ public partial class Facture
     public int? Idcommande { get; set; }
 
     [Column("pa_idpays")]
-    public int Idpays { get; set; }
+    public int IdPays { get; set; }
 
     [Column("clt_idclient")]
-    public int Idclient { get; set; }
+    public int IdClient { get; set; }
 
     [Column("fac_montantreglement")]
     [Precision(5, 2)]
-    public decimal? Montantreglement { get; set; }
+    public decimal? MontantReglement { get; set; }
 
     [Column("fac_datefacture")]
-    public DateOnly? Datefacture { get; set; }
+    public DateOnly? DateFacture { get; set; }
 
     [Column("fac_quantite")]
     public int? Quantite { get; set; }
 
     [ForeignKey("Idclient")]
     [InverseProperty("Factures")]
-    public virtual Client IdclientNavigation { get; set; } = null!;
+    public virtual Client IdClientNavigation { get; set; } = null!;
 
     [ForeignKey("Idcommande")]
     [InverseProperty("Factures")]
-    public virtual Commande? IdcommandeNavigation { get; set; }
+    public virtual Commande? IdCommandeNavigation { get; set; }
 
     [ForeignKey("Idpays")]
     [InverseProperty("Factures")]
-    public virtual Pays IdpaysNavigation { get; set; } = null!;
+    public virtual Pays IdPaysNavigation { get; set; } = null!;
 
     [ForeignKey("Idreservation")]
     [InverseProperty("Factures")]
-    public virtual Reservation? IdreservationNavigation { get; set; }
+    public virtual Reservation? IdReservationNavigation { get; set; }
 }

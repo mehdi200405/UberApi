@@ -8,22 +8,22 @@ namespace UberApi.Models.EntityFramework;
 
 [Table("t_e_code_postal_cp")]
 [Index("Codepostal", Name = "uq_codepostal", IsUnique = true)]
-public partial class CodePostal
+public partial class Code_Postal
 {
     [Key]
     [Column("cp_id")]
-    public int Idcodepostal { get; set; }
+    public int IdCodePostal { get; set; }
 
     [Column("pa_idpays")]
-    public int? Idpays { get; set; }
+    public int? IdPays { get; set; }
 
     [Column("cp_codepostal")]
     [StringLength(5)]
-    public string Codepostal { get; set; } = null!;
+    public string CodePostal { get; set; } = null!;
 
     [ForeignKey("Idpays")]
     [InverseProperty("CodePostals")]
-    public virtual Pays? IdpaysNavigation { get; set; }
+    public virtual Pays? IdPaysNavigation { get; set; }
 
     [InverseProperty("IdcodepostalNavigation")]
     public virtual ICollection<Ville> Villes { get; set; } = new List<Ville>();
