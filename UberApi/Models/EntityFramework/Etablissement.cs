@@ -6,63 +6,65 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[Table("etablissement")]
+[Table("t_e_etablissement_etb")]
 public partial class Etablissement
 {
     [Key]
-    [Column("idetablissement")]
-    public int Idetablissement { get; set; }
+    [Column("etb_id")]
+    public int IdEtablissement { get; set; }
 
-    [Column("idrestaurateur")]
-    public int Idrestaurateur { get; set; }
+    [Column("rst_id")]
+    public int IdRestaurateur { get; set; }
 
-    [Column("typeetablissement")]
+    [Column("etb_type")]
     [StringLength(50)]
-    public string Typeetablissement { get; set; } = null!;
+    public string TypeEtablissement { get; set; } = null!;
 
-    [Column("idadresse")]
-    public int Idadresse { get; set; }
+    [Column("adr_id")]
+    public int IdAdresse { get; set; }
 
-    [Column("nometablissement")]
+    [Column("etb_nom")]
     [StringLength(50)]
-    public string? Nometablissement { get; set; }
+    public string? NomEtablissement { get; set; }
 
-    [Column("description")]
+    [Column("etb_description")]
     [StringLength(1500)]
     public string? Description { get; set; }
 
-    [Column("imageetablissement")]
+    [Column("etb_image")]
     [StringLength(200)]
-    public string? Imageetablissement { get; set; }
+    public string? ImageEtablissement { get; set; }
 
-    [Column("livraison")]
+    [Column("etb_livraison")]
     public bool? Livraison { get; set; }
 
-    [Column("aemporter")]
+    [Column("etb_aemporter")]
     public bool? Aemporter { get; set; }
 
-    [InverseProperty("IdetablissementNavigation")]
+    // NON MODIFIE EN DESSOUS
+
+    [InverseProperty("IdEtablissementNavigation")]
     public virtual ICollection<Contient2> Contient2s { get; set; } = new List<Contient2>();
 
-    [InverseProperty("IdetablissementNavigation")]
+    [InverseProperty("IdEtablissementNavigation")]
     public virtual ICollection<GestionEtablissement> GestionEtablissements { get; set; } = new List<GestionEtablissement>();
 
-    [InverseProperty("IdetablissementNavigation")]
+    [InverseProperty("IdEtablissementNavigation")]
     public virtual ICollection<Horaire> Horaires { get; set; } = new List<Horaire>();
 
-    [ForeignKey("Idadresse")]
+    [ForeignKey("IdAdresse")]
     [InverseProperty("Etablissements")]
-    public virtual Adresse IdadresseNavigation { get; set; } = null!;
+    public virtual Adresse IdAdresseNavigation { get; set; } = null!;
 
-    [ForeignKey("Idrestaurateur")]
+    [ForeignKey("IdRestaurateur")]
     [InverseProperty("Etablissements")]
-    public virtual Restaurateur IdrestaurateurNavigation { get; set; } = null!;
+    public virtual Restaurateur IdRestaurateurNavigation { get; set; } = null!;
 
-    [ForeignKey("Idetablissement")]
-    [InverseProperty("Idetablissements")]
+    [ForeignKey("IdEtablissement")]
+    [InverseProperty("IdEtablissements")]
     public virtual ICollection<CategoriePrestation> Idcategorieprestations { get; set; } = new List<CategoriePrestation>();
 
-    [ForeignKey("Idetablissement")]
-    [InverseProperty("Idetablissements")]
+    [ForeignKey("IdEtablissement")]
+    [InverseProperty("IdEtablissements")]
     public virtual ICollection<Produit> Idproduits { get; set; } = new List<Produit>();
 }

@@ -18,15 +18,15 @@ public partial class Contient2
     [Column("idproduit")]
     public int Idproduit { get; set; }
 
-    [Column("idetablissement")]
-    public int Idetablissement { get; set; }
+    [Column("IdEtablissement")]
+    public int IdEtablissement { get; set; }
 
     [Column("quantite")]
     public int Quantite { get; set; }
 
-    [ForeignKey("Idetablissement")]
+    [ForeignKey("IdEtablissement")]
     [InverseProperty("Contient2s")]
-    public virtual Etablissement IdetablissementNavigation { get; set; } = null!;
+    public virtual Etablissement IdEtablissementNavigation { get; set; } = null!;
 
     [ForeignKey("Idpanier")]
     [InverseProperty("Contient2s")]

@@ -6,33 +6,33 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[Table("responsable_enseigne")]
-[Index("Emailuser", Name = "uq_responsable_email", IsUnique = true)]
+[Table("t_e_responsable_enseigne_rse")]
+[Index("EmailUser", Name = "uq_responsable_email", IsUnique = true)]
 public partial class ResponsableEnseigne
 {
     [Key]
-    [Column("idresponsable")]
-    public int Idresponsable { get; set; }
+    [Column("rse_id")]
+    public int IdResponsable { get; set; }
 
-    [Column("nomuser")]
+    [Column("rse_nom")]
     [StringLength(50)]
-    public string Nomuser { get; set; } = null!;
+    public string NomUser { get; set; } = null!;
 
-    [Column("prenomuser")]
+    [Column("rse_prenom")]
     [StringLength(50)]
-    public string Prenomuser { get; set; } = null!;
+    public string PrenomUser { get; set; } = null!;
 
-    [Column("telephone")]
+    [Column("rse_telephone")]
     [StringLength(20)]
     public string Telephone { get; set; } = null!;
 
-    [Column("emailuser")]
+    [Column("rse_email")]
     [StringLength(200)]
-    public string Emailuser { get; set; } = null!;
+    public string EmailUser { get; set; } = null!;
 
-    [Column("motdepasseuser")]
+    [Column("rse_motdepasse")]
     [StringLength(200)]
-    public string Motdepasseuser { get; set; } = null!;
+    public string MotDePasseUser { get; set; } = null!;
 
     [InverseProperty("IdresponsableNavigation")]
     public virtual ICollection<GestionEtablissement> GestionEtablissements { get; set; } = new List<GestionEtablissement>();
