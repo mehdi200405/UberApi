@@ -94,22 +94,22 @@ public partial class S221UberContext : DbContext
 
             entity.Property(e => e.IdAdresse).HasDefaultValueSql("nextval('adresse_id_seq'::regclass)");
 
-            entity.HasOne(d => d.IdvilleNavigation).WithMany(p => p.Adresses)
+            entity.HasOne(d => d.IdVilleNavigation).WithMany(p => p.Adresses)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_adresse_ville");
         });
 
         modelBuilder.Entity<CarteBancaire>(entity =>
         {
-            entity.HasKey(e => e.Idcb).HasName("pk_carte_bancaire");
+            entity.HasKey(e => e.IdCb).HasName("pk_carte_bancaire");
 
-            entity.Property(e => e.Idcb).HasDefaultValueSql("nextval('carte_bancaire_id_seq'::regclass)");
+            entity.Property(e => e.IdCb).HasDefaultValueSql("nextval('carte_bancaire_id_seq'::regclass)");
 
-            entity.HasMany(d => d.Idclients).WithMany(p => p.Idcbs)
+            entity.HasMany(d => d.IdClients).WithMany(p => p.IdCbs)
                 .UsingEntity<Dictionary<string, object>>(
                     "ClientCarte",
                     r => r.HasOne<Client>().WithMany()
-                        .HasForeignKey("Idclient")
+                        .HasForeignKey("IdClient")
                         .OnDelete(DeleteBehavior.Restrict)
                         .HasConstraintName("fk_appartient2_client"),
                     l => l.HasOne<CarteBancaire>().WithMany()
@@ -118,10 +118,10 @@ public partial class S221UberContext : DbContext
                         .HasConstraintName("fk_appartient2_carte_bancaire"),
                     j =>
                     {
-                        j.HasKey("Idcb", "Idclient").HasName("pk_client_carte");
-                        j.ToTable("client_carte");
-                        j.IndexerProperty<int>("Idcb").HasColumnName("idcb");
-                        j.IndexerProperty<int>("Idclient").HasColumnName("idclient");
+                        j.HasKey("IdCb", "IdClient").HasName("pk_client_carte");
+                        j.ToTable("t_j_clientcarte_clca");
+                        j.IndexerProperty<int>("IdCb").HasColumnName("idcb");
+                        j.IndexerProperty<int>("IdClient").HasColumnName("idclient");
                     });
         });
 
@@ -145,17 +145,17 @@ public partial class S221UberContext : DbContext
                     j =>
                     {
                         j.HasKey("IdCategoriePrestation", "IdEtablissement").HasName("pk_a_comme_categorie");
-                        j.ToTable("a_comme_categorie");
+                        j.ToTable("t_j_acommecategorie_acc");
                         j.IndexerProperty<int>("IdCategoriePrestation").HasColumnName("idcategorieprestation");
-                        j.IndexerProperty<int>("IdEtablissement").HasColumnName("IdEtablissement");
+                        j.IndexerProperty<int>("IdEtablissement").HasColumnName("idetablissement");
                     });
         });
 
         modelBuilder.Entity<CategorieProduit>(entity =>
         {
-            entity.HasKey(e => e.Idcategorie).HasName("pk_categorie_produit");
+            entity.HasKey(e => e.IdCategorie).HasName("pk_categorie_produit");
 
-            entity.Property(e => e.Idcategorie).HasDefaultValueSql("nextval('categorie_produit_id_seq'::regclass)");
+            entity.Property(e => e.IdCategorie).HasDefaultValueSql("nextval('categorie_produit_id_seq'::regclass)");
         });
 
         modelBuilder.Entity<Client>(entity =>
@@ -178,38 +178,38 @@ public partial class S221UberContext : DbContext
 
         modelBuilder.Entity<CodePostal>(entity =>
         {
-            entity.HasKey(e => e.Idcodepostal).HasName("pk_code_postal");
+            entity.HasKey(e => e.IdCodePostal).HasName("pk_code_postal");
 
-            entity.Property(e => e.Idcodepostal).HasDefaultValueSql("nextval('code_postal_id_seq'::regclass)");
-            entity.Property(e => e.Codepostal).IsFixedLength();
+            entity.Property(e => e.IdCodePostal).HasDefaultValueSql("nextval('code_postal_id_seq'::regclass)");
+            entity.Property(e => e.CP).IsFixedLength();
 
-            entity.HasOne(d => d.IdpaysNavigation).WithMany(p => p.CodePostals)
+            entity.HasOne(d => d.IdPaysNavigation).WithMany(p => p.CodePostals)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_code_postal_pays");
         });
 
         modelBuilder.Entity<Commande>(entity =>
         {
-            entity.HasKey(e => e.Idcommande).HasName("pk_commande");
+            entity.HasKey(e => e.IdCommande).HasName("pk_commande");
 
-            entity.Property(e => e.Idcommande).HasDefaultValueSql("nextval('commande_id_seq'::regclass)");
-            entity.Property(e => e.Estlivraison).HasDefaultValue(false);
-            entity.Property(e => e.Heurecreation).HasDefaultValueSql("CURRENT_TIMESTAMP");
+            entity.Property(e => e.IdCommande).HasDefaultValueSql("nextval('commande_id_seq'::regclass)");
+            entity.Property(e => e.EstLivraison).HasDefaultValue(false);
+            entity.Property(e => e.HeureCreation).HasDefaultValueSql("CURRENT_TIMESTAMP");
             entity.Property(e => e.RefusDemandee).HasDefaultValue(false);
             entity.Property(e => e.RemboursementEffectue).HasDefaultValue(false);
 
-            entity.HasOne(d => d.IdlivreurNavigation).WithMany(p => p.Commandes)
+            entity.HasOne(d => d.IdLivreurNavigation).WithMany(p => p.Commandes)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_commande_livreur");
 
-            entity.HasOne(d => d.IdpanierNavigation).WithMany(p => p.Commandes)
+            entity.HasOne(d => d.IdPanierNavigation).WithMany(p => p.Commandes)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_commande_panier");
         });
 
         modelBuilder.Entity<Contient2>(entity =>
         {
-            entity.HasKey(e => new { e.Idpanier, e.Idproduit }).HasName("pk_contient_2");
+            entity.HasKey(e => new { e.IdPanier, e.IdProduit }).HasName("pk_contient_2");
 
             entity.Property(e => e.Quantite).HasDefaultValue(1);
 
@@ -217,20 +217,20 @@ public partial class S221UberContext : DbContext
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_contient2_etablissement");
 
-            entity.HasOne(d => d.IdpanierNavigation).WithMany(p => p.Contient2s)
+            entity.HasOne(d => d.IdPanierNavigation).WithMany(p => p.Contient2s)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_contient2_panier");
 
-            entity.HasOne(d => d.IdproduitNavigation).WithMany(p => p.Contient2s)
+            entity.HasOne(d => d.IdProduitNavigation).WithMany(p => p.Contient2s)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_contient2_produit");
         });
 
         modelBuilder.Entity<Course>(entity =>
         {
-            entity.HasKey(e => e.Idcourse).HasName("pk_course");
+            entity.HasKey(e => e.IdCourse).HasName("pk_course");
 
-            entity.Property(e => e.Idcourse).HasDefaultValueSql("nextval('course_id_seq'::regclass)");
+            entity.Property(e => e.IdCourse).HasDefaultValueSql("nextval('course_id_seq'::regclass)");
 
             entity.HasOne(d => d.AdrIdAdresseNavigation).WithMany(p => p.CourseAdrIdAdresseNavigations)
                 .OnDelete(DeleteBehavior.Restrict)
@@ -240,44 +240,44 @@ public partial class S221UberContext : DbContext
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_course_adresse_arrivee");
 
-            entity.HasOne(d => d.IdcbNavigation).WithMany(p => p.Courses)
+            entity.HasOne(d => d.IdCbNavigation).WithMany(p => p.Courses)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_course_carte_bancaire");
 
-            entity.HasOne(d => d.IdcoursierNavigation).WithMany(p => p.Courses)
+            entity.HasOne(d => d.IdCoursierNavigation).WithMany(p => p.Courses)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_course_coursier");
 
-            entity.HasOne(d => d.IdprestationNavigation).WithMany(p => p.Courses)
+            entity.HasOne(d => d.IdPrestationNavigation).WithMany(p => p.Courses)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_course_type_prestation");
 
-            entity.HasOne(d => d.IdreservationNavigation).WithMany(p => p.Courses)
+            entity.HasOne(d => d.IdReservationNavigation).WithMany(p => p.Courses)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_course_reservation");
         });
 
         modelBuilder.Entity<Coursier>(entity =>
         {
-            entity.HasKey(e => e.Idcoursier).HasName("pk_coursier");
+            entity.HasKey(e => e.IdCoursier).HasName("pk_coursier");
 
-            entity.Property(e => e.Idcoursier).HasDefaultValueSql("nextval('coursier_id_seq'::regclass)");
-            entity.Property(e => e.Numerocartevtc).IsFixedLength();
+            entity.Property(e => e.IdCoursier).HasDefaultValueSql("nextval('coursier_id_seq'::regclass)");
+            entity.Property(e => e.NumeroCarteVtc).IsFixedLength();
 
             entity.HasOne(d => d.IdAdresseNavigation).WithMany(p => p.Coursiers)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_coursier_adresse");
 
-            entity.HasOne(d => d.IdentrepriseNavigation).WithMany(p => p.Coursiers)
+            entity.HasOne(d => d.IdEntrepriseNavigation).WithMany(p => p.Coursiers)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_coursier_entreprise");
         });
 
         modelBuilder.Entity<Entreprise>(entity =>
         {
-            entity.HasKey(e => e.Identreprise).HasName("pk_entreprise");
+            entity.HasKey(e => e.IdEntreprise).HasName("pk_entreprise");
 
-            entity.Property(e => e.Identreprise).HasDefaultValueSql("nextval('entreprise_id_seq'::regclass)");
+            entity.Property(e => e.IdEntreprise).HasDefaultValueSql("nextval('entreprise_id_seq'::regclass)");
 
             entity.HasOne(d => d.IdAdresseNavigation).WithMany(p => p.Entreprises)
                 .OnDelete(DeleteBehavior.Restrict)
@@ -286,12 +286,12 @@ public partial class S221UberContext : DbContext
 
         modelBuilder.Entity<Entretien>(entity =>
         {
-            entity.HasKey(e => e.Identretien).HasName("pk_entretien");
+            entity.HasKey(e => e.IdEntretien).HasName("pk_entretien");
 
-            entity.Property(e => e.Identretien).HasDefaultValueSql("nextval('entretien_id_seq'::regclass)");
+            entity.Property(e => e.IdEntretien).HasDefaultValueSql("nextval('entretien_id_seq'::regclass)");
             entity.Property(e => e.Status).HasDefaultValueSql("'En attente'::character varying");
 
-            entity.HasOne(d => d.IdcoursierNavigation).WithMany(p => p.Entretiens)
+            entity.HasOne(d => d.IdCoursierNavigation).WithMany(p => p.Entretiens)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_entretien_coursier");
         });
@@ -311,45 +311,45 @@ public partial class S221UberContext : DbContext
 
         modelBuilder.Entity<Facture>(entity =>
         {
-            entity.HasKey(e => e.Idfacture).HasName("pk_facture");
+            entity.HasKey(e => e.IdFacture).HasName("pk_facture");
 
-            entity.Property(e => e.Idfacture).HasDefaultValueSql("nextval('facture_id_seq'::regclass)");
+            entity.Property(e => e.IdFacture).HasDefaultValueSql("nextval('facture_id_seq'::regclass)");
 
-            entity.HasOne(d => d.IdclientNavigation).WithMany(p => p.Factures)
+            entity.HasOne(d => d.IdClientNavigation).WithMany(p => p.Factures)
                 .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("fk_facture_client");
 
-            entity.HasOne(d => d.IdcommandeNavigation).WithMany(p => p.Factures)
+            entity.HasOne(d => d.IdCommandeNavigation).WithMany(p => p.Factures)
                 .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("fk_facture_commande");
 
-            entity.HasOne(d => d.IdpaysNavigation).WithMany(p => p.Factures)
+            entity.HasOne(d => d.IdPaysNavigation).WithMany(p => p.Factures)
                 .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("fk_facture_pays");
 
-            entity.HasOne(d => d.IdreservationNavigation).WithMany(p => p.Factures)
+            entity.HasOne(d => d.IdReservationNavigation).WithMany(p => p.Factures)
                 .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("fk_facture_reservation");
         });
 
         modelBuilder.Entity<GestionEtablissement>(entity =>
         {
-            entity.HasKey(e => e.Idgestion).HasName("pk_gestion_etablissement");
+            entity.HasKey(e => e.IdGestion).HasName("pk_gestion_etablissement");
 
-            entity.Property(e => e.Idgestion).HasDefaultValueSql("nextval('gestion_etablissement_id_seq'::regclass)");
+            entity.Property(e => e.IdGestion).HasDefaultValueSql("nextval('gestion_etablissement_id_seq'::regclass)");
 
             entity.HasOne(d => d.IdEtablissementNavigation).WithMany(p => p.GestionEtablissements).HasConstraintName("fk_gestion_etablissement");
 
-            entity.HasOne(d => d.IdresponsableNavigation).WithMany(p => p.GestionEtablissements).HasConstraintName("fk_gestion_responsable");
+            entity.HasOne(d => d.IdResponsableNavigation).WithMany(p => p.GestionEtablissements).HasConstraintName("fk_gestion_responsable");
         });
 
         modelBuilder.Entity<Horaires>(entity =>
         {
-            entity.HasKey(e => e.Idhoraires).HasName("pk_horaires");
+            entity.HasKey(e => e.IdHoraires).HasName("pk_horaires");
 
-            entity.Property(e => e.Idhoraires).HasDefaultValueSql("nextval('horaires_id_seq'::regclass)");
+            entity.Property(e => e.IdHoraires).HasDefaultValueSql("nextval('horaires_id_seq'::regclass)");
 
-            entity.HasOne(d => d.IdcoursierNavigation).WithMany(p => p.Horaires)
+            entity.HasOne(d => d.IdCoursierNavigation).WithMany(p => p.Horaires)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("fk_horaires_coursier");
 
@@ -357,7 +357,7 @@ public partial class S221UberContext : DbContext
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("fk_horaires_etablissement");
 
-            entity.HasOne(d => d.IdlivreurNavigation).WithMany(p => p.Horaires)
+            entity.HasOne(d => d.IdLivreurNavigation).WithMany(p => p.Horaires)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("fk_horaires_livreur");
         });
@@ -365,87 +365,80 @@ public partial class S221UberContext : DbContext
 
         modelBuilder.Entity<LieuFavori>(entity =>
         {
-            entity.HasKey(e => e.Idlieufavori).HasName("pk_lieu_favori");
+            entity.HasKey(e => e.IdLieuFavori).HasName("pk_lieu_favori");
 
-            entity.Property(e => e.Idlieufavori).HasDefaultValueSql("nextval('lieu_favori_id_seq'::regclass)");
+            entity.Property(e => e.IdLieuFavori).HasDefaultValueSql("nextval('lieu_favori_id_seq'::regclass)");
 
             entity.HasOne(d => d.IdAdresseNavigation).WithMany(p => p.LieuFavoris).HasConstraintName("fk_lieu_favori_adresse");
 
-            entity.HasOne(d => d.IdclientNavigation).WithMany(p => p.LieuFavoris).HasConstraintName("fk_lieu_favori_client");
+            entity.HasOne(d => d.IdClientNavigation).WithMany(p => p.LieuFavoris).HasConstraintName("fk_lieu_favori_client");
         });
 
         modelBuilder.Entity<Livreur>(entity =>
         {
-            entity.HasKey(e => e.Idlivreur).HasName("pk_livreur");
+            entity.HasKey(e => e.IdLivreur).HasName("pk_livreur");
 
-            entity.Property(e => e.Idlivreur).HasDefaultValueSql("nextval('livreur_id_seq'::regclass)");
+            entity.Property(e => e.IdLivreur).HasDefaultValueSql("nextval('livreur_id_seq'::regclass)");
         });
 
-        modelBuilder.Entity<Migration>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("migrations_pkey");
-        });
+        
 
         modelBuilder.Entity<Otp>(entity =>
         {
-            entity.HasKey(e => e.Idotp).HasName("pk_otp");
+            entity.HasKey(e => e.IdOtp).HasName("pk_otp");
 
-            entity.Property(e => e.Idotp).HasDefaultValueSql("nextval('otp_id_seq'::regclass)");
-            entity.Property(e => e.Codeotp).IsFixedLength();
-            entity.Property(e => e.Dategeneration).HasDefaultValueSql("CURRENT_TIMESTAMP");
+            entity.Property(e => e.IdOtp).HasDefaultValueSql("nextval('otp_id_seq'::regclass)");
+            entity.Property(e => e.CodeOtp).IsFixedLength();
+            entity.Property(e => e.DateGeneration).HasDefaultValueSql("CURRENT_TIMESTAMP");
             entity.Property(e => e.Utilise).HasDefaultValue(false);
 
-            entity.HasOne(d => d.IdclientNavigation).WithMany(p => p.Otps)
+            entity.HasOne(d => d.IdClientNavigation).WithMany(p => p.Otps)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_otp_client");
         });
 
         modelBuilder.Entity<Panier>(entity =>
         {
-            entity.HasKey(e => e.Idpanier).HasName("pk_panier");
+            entity.HasKey(e => e.IdPanier).HasName("pk_panier");
 
-            entity.Property(e => e.Idpanier).HasDefaultValueSql("nextval('panier_id_seq'::regclass)");
+            entity.Property(e => e.IdPanier).HasDefaultValueSql("nextval('panier_id_seq'::regclass)");
 
-            entity.HasOne(d => d.IdclientNavigation).WithMany(p => p.Paniers)
+            entity.HasOne(d => d.IdClientNavigation).WithMany(p => p.Paniers)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_panier_client");
         });
 
         modelBuilder.Entity<Pays>(entity =>
         {
-            entity.HasKey(e => e.Idpays).HasName("pk_pays");
+            entity.HasKey(e => e.IdPays).HasName("pk_pays");
 
-            entity.Property(e => e.Idpays).HasDefaultValueSql("nextval('pays_id_seq'::regclass)");
+            entity.Property(e => e.IdPays).HasDefaultValueSql("nextval('pays_id_seq'::regclass)");
         });
 
-        modelBuilder.Entity<PersonalAccessToken>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("personal_access_tokens_pkey");
-        });
 
         modelBuilder.Entity<Produit>(entity =>
         {
-            entity.HasKey(e => e.Idproduit).HasName("pk_produit");
+            entity.HasKey(e => e.IdProduit).HasName("pk_produit");
 
-            entity.Property(e => e.Idproduit).HasDefaultValueSql("nextval('produit_id_seq'::regclass)");
+            entity.Property(e => e.IdProduit).HasDefaultValueSql("nextval('produit_id_seq'::regclass)");
 
-            entity.HasMany(d => d.Idcategories).WithMany(p => p.IdProduits)
+            entity.HasMany(d => d.IdCategories).WithMany(p => p.IdProduits)
                 .UsingEntity<Dictionary<string, object>>(
                     "ProduitCategorie",
                     r => r.HasOne<CategorieProduit>().WithMany()
-                        .HasForeignKey("Idcategorie")
+                        .HasForeignKey("IdCategorie")
                         .OnDelete(DeleteBehavior.Restrict)
                         .HasConstraintName("fk_a3_categorie_produit"),
                     l => l.HasOne<Produit>().WithMany()
-                        .HasForeignKey("Idproduit")
+                        .HasForeignKey("IdProduit")
                         .OnDelete(DeleteBehavior.Restrict)
                         .HasConstraintName("fk_a3_produit"),
                     j =>
                     {
-                        j.HasKey("Idproduit", "Idcategorie").HasName("pk_produit_categorie");
-                        j.ToTable("produit_categorie");
-                        j.IndexerProperty<int>("Idproduit").HasColumnName("idproduit");
-                        j.IndexerProperty<int>("Idcategorie").HasColumnName("idcategorie");
+                        j.HasKey("IdProduit", "IdCategorie").HasName("pk_produit_categorie");
+                        j.ToTable("t_j_produitcategorie_pce");
+                        j.IndexerProperty<int>("IdProduit").HasColumnName("idproduit");
+                        j.IndexerProperty<int>("IdCategorie").HasColumnName("idcategorie");
                     });
 
             entity.HasMany(d => d.IdEtablissements).WithMany(p => p.IdProduits)
@@ -456,15 +449,15 @@ public partial class S221UberContext : DbContext
                         .OnDelete(DeleteBehavior.Restrict)
                         .HasConstraintName("fk_est_situe2_etablissement"),
                     l => l.HasOne<Produit>().WithMany()
-                        .HasForeignKey("Idproduit")
+                        .HasForeignKey("IdProduit")
                         .OnDelete(DeleteBehavior.Restrict)
                         .HasConstraintName("fk_est_situe2_produit"),
                     j =>
                     {
-                        j.HasKey("Idproduit", "IdEtablissement").HasName("pk_est_situe_a_2");
-                        j.ToTable("est_situe_a_2");
-                        j.IndexerProperty<int>("Idproduit").HasColumnName("idproduit");
-                        j.IndexerProperty<int>("IdEtablissement").HasColumnName("IdEtablissement");
+                        j.HasKey("IdProduit", "IdEtablissement").HasName("pk_est_situe_a_2");
+                        j.ToTable("t_j_estsituea2_esa2");
+                        j.IndexerProperty<int>("IdProduit").HasColumnName("idproduit");
+                        j.IndexerProperty<int>("IdEtablissement").HasColumnName("idetablissement");
                     });
         });
 
@@ -472,22 +465,22 @@ public partial class S221UberContext : DbContext
 
         modelBuilder.Entity<ReglementSalaire>(entity =>
         {
-            entity.HasKey(e => e.Idreglement).HasName("pk_reglement_salaire");
+            entity.HasKey(e => e.IdReglement).HasName("pk_reglement_salaire");
 
-            entity.Property(e => e.Idreglement).HasDefaultValueSql("nextval('reglement_salaire_id_seq'::regclass)");
+            entity.Property(e => e.IdReglement).HasDefaultValueSql("nextval('reglement_salaire_id_seq'::regclass)");
 
-            entity.HasOne(d => d.IdcoursierNavigation).WithMany(p => p.ReglementSalaires)
+            entity.HasOne(d => d.IdCoursierNavigation).WithMany(p => p.ReglementSalaires)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_reglement_salaire_coursier");
         });
 
         modelBuilder.Entity<Reservation>(entity =>
         {
-            entity.HasKey(e => e.Idreservation).HasName("pk_reservation");
+            entity.HasKey(e => e.IdReservation).HasName("pk_reservation");
 
-            entity.Property(e => e.Idreservation).HasDefaultValueSql("nextval('reservation_id_seq'::regclass)");
+            entity.Property(e => e.IdReservation).HasDefaultValueSql("nextval('reservation_id_seq'::regclass)");
 
-            entity.HasOne(d => d.IdclientNavigation).WithMany(p => p.Reservations)
+            entity.HasOne(d => d.IdClientNavigation).WithMany(p => p.Reservations)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_reservation_client");
         });
@@ -508,49 +501,49 @@ public partial class S221UberContext : DbContext
 
         modelBuilder.Entity<TypePrestation>(entity =>
         {
-            entity.HasKey(e => e.Idprestation).HasName("pk_type_prestation");
+            entity.HasKey(e => e.IdPrestation).HasName("pk_type_prestation");
 
-            entity.Property(e => e.Idprestation).HasDefaultValueSql("nextval('type_prestation_id_seq'::regclass)");
+            entity.Property(e => e.IdPrestation).HasDefaultValueSql("nextval('type_prestation_id_seq'::regclass)");
         });
 
         modelBuilder.Entity<Vehicule>(entity =>
         {
-            entity.HasKey(e => e.Idvehicule).HasName("pk_vehicule");
+            entity.HasKey(e => e.IdVehicule).HasName("pk_vehicule");
 
-            entity.Property(e => e.Idvehicule).HasDefaultValueSql("nextval('vehicule_id_seq'::regclass)");
-            entity.Property(e => e.Demandemodificationeffectue).HasDefaultValue(false);
+            entity.Property(e => e.IdVehicule).HasDefaultValueSql("nextval('vehicule_id_seq'::regclass)");
+            entity.Property(e => e.DemandeModificationEffectue).HasDefaultValue(false);
             entity.Property(e => e.Immatriculation).IsFixedLength();
-            entity.Property(e => e.Statusprocessuslogistique).HasDefaultValueSql("'En attente'::character varying");
+            entity.Property(e => e.StatusProcessusLogistique).HasDefaultValueSql("'En attente'::character varying");
 
-            entity.HasOne(d => d.IdcoursierNavigation).WithMany(p => p.Vehicules)
+            entity.HasOne(d => d.IdCoursierNavigation).WithMany(p => p.Vehicules)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_vehicule_coursier");
 
-            entity.HasMany(d => d.Idprestations).WithMany(p => p.Idvehicules)
+            entity.HasMany(d => d.IdPrestations).WithMany(p => p.IdVehicules)
                 .UsingEntity<Dictionary<string, object>>(
                     "ACommeType",
                     r => r.HasOne<TypePrestation>().WithMany()
-                        .HasForeignKey("Idprestation")
+                        .HasForeignKey("IdPrestation")
                         .OnDelete(DeleteBehavior.Restrict)
                         .HasConstraintName("fk_a_comme_type_type_prestation"),
                     l => l.HasOne<Vehicule>().WithMany()
-                        .HasForeignKey("Idvehicule")
+                        .HasForeignKey("IdVehicule")
                         .OnDelete(DeleteBehavior.Restrict)
                         .HasConstraintName("fk_a_comme_type_vehicule"),
                     j =>
                     {
                         j.HasKey("Idvehicule", "Idprestation").HasName("pk_a_comme_type");
-                        j.ToTable("a_comme_type");
-                        j.IndexerProperty<int>("Idvehicule").HasColumnName("idvehicule");
-                        j.IndexerProperty<int>("Idprestation").HasColumnName("idprestation");
+                        j.ToTable("t_j_acommetype_act");
+                        j.IndexerProperty<int>("IdVehicule").HasColumnName("idvehicule");
+                        j.IndexerProperty<int>("IdPrestation").HasColumnName("idprestation");
                     });
         });
 
         modelBuilder.Entity<Velo>(entity =>
         {
-            entity.HasKey(e => e.Idvelo).HasName("pk_velo");
+            entity.HasKey(e => e.IdVelo).HasName("pk_velo");
 
-            entity.Property(e => e.Idvelo).HasDefaultValueSql("nextval('velo_id_seq'::regclass)");
+            entity.Property(e => e.IdVelo).HasDefaultValueSql("nextval('velo_id_seq'::regclass)");
 
             entity.HasOne(d => d.IdAdresseNavigation).WithMany(p => p.Velos)
                 .OnDelete(DeleteBehavior.Restrict)
@@ -559,30 +552,30 @@ public partial class S221UberContext : DbContext
 
         modelBuilder.Entity<VeloReservation>(entity =>
         {
-            entity.HasKey(e => new { e.IdreservationVelo, e.Idvelo }).HasName("pk_velo_reservation");
+            entity.HasKey(e => new { e.IdReservationVelo, e.IdVelo }).HasName("pk_velo_reservation");
 
-            entity.Property(e => e.IdreservationVelo).HasDefaultValueSql("nextval('velo_reservation_id_seq'::regclass)");
+            entity.Property(e => e.IdReservationVelo).HasDefaultValueSql("nextval('velo_reservation_id_seq'::regclass)");
 
-            entity.HasOne(d => d.IdreservationVeloNavigation).WithMany(p => p.VeloReservations)
+            entity.HasOne(d => d.IdReservationVeloNavigation).WithMany(p => p.VeloReservations)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_velo_reservation_reservation");
 
-            entity.HasOne(d => d.IdveloNavigation).WithMany(p => p.VeloReservations)
+            entity.HasOne(d => d.IdVeloNavigation).WithMany(p => p.VeloReservations)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_velo_reservation_velo");
         });
 
         modelBuilder.Entity<Ville>(entity =>
         {
-            entity.HasKey(e => e.Idville).HasName("pk_ville");
+            entity.HasKey(e => e.IdVille).HasName("pk_ville");
 
-            entity.Property(e => e.Idville).HasDefaultValueSql("nextval('ville_id_seq'::regclass)");
+            entity.Property(e => e.IdVille).HasDefaultValueSql("nextval('ville_id_seq'::regclass)");
 
-            entity.HasOne(d => d.IdcodepostalNavigation).WithMany(p => p.Villes)
+            entity.HasOne(d => d.IdCodePostalNavigation).WithMany(p => p.Villes)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_ville_code_postal");
 
-            entity.HasOne(d => d.IdpaysNavigation).WithMany(p => p.Villes)
+            entity.HasOne(d => d.IdPaysNavigation).WithMany(p => p.Villes)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_ville_pays");
         });
