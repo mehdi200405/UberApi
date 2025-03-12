@@ -25,7 +25,7 @@ public partial class Course
     [Column("res_id")]
     public int IdReservation { get; set; }
 
-    [Column("adr_adr_adresse")]
+    [Column("adr_adr_id")]
     public int AdrIdAdresse { get; set; }
 
     [Column("tpn_id")]
