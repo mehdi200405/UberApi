@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UberApi.Models.EntityFramework;
 
-[Table("t_e_carteBancaire_ctbr")]
+[Table("t_e_cartebancaire_ctbr")]
 [Index("NumeroCb", Name = "carte_bancaire_numerocb_key", IsUnique = true)]
 public partial class CarteBancaire
 {

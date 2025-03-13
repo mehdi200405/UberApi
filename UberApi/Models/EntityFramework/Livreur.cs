@@ -44,7 +44,7 @@ public partial class Livreur
     [StringLength(200)]
     public string EmailUser { get; set; } = null!;
 
-    [Column("livr_motdepasseUser")]
+    [Column("livr_motdepasseuser")]
     [StringLength(200)]
     public string MotDePasseUser { get; set; } = null!;
 
@@ -59,9 +59,9 @@ public partial class Livreur
     [Precision(2, 1)]
     public decimal? NoteMoyenne { get; set; }
 
-    [InverseProperty("IdLivreur")]
+    [InverseProperty("IdLivreurNavigation")]
     public virtual ICollection<Commande> Commandes { get; set; } = new List<Commande>();
 
-    [InverseProperty("IdPanier")]
+    [InverseProperty("IdLivreurNavigation")]
     public virtual ICollection<Horaires> Horaires { get; set; } = new List<Horaires>();
 }

@@ -9,7 +9,7 @@ namespace UberApi.Models.EntityFramework;
 [Table("t_e_coursier_crr")]
 [Index("Iban", Name = "uq_coursier_iban", IsUnique = true)]
 [Index("EmailUser", Name = "uq_coursier_mail", IsUnique = true)]
-[Index("NumeroCartevtc", Name = "uq_coursier_numcarte", IsUnique = true)]
+[Index("NumeroCarteVtc", Name = "uq_coursier_numcarte", IsUnique = true)]
 public partial class Coursier
 {
     [Key]

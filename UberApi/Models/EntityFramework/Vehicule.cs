@@ -38,7 +38,7 @@ public partial class Vehicule
     [Column("vcl_estelectrique")]
     public bool EstElectrique { get; set; }
 
-    [Column("vcl_estrecent")]
+    [Column("vcl_estconfortable")]
     public bool EstConfortable { get; set; }
 
     [Column("vcl_estrecent")]

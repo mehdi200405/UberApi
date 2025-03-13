@@ -31,7 +31,7 @@ public partial class Adresse
     [InverseProperty("IdAdresseNavigation")]
     public virtual ICollection<Client> Clients { get; set; } = new List<Client>();
 
-    [InverseProperty("AdrIdadresseNavigation")]
+    [InverseProperty("AdrIdAdresseNavigation")]
     public virtual ICollection<Course> CourseAdrIdAdresseNavigations { get; set; } = new List<Course>();
 
     [InverseProperty("IdAdresseNavigation")]

@@ -84,7 +84,7 @@ public partial class Course
     [InverseProperty("Courses")]
     public virtual TypePrestation IdPrestationNavigation { get; set; } = null!;
 
-    [ForeignKey("IdPeservation")]
+    [ForeignKey("IdReservation")]
     [InverseProperty("Courses")]
     public virtual Reservation IdReservationNavigation { get; set; } = null!;
 }
