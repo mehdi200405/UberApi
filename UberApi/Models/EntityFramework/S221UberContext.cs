@@ -109,7 +109,7 @@ public partial class S221UberContext : DbContext
                         .OnDelete(DeleteBehavior.Restrict)
                         .HasConstraintName("fk_appartient2_client"),
                     l => l.HasOne<CarteBancaire>().WithMany()
-                        .HasForeignKey("Idcb")
+                        .HasForeignKey("IdCb")
                         .OnDelete(DeleteBehavior.Restrict)
                         .HasConstraintName("fk_appartient2_carte_bancaire"),
                     j =>
