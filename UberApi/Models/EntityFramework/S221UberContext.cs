@@ -47,12 +47,9 @@ public partial class S221UberContext : DbContext
 
     public virtual DbSet<Horaires> Horaires { get; set; }
 
-    
-
     public virtual DbSet<LieuFavori> LieuFavoris { get; set; }
 
     public virtual DbSet<Livreur> Livreurs { get; set; }
-
 
     public virtual DbSet<Otp> Otps { get; set; }
 
@@ -62,7 +59,6 @@ public partial class S221UberContext : DbContext
 
 
     public virtual DbSet<Produit> Produits { get; set; }
-
 
     public virtual DbSet<ReglementSalaire> ReglementSalaires { get; set; }
 
