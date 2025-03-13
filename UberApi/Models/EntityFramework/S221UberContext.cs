@@ -142,8 +142,8 @@ public partial class S221UberContext : DbContext
                     {
                         j.HasKey("IdCategoriePrestation", "IdEtablissement").HasName("pk_a_comme_categorie");
                         j.ToTable("t_j_acommecategorie_acc");
-                        j.IndexerProperty<int>("IdCategoriePrestation").HasColumnName("idcategorieprestation");
-                        j.IndexerProperty<int>("IdEtablissement").HasColumnName("idetablissement");
+                        j.IndexerProperty<int>("IdCategoriePrestation").HasColumnName("cpn_id");
+                        j.IndexerProperty<int>("IdEtablissement").HasColumnName("etb_id");
                     });
         });
 
@@ -433,8 +433,8 @@ public partial class S221UberContext : DbContext
                     {
                         j.HasKey("IdProduit", "IdCategorie").HasName("pk_produit_categorie");
                         j.ToTable("t_j_produitcategorie_pce");
-                        j.IndexerProperty<int>("IdProduit").HasColumnName("idproduit");
-                        j.IndexerProperty<int>("IdCategorie").HasColumnName("idcategorie");
+                        j.IndexerProperty<int>("IdProduit").HasColumnName("pdt_id");
+                        j.IndexerProperty<int>("IdCategorie").HasColumnName("cpt_id");
                     });
 
             entity.HasMany(d => d.IdEtablissements).WithMany(p => p.IdProduits)
@@ -452,8 +452,8 @@ public partial class S221UberContext : DbContext
                     {
                         j.HasKey("IdProduit", "IdEtablissement").HasName("pk_est_situe_a_2");
                         j.ToTable("t_j_estsituea2_esa2");
-                        j.IndexerProperty<int>("IdProduit").HasColumnName("idproduit");
-                        j.IndexerProperty<int>("IdEtablissement").HasColumnName("idetablissement");
+                        j.IndexerProperty<int>("IdProduit").HasColumnName("pdt_id");
+                        j.IndexerProperty<int>("IdEtablissement").HasColumnName("etb_id");
                     });
         });
 
@@ -530,8 +530,8 @@ public partial class S221UberContext : DbContext
                     {
                         j.HasKey("IdVehicule", "IdPrestation").HasName("pk_a_comme_type");
                         j.ToTable("t_j_acommetype_act");
-                        j.IndexerProperty<int>("IdVehicule").HasColumnName("idvehicule");
-                        j.IndexerProperty<int>("IdPrestation").HasColumnName("idprestation");
+                        j.IndexerProperty<int>("IdVehicule").HasColumnName("vcl_id");
+                        j.IndexerProperty<int>("IdPrestation").HasColumnName("tpn_id");
                     });
         });
 
