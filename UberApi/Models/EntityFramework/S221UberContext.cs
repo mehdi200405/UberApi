@@ -80,7 +80,7 @@ public partial class S221UberContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Server=51.83.36.122;port=5432;Database=s221_uber; uid=s221; password=VmFu4u;");
+        => optionsBuilder.UseNpgsql("Server=51.83.36.122;port=5432;Database=sae4_UberApiDB; uid=s221; \npassword=VmFu4u;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
