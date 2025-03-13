@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using UberApi.Models.EntityFramework;
 
-namespace YourNamespace.Controllers
+namespace UberApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -18,52 +20,33 @@ namespace YourNamespace.Controllers
             _context = context;
         }
 
-        // GET: api/coursiers
+        // GET: api/Coursiers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Coursier>>> GetCoursiers()
         {
-            var coursiers = await _context.Coursiers
-                .Include(c => c.Adresse)
-                .Include(c => c.Entretien)
-                .Include(c => c.Vehicules)
-                .ToListAsync();
-
-            return Ok(coursiers);
+            return await _context.Coursiers.ToListAsync();
         }
 
-        // GET: api/coursiers/5
+        // GET: api/Coursiers/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Coursier>> GetCoursier(int id)
         {
-            var coursier = await _context.Coursiers
-                .Include(c => c.Adresse)
-                .Include(c => c.Entretien)
-                .Include(c => c.Vehicules)
-                .FirstOrDefaultAsync(c => c.Id == id);
+            var coursier = await _context.Coursiers.FindAsync(id);
 
             if (coursier == null)
             {
                 return NotFound();
             }
 
-            return Ok(coursier);
+            return coursier;
         }
 
-        // POST: api/coursiers
-        [HttpPost]
-        public async Task<ActionResult<Coursier>> PostCoursier(Coursier coursier)
-        {
-            _context.Coursiers.Add(coursier);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetCoursier", new { id = coursier.Id }, coursier);
-        }
-
-        // PUT: api/coursiers/5
+        // PUT: api/Coursiers/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCoursier(int id, Coursier coursier)
         {
-            if (id != coursier.Id)
+            if (id != coursier.IdCoursier)
             {
                 return BadRequest();
             }
@@ -89,7 +72,18 @@ namespace YourNamespace.Controllers
             return NoContent();
         }
 
-        // DELETE: api/coursiers/5
+        // POST: api/Coursiers
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<Coursier>> PostCoursier(Coursier coursier)
+        {
+            _context.Coursiers.Add(coursier);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetCoursier", new { id = coursier.IdCoursier }, coursier);
+        }
+
+        // DELETE: api/Coursiers/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCoursier(int id)
         {
@@ -107,7 +101,7 @@ namespace YourNamespace.Controllers
 
         private bool CoursierExists(int id)
         {
-            return _context.Coursiers.Any(e => e.Id == id);
+            return _context.Coursiers.Any(e => e.IdCoursier == id);
         }
     }
 }
