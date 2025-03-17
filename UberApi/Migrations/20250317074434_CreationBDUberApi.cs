@@ -234,9 +234,9 @@ namespace UberApi.Migrations
                 columns: table => new
                 {
                     tpn_id = table.Column<int>(type: "integer", nullable: false, defaultValueSql: "nextval('type_prestation_id_seq'::regclass)"),
-                    tpn_libelleprestation = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
-                    tpn_descriptionprestation = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
-                    tpn_imageprestation = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: true)
+                    tpn_libelle = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    tpn_description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    tpn_image = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -747,7 +747,7 @@ namespace UberApi.Migrations
                 columns: table => new
                 {
                     vcl_id = table.Column<int>(type: "integer", nullable: false, defaultValueSql: "nextval('vehicule_id_seq'::regclass)"),
-                    csr_id = table.Column<int>(type: "integer", nullable: false),
+                    crr_id = table.Column<int>(type: "integer", nullable: false),
                     vcl_immatriculation = table.Column<string>(type: "character(9)", fixedLength: true, maxLength: 9, nullable: false),
                     vcl_marque = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
                     vcl_modele = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
@@ -767,7 +767,7 @@ namespace UberApi.Migrations
                     table.PrimaryKey("pk_vehicule", x => x.vcl_id);
                     table.ForeignKey(
                         name: "fk_vehicule_coursier",
-                        column: x => x.csr_id,
+                        column: x => x.crr_id,
                         principalTable: "t_e_coursier_crr",
                         principalColumn: "crr_id",
                         onDelete: ReferentialAction.Restrict);
@@ -1226,9 +1226,9 @@ namespace UberApi.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_t_e_vehicule_vcl_csr_id",
+                name: "IX_t_e_vehicule_vcl_crr_id",
                 table: "t_e_vehicule_vcl",
-                column: "csr_id");
+                column: "crr_id");
 
             migrationBuilder.CreateIndex(
                 name: "uq_vehicule_immatriculation",

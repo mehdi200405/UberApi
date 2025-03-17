@@ -1402,17 +1402,17 @@ namespace UberApi.Migrations
                     b.Property<string>("DescriptionPrestation")
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)")
-                        .HasColumnName("tpn_descriptionprestation");
+                        .HasColumnName("tpn_description");
 
                     b.Property<string>("ImagePrestation")
                         .HasMaxLength(300)
                         .HasColumnType("character varying(300)")
-                        .HasColumnName("tpn_imageprestation");
+                        .HasColumnName("tpn_image");
 
                     b.Property<string>("LibellePrestation")
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)")
-                        .HasColumnName("tpn_libelleprestation");
+                        .HasColumnName("tpn_libelle");
 
                     b.HasKey("IdPrestation")
                         .HasName("pk_type_prestation");
@@ -1469,7 +1469,7 @@ namespace UberApi.Migrations
 
                     b.Property<int>("IdCoursier")
                         .HasColumnType("integer")
-                        .HasColumnName("csr_id");
+                        .HasColumnName("crr_id");
 
                     b.Property<string>("Immatriculation")
                         .IsRequired()
