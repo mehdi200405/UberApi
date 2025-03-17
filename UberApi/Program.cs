@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using UberApi.Models.EntityFramework;
+
 namespace UberApi
 {
     public class Program
@@ -7,6 +10,9 @@ namespace UberApi
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+
+            builder.Services.AddDbContext<S221UberContext>(options =>
+                options.UseNpgsql(builder.Configuration.GetConnectionString("S221UberContext")));
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
