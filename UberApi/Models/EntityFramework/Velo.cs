@@ -14,7 +14,7 @@ public partial class Velo
     [Column("vel_id")]
     public int IdVelo { get; set; }
 
-    [Column("adr_idadresse")]
+    [Column("adr_id")]
     public int IdAdresse { get; set; }
 
     [Column("vel_numero")]

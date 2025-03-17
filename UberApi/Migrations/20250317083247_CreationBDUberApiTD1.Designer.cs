@@ -12,8 +12,8 @@ using UberApi.Models.EntityFramework;
 namespace UberApi.Migrations
 {
     [DbContext(typeof(S221UberContext))]
-    [Migration("20250317074434_CreationBDUberApi")]
-    partial class CreationBDUberApi
+    [Migration("20250317083247_CreationBDUberApiTD1")]
+    partial class CreationBDUberApiTD1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1065,7 +1065,7 @@ namespace UberApi.Migrations
 
                     b.Property<int>("IdEntreprise")
                         .HasColumnType("integer")
-                        .HasColumnName("entr_id");
+                        .HasColumnName("ent_id");
 
                     b.Property<string>("MotDePasseUser")
                         .IsRequired()
@@ -1524,7 +1524,7 @@ namespace UberApi.Migrations
 
                     b.Property<int>("IdAdresse")
                         .HasColumnType("integer")
-                        .HasColumnName("adr_idadresse");
+                        .HasColumnName("adr_id");
 
                     b.Property<int>("NumeroVelo")
                         .HasColumnType("integer")

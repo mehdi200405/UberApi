@@ -1062,7 +1062,7 @@ namespace UberApi.Migrations
 
                     b.Property<int>("IdEntreprise")
                         .HasColumnType("integer")
-                        .HasColumnName("entr_id");
+                        .HasColumnName("ent_id");
 
                     b.Property<string>("MotDePasseUser")
                         .IsRequired()
@@ -1521,7 +1521,7 @@ namespace UberApi.Migrations
 
                     b.Property<int>("IdAdresse")
                         .HasColumnType("integer")
-                        .HasColumnName("adr_idadresse");
+                        .HasColumnName("adr_id");
 
                     b.Property<int>("NumeroVelo")
                         .HasColumnType("integer")

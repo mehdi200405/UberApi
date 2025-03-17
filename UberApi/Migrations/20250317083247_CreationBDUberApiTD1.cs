@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace UberApi.Migrations
 {
     /// <inheritdoc />
-    public partial class CreationBDUberApi : Migration
+    public partial class CreationBDUberApiTD1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -151,7 +151,7 @@ namespace UberApi.Migrations
                 columns: table => new
                 {
                     livr_id = table.Column<int>(type: "integer", nullable: false, defaultValueSql: "nextval('livreur_id_seq'::regclass)"),
-                    entr_id = table.Column<int>(type: "integer", nullable: false),
+                    ent_id = table.Column<int>(type: "integer", nullable: false),
                     adr_id = table.Column<int>(type: "integer", nullable: true),
                     livr_genreuser = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
                     livr_nomuser = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
@@ -390,7 +390,7 @@ namespace UberApi.Migrations
                 columns: table => new
                 {
                     vel_id = table.Column<int>(type: "integer", nullable: false, defaultValueSql: "nextval('velo_id_seq'::regclass)"),
-                    adr_idadresse = table.Column<int>(type: "integer", nullable: false),
+                    adr_id = table.Column<int>(type: "integer", nullable: false),
                     vel_numero = table.Column<int>(type: "integer", nullable: false),
                     vel_estdisponible = table.Column<bool>(type: "boolean", nullable: false)
                 },
@@ -399,7 +399,7 @@ namespace UberApi.Migrations
                     table.PrimaryKey("pk_velo", x => x.vel_id);
                     table.ForeignKey(
                         name: "fk_velo_adresse",
-                        column: x => x.adr_idadresse,
+                        column: x => x.adr_id,
                         principalTable: "t_e_adresse_adr",
                         principalColumn: "adr_id",
                         onDelete: ReferentialAction.Restrict);
@@ -1237,9 +1237,9 @@ namespace UberApi.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_t_e_velo_vel_adr_idadresse",
+                name: "IX_t_e_velo_vel_adr_id",
                 table: "t_e_velo_vel",
-                column: "adr_idadresse");
+                column: "adr_id");
 
             migrationBuilder.CreateIndex(
                 name: "uq_velo_numero",
