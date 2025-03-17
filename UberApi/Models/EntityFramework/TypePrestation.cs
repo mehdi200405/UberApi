@@ -13,15 +13,15 @@ public partial class TypePrestation
     [Column("tpn_id")]
     public int IdPrestation { get; set; }
 
-    [Column("tpn_libelleprestation")]
+    [Column("tpn_libelle")]
     [StringLength(50)]
     public string? LibellePrestation { get; set; }
 
-    [Column("tpn_descriptionprestation")]
+    [Column("tpn_description")]
     [StringLength(500)]
     public string? DescriptionPrestation { get; set; }
 
-    [Column("tpn_imageprestation")]
+    [Column("tpn_image")]
     [StringLength(300)]
     public string? ImagePrestation { get; set; }
 

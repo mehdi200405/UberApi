@@ -14,7 +14,7 @@ public partial class Vehicule
     [Column("vcl_id")]
     public int IdVehicule { get; set; }
 
-    [Column("csr_id")]
+    [Column("crr_id")]
     public int IdCoursier { get; set; }
 
     [Column("vcl_immatriculation")]
