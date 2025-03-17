@@ -69,7 +69,7 @@ public partial class Client
     public bool? DemandeSuppression { get; set; }
 
     [InverseProperty("IdClientNavigation")]
-    public virtual ICollection<Facture> Factures { get; set; } = new List<Facture>();
+    public virtual ICollection<Facture>? Factures { get; set; } = new List<Facture>();
 
     [ForeignKey("IdAdresse")]
     [InverseProperty("Clients")]
@@ -80,18 +80,18 @@ public partial class Client
     public virtual Entreprise? IdEntrepriseNavigation { get; set; }
 
     [InverseProperty("IdClientNavigation")]
-    public virtual ICollection<LieuFavori> LieuFavoris { get; set; } = new List<LieuFavori>();
+    public virtual ICollection<LieuFavori>? LieuFavoris { get; set; } = new List<LieuFavori>();
 
     [InverseProperty("IdClientNavigation")]
-    public virtual ICollection<Otp> Otps { get; set; } = new List<Otp>();
+    public virtual ICollection<Otp>? Otps { get; set; } = new List<Otp>();
 
     [InverseProperty("IdClientNavigation")]
-    public virtual ICollection<Panier> Paniers { get; set; } = new List<Panier>();
+    public virtual ICollection<Panier>? Paniers { get; set; } = new List<Panier>();
 
     [InverseProperty("IdClientNavigation")]
-    public virtual ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
+    public virtual ICollection<Reservation>? Reservations { get; set; } = new List<Reservation>();
 
     [ForeignKey("IdClient")]
     [InverseProperty("IdClients")]
-    public virtual ICollection<CarteBancaire> IdCbs { get; set; } = new List<CarteBancaire>();
+    public virtual ICollection<CarteBancaire>? IdCbs { get; set; } = new List<CarteBancaire>();
 }
