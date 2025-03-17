@@ -15,7 +15,7 @@ public partial class Livreur
     [Column("livr_id")]
     public int IdLivreur { get; set; }
 
-    [Column("entr_id")]
+    [Column("ent_id")]
     public int IdEntreprise { get; set; }
 
     [Column("adr_id")]
