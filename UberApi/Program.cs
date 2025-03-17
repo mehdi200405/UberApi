@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using UberApi.Models.DataManager;
 using UberApi.Models.EntityFramework;
+using UberApi.Models.Repository;
 
 namespace UberApi
 {
@@ -15,9 +17,9 @@ namespace UberApi
                 options.UseNpgsql(builder.Configuration.GetConnectionString("S221UberContext")));
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddScoped<IDataRepository<Client>, ClientManager>();
 
             var app = builder.Build();
 
