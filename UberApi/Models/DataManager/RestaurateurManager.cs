@@ -7,47 +7,49 @@ namespace UberApi.Models.DataManager
 {
 
 
-        public class RestaurateurManager : IDataRepository<Restaurateur>
+    public class RestaurateurManager : IDataRepository<Restaurateur>
+    {
+        readonly S221UberContext? s221UberContext;
+        public RestaurateurManager() { }
+        public RestaurateurManager(S221UberContext context)
         {
-            readonly S221UberContext? s221UberContext;
-            public RestaurateurManager() { }
-            public RestaurateurManager(S221UberContext context)
-            {
-                s221UberContext = context;
-            }
-            public ActionResult<IEnumerable<Restaurateur>> GetAll()
-            {
-                return s221UberContext.Restaurateurs.ToList();
-            }
-            public ActionResult<Restaurateur> GetById(int id)
-            {
-                return s221UberContext.Restaurateurs.FirstOrDefault(u => u.IdRestaurateur == id);
-            }
-            public ActionResult<Restaurateur> GetByString(string mail)
-            {
-                return s221UberContext.Restaurateurs.FirstOrDefault(u => u.EmailUser.ToUpper() == mail.ToUpper());
-            }
-            public void Add(Restaurateur entity)
-            {
-                s221UberContext.Restaurateurs.Add(entity);
-                s221UberContext.SaveChanges();
-            }
-            public void Update(Restaurateur newRestaurateur, Restaurateur entity)
-            {
-                s221UberContext.Entry(newRestaurateur).State = EntityState.Modified;
-                newRestaurateur.IdRestaurateur = entity.IdRestaurateur;
-                newRestaurateur.NomUser = entity.NomUser;
-                newRestaurateur.PrenomUser = entity.PrenomUser;
-                newRestaurateur.Telephone = entity.Telephone;
-                newRestaurateur.EmailUser = entity.EmailUser;
-                newRestaurateur.MotDePasseUser = entity.MotDePasseUser;
-                s221UberContext.SaveChanges();
-            }
-            public void Delete(Restaurateur utilisateur)
-            {
-                s221UberContext.Restaurateurs.Remove(utilisateur);
-                s221UberContext.SaveChanges();
-            }
+            s221UberContext = context;
         }
-    
+        public async Task<ActionResult<IEnumerable<Restaurateur>>> GetAllAsync()
+        {
+            return await s221UberContext.Restaurateurs.ToListAsync();
+        }
+        public async Task<ActionResult<Restaurateur>> GetByIdAsync(int id)
+        {
+            return await s221UberContext.Restaurateurs.FirstOrDefaultAsync(u => u.IdRestaurateur == id);
+        }
+        public async Task<ActionResult<Restaurateur>> GetByStringAsync(string mail)
+        {
+            return await s221UberContext.Restaurateurs.FirstOrDefaultAsync(u => u.EmailUser.ToUpper() == mail.ToUpper());
+        }
+
+        public async Task AddAsync(Restaurateur entity)
+        {
+            s221UberContext.Restaurateurs.Add(entity);
+            s221UberContext.SaveChanges();
+        }
+        public async Task UpdateAsync(Restaurateur newRestaurateur, Restaurateur entity)
+        {
+            s221UberContext.Entry(newRestaurateur).State = EntityState.Modified;
+            newRestaurateur.IdRestaurateur = entity.IdRestaurateur;
+            newRestaurateur.NomUser = entity.NomUser;
+            newRestaurateur.PrenomUser = entity.PrenomUser;
+            newRestaurateur.Telephone = entity.Telephone;
+            newRestaurateur.EmailUser = entity.EmailUser;
+            newRestaurateur.MotDePasseUser = entity.MotDePasseUser;
+
+            await s221UberContext.SaveChangesAsync();
+        }
+        public async Task DeleteAsync(Restaurateur utilisateur)
+        {
+            s221UberContext.Restaurateurs.Remove(utilisateur);
+            await s221UberContext.SaveChangesAsync();
+        }
+    }
+
 }

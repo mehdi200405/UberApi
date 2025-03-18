@@ -14,95 +14,110 @@ namespace UberApi.Controllers
     [ApiController]
     public class CoursiersController : ControllerBase
     {
-        //private readonly IDataRepository<Coursier> dataRepository;
+        private readonly IDataRepository<Coursier> dataRepository;
 
-        //public CoursiersController(IDataRepository<Coursier> dataRepo)
-        //{
-        //    dataRepository = dataRepo;
-        //}
-
-        //// GET: api/Coursiers
-        //[HttpGet]
-        //public async Task<ActionResult<IEnumerable<Coursier>>> GetCoursiers()
-        //{
-        //    return dataRepository.GetAll();
-        //}
-
-        //// GET: api/Coursiers/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<Coursier>> GetCoursier(int id)
-        //{
-        //    var coursier = dataRepository.GetById(id);
-
-        //    if (coursier == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return coursier;
-        //}
-
-        // PUT: api/Coursiers/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutCoursier(int id, Coursier coursier)
-        //{
-        //    if (id != coursier.IdCoursier)
-        //    {
-        //        return BadRequest();
-        //    }
+        public CoursiersController(IDataRepository<Coursier> dataRepo)
+        {
+            dataRepository = dataRepo;
+        }
 
 
 
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!CoursierExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
 
-        //    return NoContent();
-        //}
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Coursier>>> GetCoursiersAsync()
+        {
+            return await dataRepository.GetAllAsync();
+        }
 
-        //POST: api/Coursiers
-        //To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPost]
-        //public async Task<ActionResult<Coursier>> PostCoursier(Coursier coursier)
-        //{
-        //    _context.Coursiers.Add(coursier);
-        //    await _context.SaveChangesAsync();
 
-        //    return CreatedAtAction("GetCoursier", new { id = coursier.IdCoursier }, coursier);
-        //}
 
-        //DELETE: api/Coursiers/5
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteCoursier(int id)
-        //{
-        //    var coursier = await _context.Coursiers.FindAsync(id);
-        //    if (coursier == null)
-        //    {
-        //        return NotFound();
-        //    }
 
-        //    _context.Coursiers.Remove(coursier);
-        //    await _context.SaveChangesAsync();
 
-        //    return NoContent();
-        //}
+        [HttpGet]
+        [Route("[action]/{id}")]
+        [ActionName("GetById")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<Coursier>> GetCoursierAsync(int id)
+        {
+            var coursier = await dataRepository.GetByIdAsync(id);
 
-        //private bool CoursierExists(int id)
-        //{
-        //    return _context.Coursiers.Any(e => e.IdCoursier == id);
-        //}
+            if (coursier == null)
+            {
+                return NotFound();
+            }
+            return coursier;
+
+        }
+
+
+        [HttpGet]
+        [Route("[action]/{email}")]
+        [ActionName("GetByEmail")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<Coursier>> GetUtilisateurByEmailAsync(string email)
+        {
+            var utilisateur = await dataRepository.GetByStringAsync(email);
+            if (utilisateur == null)
+            {
+                return NotFound();
+            }
+            return utilisateur;
+        }
+
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> PutCoursierAsync(int id, Coursier coursier)
+        {
+            if (id != coursier.IdCoursier)
+            {
+                return BadRequest();
+            }
+            var userToUpdate = await dataRepository.GetByIdAsync(id);
+            if (userToUpdate == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                await dataRepository.UpdateAsync(userToUpdate.Value, coursier);
+                return NoContent();
+            }
+        }
+
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<Coursier>> PostCoursierAsync(Coursier coursier)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            await dataRepository.AddAsync(coursier);
+            return CreatedAtAction("GetById", new { id = coursier.IdCoursier }, coursier); // GetById : nom de l’action
+        }
+
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteCoursierAsync(int id)
+        {
+            var coursier = await dataRepository.GetByIdAsync(id);
+            if (coursier == null)
+            {
+                return NotFound();
+
+            }
+            await dataRepository.DeleteAsync(coursier.Value);
+            return NoContent();
+        }
     }
 }
