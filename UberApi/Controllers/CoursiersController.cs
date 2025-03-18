@@ -14,33 +14,33 @@ namespace UberApi.Controllers
     [ApiController]
     public class CoursiersController : ControllerBase
     {
-        private readonly IDataRepository<Coursier> dataRepository;
+        //private readonly IDataRepository<Coursier> dataRepository;
 
-        public CoursiersController(IDataRepository<Coursier> dataRepo)
-        {
-            dataRepository = dataRepo;
-        }
+        //public CoursiersController(IDataRepository<Coursier> dataRepo)
+        //{
+        //    dataRepository = dataRepo;
+        //}
 
-        // GET: api/Coursiers
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Coursier>>> GetCoursiers()
-        {
-            return dataRepository.GetAll();
-        }
+        //// GET: api/Coursiers
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<Coursier>>> GetCoursiers()
+        //{
+        //    return dataRepository.GetAll();
+        //}
 
-        // GET: api/Coursiers/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Coursier>> GetCoursier(int id)
-        {
-            var coursier = dataRepository.GetById(id);
+        //// GET: api/Coursiers/5
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<Coursier>> GetCoursier(int id)
+        //{
+        //    var coursier = dataRepository.GetById(id);
 
-            if (coursier == null)
-            {
-                return NotFound();
-            }
+        //    if (coursier == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return coursier;
-        }
+        //    return coursier;
+        //}
 
         // PUT: api/Coursiers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
