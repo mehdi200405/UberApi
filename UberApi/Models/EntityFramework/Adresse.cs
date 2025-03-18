@@ -29,30 +29,30 @@ public partial class Adresse
     public string? Longitude { get; set; }
 
     [InverseProperty("IdAdresseNavigation")]
-    public virtual ICollection<Client> Clients { get; set; } = new List<Client>();
+    public virtual ICollection<Client>? Clients { get; set; } = new List<Client>();
 
     [InverseProperty("AdrIdAdresseNavigation")]
-    public virtual ICollection<Course> CourseAdrIdAdresseNavigations { get; set; } = new List<Course>();
+    public virtual ICollection<Course>? CourseAdrIdAdresseNavigations { get; set; } = new List<Course>();
 
     [InverseProperty("IdAdresseNavigation")]
-    public virtual ICollection<Course> CourseIdAdresseNavigations { get; set; } = new List<Course>();
+    public virtual ICollection<Course>? CourseIdAdresseNavigations { get; set; } = new List<Course>();
 
     [InverseProperty("IdAdresseNavigation")]
-    public virtual ICollection<Coursier> Coursiers { get; set; } = new List<Coursier>();
+    public virtual ICollection<Coursier>? Coursiers { get; set; } = new List<Coursier>();
 
     [InverseProperty("IdAdresseNavigation")]
-    public virtual ICollection<Entreprise> Entreprises { get; set; } = new List<Entreprise>();
+    public virtual ICollection<Entreprise>? Entreprises { get; set; } = new List<Entreprise>();
 
     [InverseProperty("IdAdresseNavigation")]
-    public virtual ICollection<Etablissement> Etablissements { get; set; } = new List<Etablissement>();
+    public virtual ICollection<Etablissement>? Etablissements { get; set; } = new List<Etablissement>();
 
     [ForeignKey("IdVille")]
     [InverseProperty("Adresses")]
     public virtual Ville? IdVilleNavigation { get; set; }
 
     [InverseProperty("IdAdresseNavigation")]
-    public virtual ICollection<LieuFavori> LieuFavoris { get; set; } = new List<LieuFavori>();
+    public virtual ICollection<LieuFavori>? LieuFavoris { get; set; } = new List<LieuFavori>();
 
     [InverseProperty("IdAdresseNavigation")]
-    public virtual ICollection<Velo> Velos { get; set; } = new List<Velo>();
+    public virtual ICollection<Velo>? Velos { get; set; } = new List<Velo>();
 }
