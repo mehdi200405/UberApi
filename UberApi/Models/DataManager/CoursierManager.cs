@@ -23,7 +23,7 @@ namespace UberApi.Models.DataManager
         }
         public async Task<ActionResult<Coursier>> GetByStringAsync(string mail)
         {
-            return await s221UberContext.Coursiers.FirstOrDefaultAsync(u => u.EmailUser.ToUpper() == mail.ToUpper());
+            return await s221UberContext.Coursiers.FirstOrDefaultAsync(u => u.NumeroCarteVtc.ToUpper() == mail.ToUpper());
         }
         public async Task AddAsync(Coursier entity)
         {

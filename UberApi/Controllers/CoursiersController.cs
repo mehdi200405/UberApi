@@ -53,13 +53,13 @@ namespace UberApi.Controllers
 
 
         [HttpGet]
-        [Route("[action]/{email}")]
-        [ActionName("GetByEmail")]
+        [Route("[action]/{numeroCarteVTC}")]
+        [ActionName("GetByNumeroCarteVTC")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Coursier>> GetUtilisateurByEmailAsync(string email)
+        public async Task<ActionResult<Coursier>> GetCoursierByNumeroCarteVTCAsync(string numeroCarteVTC)
         {
-            var utilisateur = await dataRepository.GetByStringAsync(email);
+            var utilisateur = await dataRepository.GetByStringAsync(numeroCarteVTC);
             if (utilisateur == null)
             {
                 return NotFound();
