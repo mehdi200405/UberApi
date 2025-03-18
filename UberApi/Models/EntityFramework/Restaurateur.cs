@@ -35,5 +35,5 @@ public partial class Restaurateur
     public string MotDePasseUser { get; set; } = null!;
 
     [InverseProperty("IdRestaurateurNavigation")]
-    public virtual ICollection<Etablissement> Etablissements { get; set; } = new List<Etablissement>();
+    public virtual ICollection<Etablissement>? Etablissements { get; set; } = new List<Etablissement>();
 }
