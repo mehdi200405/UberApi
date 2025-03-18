@@ -42,27 +42,27 @@ public partial class Etablissement
     public bool? AEmporter { get; set; }
 
     [InverseProperty("IdEtablissementNavigation")]
-    public virtual ICollection<Contient2> Contient2s { get; set; } = new List<Contient2>();
+    public virtual ICollection<Contient2>? Contient2s { get; set; } = new List<Contient2>();
 
     [InverseProperty("IdEtablissementNavigation")]
-    public virtual ICollection<GestionEtablissement> GestionEtablissements { get; set; } = new List<GestionEtablissement>();
+    public virtual ICollection<GestionEtablissement>? GestionEtablissements { get; set; } = new List<GestionEtablissement>();
 
     [InverseProperty("IdEtablissementNavigation")]
-    public virtual ICollection<Horaires> Horaires { get; set; } = new List<Horaires>();
+    public virtual ICollection<Horaires>? Horaires { get; set; } = new List<Horaires>();
 
     [ForeignKey("IdAdresse")]
     [InverseProperty("Etablissements")]
-    public virtual Adresse IdAdresseNavigation { get; set; } = null!;
+    public virtual Adresse? IdAdresseNavigation { get; set; } = null!;
 
     [ForeignKey("IdRestaurateur")]
     [InverseProperty("Etablissements")]
-    public virtual Restaurateur IdRestaurateurNavigation { get; set; } = null!;
+    public virtual Restaurateur? IdRestaurateurNavigation { get; set; } = null!;
 
     [ForeignKey("IdEtablissement")]
     [InverseProperty("IdEtablissements")]
-    public virtual ICollection<CategoriePrestation> IdCategoriePrestations { get; set; } = new List<CategoriePrestation>();
+    public virtual ICollection<CategoriePrestation>? IdCategoriePrestations { get; set; } = new List<CategoriePrestation>();
 
     [ForeignKey("IdEtablissement")]
     [InverseProperty("IdEtablissements")]
-    public virtual ICollection<Produit> IdProduits { get; set; } = new List<Produit>();
+    public virtual ICollection<Produit>? IdProduits { get; set; } = new List<Produit>();
 }

@@ -14,11 +14,11 @@ namespace UberApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LivreursController : ControllerBase
+    public class EtablissementsController : ControllerBase
     {
-        private readonly IDataRepository<Livreur> dataRepository;
+        private readonly IDataRepository<Etablissement> dataRepository;
 
-        public LivreursController(IDataRepository<Livreur> dataRepo)
+        public EtablissementsController(IDataRepository<Etablissement> dataRepo)
         {
             dataRepository = dataRepo;
         }   
@@ -27,7 +27,7 @@ namespace UberApi.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Livreur>>> GetLivreursAsync()
+        public async Task<ActionResult<IEnumerable<Etablissement>>> GetEtablissementsAsync()
         {
             return await dataRepository.GetAllAsync();
         }
@@ -41,32 +41,32 @@ namespace UberApi.Controllers
         [ActionName("GetById")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Livreur>> GetLivreurAsync(int id)
+        public async Task<ActionResult<Etablissement>> GetEtablissementAsync(int id)
         {
-            var livreur = await dataRepository.GetByIdAsync(id);
+            var etablissement = await dataRepository.GetByIdAsync(id);
 
-            if (livreur == null)
+            if (etablissement == null)
             {
                 return NotFound();
             }
-            return livreur;
+            return etablissement;
 
         }
 
 
         [HttpGet]
-        [Route("[action]/{libelleLivreur}")]
-        [ActionName("GetByLibelleLivreur")]
+        [Route("[action]/{nomEtablissement}")]
+        [ActionName("GetByNomEtablissement")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Livreur>> GetLivreurByEmailLivreurAsync(string libelleLivreur)
+        public async Task<ActionResult<Etablissement>> GetEtablissementByNomEtablissementAsync(string nomEtablissement)
         {
-            var livreur = await dataRepository.GetByStringAsync(libelleLivreur);
-            if (livreur == null)
+            var etablissement = await dataRepository.GetByStringAsync(nomEtablissement);
+            if (etablissement == null)
             {
                 return NotFound();
             }
-            return livreur;
+            return etablissement;
         }
 
 
@@ -74,9 +74,9 @@ namespace UberApi.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> PutLivreurAsync(int id, Livreur livreur)
+        public async Task<IActionResult> PutEtablissementAsync(int id, Etablissement etablissement)
         {
-            if (id != livreur.IdLivreur)
+            if (id != etablissement.IdEtablissement)
             {
                 return BadRequest();
             }
@@ -87,7 +87,7 @@ namespace UberApi.Controllers
             }
             else
             {
-                await dataRepository.UpdateAsync(userToUpdate.Value, livreur);
+                await dataRepository.UpdateAsync(userToUpdate.Value, etablissement);
                 return NoContent();
             }
         }
@@ -96,29 +96,29 @@ namespace UberApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<Livreur>> PostLivreurAsync(Livreur livreur)
+        public async Task<ActionResult<Etablissement>> PostEtablissementAsync(Etablissement etablissement)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            await dataRepository.AddAsync(livreur);
-            return CreatedAtAction("GetById", new { id = livreur.IdLivreur }, livreur); // GetById : nom de l’action
+            await dataRepository.AddAsync(etablissement);
+            return CreatedAtAction("GetById", new { id = etablissement.IdEtablissement }, etablissement); // GetById : nom de l’action
         }
 
 
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteLivreurAsync(int id)
+        public async Task<IActionResult> DeleteEtablissementAsync(int id)
         {
-            var livreur = await dataRepository.GetByIdAsync(id);
-            if (livreur == null)
+            var etablissement = await dataRepository.GetByIdAsync(id);
+            if (etablissement == null)
             {
                 return NotFound();
 
             }
-            await dataRepository.DeleteAsync(livreur.Value);
+            await dataRepository.DeleteAsync(etablissement.Value);
             return NoContent();
         }
     }
