@@ -60,8 +60,8 @@ public partial class Livreur
     public decimal? NoteMoyenne { get; set; }
 
     [InverseProperty("IdLivreurNavigation")]
-    public virtual ICollection<Commande> Commandes { get; set; } = new List<Commande>();
+    public virtual ICollection<Commande>? Commandes { get; set; } = new List<Commande>();
 
     [InverseProperty("IdLivreurNavigation")]
-    public virtual ICollection<Horaires> Horaires { get; set; } = new List<Horaires>();
+    public virtual ICollection<Horaires>? Horaires { get; set; } = new List<Horaires>();
 }
