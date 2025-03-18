@@ -52,7 +52,7 @@ public partial class Commande
     public bool RemboursementEffectue { get; set; }
 
     [InverseProperty("IdCommandeNavigation")]
-    public virtual ICollection<Facture> Factures { get; set; } = new List<Facture>();
+    public virtual ICollection<Facture>? Factures { get; set; } = new List<Facture>();
 
     [ForeignKey("IdLivreur")]
     [InverseProperty("Commandes")]
@@ -60,5 +60,5 @@ public partial class Commande
 
     [ForeignKey("IdPanier")]
     [InverseProperty("Commandes")]
-    public virtual Panier IdPanierNavigation { get; set; } = null!;
+    public virtual Panier? IdPanierNavigation { get; set; } = null!;
 }

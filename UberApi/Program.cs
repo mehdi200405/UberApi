@@ -23,6 +23,7 @@ namespace UberApi
             builder.Services.AddScoped<IDataRepository<Coursier>, CoursierManager>();
             builder.Services.AddScoped<IDataRepository<Restaurateur>, RestaurateurManager>();
 
+            builder.Services.AddScoped<IDataRepository<Commande>, CommandeManager>();
 
             var app = builder.Build();
 
