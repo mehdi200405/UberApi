@@ -29,7 +29,7 @@ namespace UberApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Client>>> GetClients()
         {
-            return dataRepository.GetAll();
+            return await dataRepository.GetAllAsync();
         }
 
 
@@ -43,13 +43,14 @@ namespace UberApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Client>> GetClientById(int id)
         {
-            var client = dataRepository.GetById(id);
+            var client = await dataRepository.GetByIdAsync(id);
 
             if (client == null)
             {
                 return NotFound();
             }
-            return client;
+                return client;
+
         }
 
 
@@ -58,16 +59,16 @@ namespace UberApi.Controllers
         [ActionName("GetByEmail")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Client>> GetClientByEmail(string email)
+        public async Task<ActionResult<Client>> GetUtilisateurByEmail(string email)
         {
-             var client = dataRepository.GetByString(email);
-
-             if (client == null)
-             {
-             return NotFound();
-                }
-             return client;
+            var utilisateur = await dataRepository.GetByStringAsync(email);
+            if (utilisateur == null)
+            {
+                return NotFound();
+            }
+            return utilisateur;
         }
+        
 
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -79,14 +80,14 @@ namespace UberApi.Controllers
             {
                 return BadRequest();
             }
-            var userToUpdate = dataRepository.GetById(id);
+            var userToUpdate = await dataRepository.GetByIdAsync(id);
             if (userToUpdate == null)
             {
                 return NotFound();
             }
             else
             {
-                        dataRepository.Update(userToUpdate.Value, client);
+                        await dataRepository.UpdateAsync(userToUpdate.Value, client);
                 return NoContent();
             }
         }
@@ -101,7 +102,7 @@ namespace UberApi.Controllers
             {
                 return BadRequest(ModelState);
             }
-            dataRepository.Add(client);
+            await dataRepository.AddAsync(client);
             return CreatedAtAction("GetById", new { id = client.IdClient }, client); // GetById : nom de l’action
         }
 
@@ -111,13 +112,13 @@ namespace UberApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteClient(int id)
         {
-            var client = dataRepository.GetById(id);
+            var client = await dataRepository.GetByIdAsync(id);
             if (client == null)
             {
                 return NotFound();
 
             }
-            dataRepository.Delete(client.Value);
+            await dataRepository.DeleteAsync(client.Value);
             return NoContent();
         }
             }
