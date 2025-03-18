@@ -65,13 +65,13 @@ public partial class Coursier
     public decimal? NoteMoyenne { get; set; }
 
     [InverseProperty("IdCoursierNavigation")]
-    public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
+    public virtual ICollection<Course>? Courses { get; set; } = new List<Course>();
 
     [InverseProperty("IdCoursierNavigation")]
-    public virtual ICollection<Entretien> Entretiens { get; set; } = new List<Entretien>();
+    public virtual ICollection<Entretien>? Entretiens { get; set; } = new List<Entretien>();
 
     [InverseProperty("IdCoursierNavigation")]
-    public virtual ICollection<Horaires> Horaires { get; set; } = new List<Horaires>();
+    public virtual ICollection<Horaires>? Horaires { get; set; } = new List<Horaires>();
 
     [ForeignKey("IdAdresse")]
     [InverseProperty("Coursiers")]
@@ -79,11 +79,11 @@ public partial class Coursier
 
     [ForeignKey("IdEntreprise")]
     [InverseProperty("Coursiers")]
-    public virtual Entreprise IdEntrepriseNavigation { get; set; } = null!;
+    public virtual Entreprise? IdEntrepriseNavigation { get; set; } = null!;
 
     [InverseProperty("IdCoursierNavigation")]
-    public virtual ICollection<ReglementSalaire> ReglementSalaires { get; set; } = new List<ReglementSalaire>();
+    public virtual ICollection<ReglementSalaire>? ReglementSalaires { get; set; } = new List<ReglementSalaire>();
 
     [InverseProperty("IdCoursierNavigation")]
-    public virtual ICollection<Vehicule> Vehicules { get; set; } = new List<Vehicule>();
+    public virtual ICollection<Vehicule>? Vehicules { get; set; } = new List<Vehicule>();
 }
