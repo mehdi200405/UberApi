@@ -29,12 +29,12 @@ public partial class Entreprise
     public string Taille { get; set; } = null!;
 
     [InverseProperty("IdEntrepriseNavigation")]
-    public virtual ICollection<Client> Clients { get; set; } = new List<Client>();
+    public virtual ICollection<Client>? Clients { get; set; } = new List<Client>();
 
     [InverseProperty("IdEntrepriseNavigation")]
-    public virtual ICollection<Coursier> Coursiers { get; set; } = new List<Coursier>();
+    public virtual ICollection<Coursier>? Coursiers { get; set; } = new List<Coursier>();
 
     [ForeignKey("IdAdresse")]
     [InverseProperty("Entreprises")]
-    public virtual Adresse IdAdresseNavigation { get; set; } = null!;
+    public virtual Adresse? IdAdresseNavigation { get; set; } = null!;
 }
