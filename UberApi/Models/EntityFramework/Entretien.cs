@@ -36,5 +36,5 @@ public partial class Entretien
 
     [ForeignKey("IdCoursier")]
     [InverseProperty("Entretiens")]
-    public virtual Coursier IdCoursierNavigation { get; set; } = null!;
+    public virtual Coursier? IdCoursierNavigation { get; set; } = null!;
 }
