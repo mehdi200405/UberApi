@@ -43,11 +43,6 @@ namespace UberApi.Models.DataManager
             newCoursier.Telephone = entity.Telephone;
             newCoursier.EmailUser = entity.EmailUser;
             newCoursier.MotDePasseUser = entity.MotDePasseUser;
-            newCoursier.PhotoProfile = entity.PhotoProfile;
-            newCoursier.SouhaiteRecevoirBonPlan = entity.SouhaiteRecevoirBonPlan;
-            newCoursier.MfaActivee = entity.MfaActivee;
-            newCoursier.TypeCoursier = entity.TypeCoursier;
-            newCoursier.DemandeSuppression = entity.DemandeSuppression;
             s221UberContext.SaveChanges();
         }
         public void Delete(Coursier utilisateur)
