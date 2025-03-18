@@ -20,6 +20,7 @@ namespace UberApi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<IDataRepository<Client>, ClientManager>();
+            builder.Services.AddScoped<IDataRepository<Coursier>, CoursierManager>();
             builder.Services.AddScoped<IDataRepository<Restaurateur>, RestaurateurManager>();
 
 
