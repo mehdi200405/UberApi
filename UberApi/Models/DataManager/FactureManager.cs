@@ -35,8 +35,8 @@ namespace UberApi.Models.DataManager
         }
         public async Task AddAsync(Facture entity)
         {
-            s221UberContext.Factures.Add(entity);
-            s221UberContext.SaveChanges();
+            await s221UberContext.Factures.AddAsync(entity);
+            await s221UberContext.SaveChangesAsync();
         }
         public async Task UpdateAsync(Facture newFacture, Facture entity)
         {

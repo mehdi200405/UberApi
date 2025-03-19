@@ -28,8 +28,8 @@ namespace UberApi.Models.DataManager
 
         public async Task AddAsync(Commande entity)
         {
-            s221UberContext.Commandes.Add(entity);
-            s221UberContext.SaveChanges();
+            await s221UberContext.Commandes.AddAsync(entity);
+            await s221UberContext.SaveChangesAsync();
         }
         public async Task UpdateAsync(Commande newCommande, Commande entity)
         {

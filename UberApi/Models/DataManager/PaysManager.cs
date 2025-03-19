@@ -11,7 +11,7 @@ namespace UberApi.Models.DataManager
     {
         readonly S221UberContext? s221UberContext;
         public PaysManager() { }
-        public PaysManager(S221UberContext context) 
+        public PaysManager(S221UberContext context)
         {
             s221UberContext = context;
         }
@@ -30,8 +30,8 @@ namespace UberApi.Models.DataManager
 
         public async Task AddAsync(Pays entity)
         {
-            s221UberContext.Pays.Add(entity);
-            s221UberContext.SaveChanges();
+            await s221UberContext.Pays.AddAsync(entity);
+            await s221UberContext.SaveChangesAsync();
         }
         public async Task UpdateAsync(Pays newPays, Pays entity)
         {
@@ -39,7 +39,7 @@ namespace UberApi.Models.DataManager
             newPays.IdPays = entity.IdPays;
             newPays.NomPays = entity.NomPays;
             newPays.PourcentageTva = entity.PourcentageTva;
-           
+
             await s221UberContext.SaveChangesAsync();
         }
         public async Task DeleteAsync(Pays adresse)
