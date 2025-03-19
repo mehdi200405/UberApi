@@ -33,6 +33,7 @@ namespace UberApi
             builder.Services.AddScoped<IDataRepository<Ville>, VilleManager>();
             builder.Services.AddScoped<IDataRepository<CodePostal>, CodePostalManager>();
             builder.Services.AddScoped<IDataRepository<Pays>, PaysManager>();
+            builder.Services.AddScoped<IDataRepository<LieuFavori>, LieuFavoriManager>();
 
 
 
