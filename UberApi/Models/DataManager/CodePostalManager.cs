@@ -30,8 +30,8 @@ namespace UberApi.Models.DataManager
 
         public async Task AddAsync(CodePostal entity)
         {
-            s221UberContext.CodePostals.Add(entity);
-            s221UberContext.SaveChanges();
+            await s221UberContext.CodePostals.AddAsync(entity);
+            await s221UberContext.SaveChangesAsync();
         }
         public async Task UpdateAsync(CodePostal newCodePostal, CodePostal entity)
         {

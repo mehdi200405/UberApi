@@ -30,8 +30,8 @@ namespace UberApi.Models.DataManager
 
         public async Task AddAsync(Restaurateur entity)
         {
-            s221UberContext.Restaurateurs.Add(entity);
-            s221UberContext.SaveChanges();
+            await s221UberContext.Restaurateurs.AddAsync(entity);
+            await s221UberContext.SaveChangesAsync();
         }
         public async Task UpdateAsync(Restaurateur newRestaurateur, Restaurateur entity)
         {

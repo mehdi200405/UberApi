@@ -30,8 +30,8 @@ namespace UberApi.Models.DataManager
 
         public async Task AddAsync(LieuFavori entity)
         {
-            s221UberContext.LieuFavoris.Add(entity);
-            s221UberContext.SaveChanges();
+            await s221UberContext.LieuFavoris.AddAsync(entity);
+            await s221UberContext.SaveChangesAsync();
         }
         public async Task UpdateAsync(LieuFavori newLieuFavori, LieuFavori entity)
         {
