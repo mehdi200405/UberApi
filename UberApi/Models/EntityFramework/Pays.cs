@@ -23,11 +23,11 @@ public partial class Pays
     public decimal? PourcentageTva { get; set; }
 
     [InverseProperty("IdPaysNavigation")]
-    public virtual ICollection<CodePostal> CodePostals { get; set; } = new List<CodePostal>();
+    public virtual ICollection<CodePostal>? CodePostals { get; set; } = new List<CodePostal>();
 
     [InverseProperty("IdPaysNavigation")]
-    public virtual ICollection<Facture> Factures { get; set; } = new List<Facture>();
+    public virtual ICollection<Facture>? Factures { get; set; } = new List<Facture>();
 
     [InverseProperty("IdPaysNavigation")]
-    public virtual ICollection<Ville> Villes { get; set; } = new List<Ville>();
+    public virtual ICollection<Ville>? Villes { get; set; } = new List<Ville>();
 }

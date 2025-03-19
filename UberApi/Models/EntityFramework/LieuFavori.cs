@@ -25,9 +25,9 @@ public partial class LieuFavori
 
     [ForeignKey("IdAdresse")]
     [InverseProperty("LieuFavoris")]
-    public virtual Adresse IdAdresseNavigation { get; set; } = null!;
+    public virtual Adresse? IdAdresseNavigation { get; set; } = null!;
 
     [ForeignKey("IdClient")]
     [InverseProperty("LieuFavoris")]
-    public virtual Client IdClientNavigation { get; set; } = null!;
+    public virtual Client? IdClientNavigation { get; set; } = null!;
 }
