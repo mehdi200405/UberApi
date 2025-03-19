@@ -31,6 +31,7 @@ namespace UberApi
             builder.Services.AddScoped<IDataRepository<Entreprise>, EntrepriseManager>();
             builder.Services.AddScoped<IDataRepository<CarteBancaire>, CarteBancaireManager>();
             builder.Services.AddScoped<IDataRepository<Ville>, VilleManager>();
+            builder.Services.AddScoped<IDataRepository<CodePostal>, CodePostalManager>();
 
 
 

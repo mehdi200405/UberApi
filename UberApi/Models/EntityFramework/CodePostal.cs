@@ -26,5 +26,5 @@ public partial class CodePostal
     public virtual Pays? IdPaysNavigation { get; set; }
 
     [InverseProperty("IdCodePostalNavigation")]
-    public virtual ICollection<Ville> Villes { get; set; } = new List<Ville>();
+    public virtual ICollection<Ville>? Villes { get; set; } = new List<Ville>();
 }
