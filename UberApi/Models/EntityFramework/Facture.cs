@@ -37,7 +37,7 @@ public partial class Facture
 
     [ForeignKey("IdClient")]
     [InverseProperty("Factures")]
-    public virtual Client IdClientNavigation { get; set; } = null!;
+    public virtual Client? IdClientNavigation { get; set; } = null!;
 
     [ForeignKey("IdCommande")]
     [InverseProperty("Factures")]
@@ -45,7 +45,7 @@ public partial class Facture
 
     [ForeignKey("IdPays")]
     [InverseProperty("Factures")]
-    public virtual Pays IdPaysNavigation { get; set; } = null!;
+    public virtual Pays? IdPaysNavigation { get; set; } = null!;
 
     [ForeignKey("IdReservation")]
     [InverseProperty("Factures")]
