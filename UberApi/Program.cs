@@ -35,7 +35,7 @@ namespace UberApi
             builder.Services.AddScoped<IDataRepository<Pays>, PaysManager>();
             builder.Services.AddScoped<IDataRepository<LieuFavori>, LieuFavoriManager>();
 
-
+            builder.Services.AddScoped<IDataRepository<CategoriePrestation>, CategoriePrestationManager>();
 
             var app = builder.Build();
 
