@@ -43,9 +43,9 @@ namespace UberApi.Models.DataManager
             newAdresse.Longitude = entity.Longitude;
             await s221UberContext.SaveChangesAsync();
         }
-        public async Task DeleteAsync(Adresse utilisateur)
+        public async Task DeleteAsync(Adresse adresse)
         {
-            s221UberContext.Adresses.Remove(utilisateur);
+            s221UberContext.Adresses.Remove(adresse);
             await s221UberContext.SaveChangesAsync();
         }
     }

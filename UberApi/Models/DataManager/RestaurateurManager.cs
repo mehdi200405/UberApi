@@ -45,9 +45,9 @@ namespace UberApi.Models.DataManager
 
             await s221UberContext.SaveChangesAsync();
         }
-        public async Task DeleteAsync(Restaurateur utilisateur)
+        public async Task DeleteAsync(Restaurateur restaurateur)
         {
-            s221UberContext.Restaurateurs.Remove(utilisateur);
+            s221UberContext.Restaurateurs.Remove(restaurateur);
             await s221UberContext.SaveChangesAsync();
         }
     }

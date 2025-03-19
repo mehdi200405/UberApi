@@ -43,9 +43,9 @@ namespace UberApi.Models.DataManager
             newEntreprise.Taille = entity.Taille;
             await s221UberContext.SaveChangesAsync();
         }
-        public async Task DeleteAsync(Entreprise utilisateur)
+        public async Task DeleteAsync(Entreprise entreprise)
         {
-            s221UberContext.Entreprises.Remove(utilisateur);
+            s221UberContext.Entreprises.Remove(entreprise);
             await s221UberContext.SaveChangesAsync();
         }
     }

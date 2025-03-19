@@ -14,11 +14,11 @@ namespace UberApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AdressesController : ControllerBase
+    public class VillesController : ControllerBase
     {
-        private readonly IDataRepository<Adresse> dataRepository;
+        private readonly IDataRepository<Ville> dataRepository;
 
-        public AdressesController(IDataRepository<Adresse> dataRepo)
+        public VillesController(IDataRepository<Ville> dataRepo)
         {
             dataRepository = dataRepo;
         }   
@@ -27,7 +27,7 @@ namespace UberApi.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Adresse>>> GetAdressesAsync()
+        public async Task<ActionResult<IEnumerable<Ville>>> GetVillesAsync()
         {
             return await dataRepository.GetAllAsync();
         }
@@ -41,32 +41,32 @@ namespace UberApi.Controllers
         [ActionName("GetById")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Adresse>> GetAdresseAsync(int id)
+        public async Task<ActionResult<Ville>> GetVilleAsync(int id)
         {
-            var adresse = await dataRepository.GetByIdAsync(id);
+            var ville = await dataRepository.GetByIdAsync(id);
 
-            if (adresse == null)
+            if (ville == null)
             {
                 return NotFound();
             }
-            return adresse;
+            return ville;
 
         }
 
 
         [HttpGet]
-        [Route("[action]/{libelleAdresse}")]
-        [ActionName("GetByLibelleAdresse")]
+        [Route("[action]/{nomVille}")]
+        [ActionName("GetByNomVille")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Adresse>> GetAdresseByLibelleAdresseAsync(string libelleAdresse)
+        public async Task<ActionResult<Ville>> GetVilleByNomVilleAsync(string nomVille)
         {
-            var adresse = await dataRepository.GetByStringAsync(libelleAdresse);
-            if (adresse == null)
+            var ville = await dataRepository.GetByStringAsync(nomVille);
+            if (ville == null)
             {
                 return NotFound();
             }
-            return adresse;
+            return ville;
         }
 
 
@@ -74,9 +74,9 @@ namespace UberApi.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> PutAdresseAsync(int id, Adresse adresse)
+        public async Task<IActionResult> PutVilleAsync(int id, Ville ville)
         {
-            if (id != adresse.IdAdresse)
+            if (id != ville.IdVille)
             {
                 return BadRequest();
             }
@@ -87,7 +87,7 @@ namespace UberApi.Controllers
             }
             else
             {
-                await dataRepository.UpdateAsync(userToUpdate.Value, adresse);
+                await dataRepository.UpdateAsync(userToUpdate.Value, ville);
                 return NoContent();
             }
         }
@@ -96,29 +96,29 @@ namespace UberApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<Adresse>> PostAdresseAsync(Adresse adresse)
+        public async Task<ActionResult<Ville>> PostVilleAsync(Ville ville)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            await dataRepository.AddAsync(adresse);
-            return CreatedAtAction("GetById", new { id = adresse.IdAdresse }, adresse); // GetById : nom de l’action
+            await dataRepository.AddAsync(ville);
+            return CreatedAtAction("GetById", new { id = ville.IdVille }, ville); // GetById : nom de l’action
         }
 
 
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteAdresseAsync(int id)
+        public async Task<IActionResult> DeleteVilleAsync(int id)
         {
-            var adresse = await dataRepository.GetByIdAsync(id);
-            if (adresse == null)
+            var ville = await dataRepository.GetByIdAsync(id);
+            if (ville == null)
             {
                 return NotFound();
 
             }
-            await dataRepository.DeleteAsync(adresse.Value);
+            await dataRepository.DeleteAsync(ville.Value);
             return NoContent();
         }
     }

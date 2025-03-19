@@ -45,9 +45,9 @@ namespace UberApi.Models.DataManager
             newEntretien.RdvLogistiqueLieu = entity.RdvLogistiqueLieu;
             await s221UberContext.SaveChangesAsync();
         }
-        public async Task DeleteAsync(Entretien utilisateur)
+        public async Task DeleteAsync(Entretien entretien)
         {
-            s221UberContext.Entretiens.Remove(utilisateur);
+            s221UberContext.Entretiens.Remove(entretien);
             await s221UberContext.SaveChangesAsync();
         }
     }

@@ -24,7 +24,7 @@ public partial class Ville
     public string NomVille { get; set; } = null!;
 
     [InverseProperty("IdVilleNavigation")]
-    public virtual ICollection<Adresse> Adresses { get; set; } = new List<Adresse>();
+    public virtual ICollection<Adresse>? Adresses { get; set; } = new List<Adresse>();
 
     [ForeignKey("IdCodePostal")]
     [InverseProperty("Villes")]

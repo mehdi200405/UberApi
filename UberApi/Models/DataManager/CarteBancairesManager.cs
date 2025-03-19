@@ -45,9 +45,9 @@ namespace UberApi.Models.DataManager
 
             await s221UberContext.SaveChangesAsync();
         }
-        public async Task DeleteAsync(CarteBancaire utilisateur)
+        public async Task DeleteAsync(CarteBancaire cb)
         {
-            s221UberContext.CarteBancaires.Remove(utilisateur);
+            s221UberContext.CarteBancaires.Remove(cb);
             await s221UberContext.SaveChangesAsync();
         }
     }
