@@ -32,9 +32,9 @@ public partial class CarteBancaire
     public string TypeReseaux { get; set; } = null!;
 
     [InverseProperty("IdCbNavigation")]
-    public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
+    public virtual ICollection<Course>? Courses { get; set; } = new List<Course>();
 
     [ForeignKey("IdCb")]
     [InverseProperty("IdCbs")]
-    public virtual ICollection<Client> IdClients { get; set; } = new List<Client>();
+    public virtual ICollection<Client>? IdClients { get; set; } = new List<Client>();
 }
