@@ -21,20 +21,13 @@ namespace UberApi.Controllers
         public LivreursController(IDataRepository<Livreur> dataRepo)
         {
             dataRepository = dataRepo;
-        }   
-
-
-
+        }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Livreur>>> GetLivreursAsync()
         {
             return await dataRepository.GetAllAsync();
         }
-
-
-
-
 
         [HttpGet]
         [Route("[action]/{id}")]
@@ -53,7 +46,6 @@ namespace UberApi.Controllers
 
         }
 
-
         [HttpGet]
         [Route("[action]/{libelleLivreur}")]
         [ActionName("GetByLibelleLivreur")]
@@ -68,7 +60,6 @@ namespace UberApi.Controllers
             }
             return livreur;
         }
-
 
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -92,7 +83,6 @@ namespace UberApi.Controllers
             }
         }
 
-
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -103,9 +93,8 @@ namespace UberApi.Controllers
                 return BadRequest(ModelState);
             }
             await dataRepository.AddAsync(livreur);
-            return CreatedAtAction("GetById", new { id = livreur.IdLivreur }, livreur); // GetById : nom de l’action
+            return CreatedAtAction("GetById", new { id = livreur.IdLivreur }, livreur);
         }
-
 
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
