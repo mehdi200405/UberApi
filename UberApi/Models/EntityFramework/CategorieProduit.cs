@@ -19,5 +19,5 @@ public partial class CategorieProduit
 
     [ForeignKey("IdCategorie")]
     [InverseProperty("IdCategories")]
-    public virtual ICollection<Produit> IdProduits { get; set; } = new List<Produit>();
+    public virtual ICollection<Produit>? IdProduits { get; set; } = new List<Produit>();
 }
