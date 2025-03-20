@@ -9,6 +9,7 @@ using UberApi.Models.Repository;
 using UberApi.Models.EntityFramework;
 using Moq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace UberApi.Controllers.Tests
 {
@@ -74,7 +75,7 @@ namespace UberApi.Controllers.Tests
         }
 
         [TestMethod]
-        public void GetCoursierByEmail_ExistingIdPassed_ReturnsRightItem_AvecMoq()
+        public void GetCoursierByNumeroCarteVTC_ExistingIdPassed_ReturnsRightItem_AvecMoq()
         {
             Coursier coursier = new Coursier
             {
@@ -112,7 +113,7 @@ namespace UberApi.Controllers.Tests
         }
 
         [TestMethod]
-        public void GetCoursierByEmail_NotExistingIdPassed_ReturnsRightItem_AvecMoq()
+        public void GetCoursierByNumeroCarteVTC_NotExistingIdPassed_ReturnsRightItem_AvecMoq()
         {
             
             _mockRepository = new Mock<IDataRepository<Coursier>>();
@@ -122,6 +123,45 @@ namespace UberApi.Controllers.Tests
             // Assert
             Assert.IsInstanceOfType(actionResult.Result, typeof(NotFoundResult));
         }
+
+
+        //[TestMethod]
+        //public void PostCouriser_ExistingIdPassed_ReturnsRightItem_AvecMoq()
+        //{
+        //    Coursier coursier = new Coursier
+        //    {
+        //        IdCoursier = 10, //new coursier id 10
+        //        IdEntreprise = 1,
+        //        IdAdresse = 1,
+        //        GenreUser = "Homme",
+        //        NomUser = "Amir", //new coursier name Amir
+        //        PrenomUser = "Julien",
+        //        DateNaissance = DateOnly.Parse("1988-04-25"),
+        //        Telephone = "0601010101",
+        //        EmailUser = "julien.durant@example.com",
+        //        MotDePasseUser = "hasedpassword123",
+        //        NumeroCarteVtc = "123456789012",
+        //        Iban = "FR7630006000011234567890189",
+        //        DateDebutActivite = DateOnly.Parse("2023-01-15"),
+        //        NoteMoyenne = 4.5m,
+        //        Courses = [],
+        //        Entretiens = [],
+        //        Horaires = [],
+        //        IdAdresseNavigation = null,
+        //        IdEntrepriseNavigation = null,
+        //        ReglementSalaires = [],
+        //        Vehicules = []
+        //    };
+
+        //    _mockRepository = new Mock<IDataRepository<Coursier>>();
+        //    _controller = new CoursiersController(_mockRepository.Object);
+        //    // Act
+        //    var actionResult = _controller.PostCoursierAsync(coursier).Result;
+
+        //    // Assert
+        //    Assert.IsNotNull(actionResult);
+        //    Assert.AreSame(coursier, actionResult.Value);
+        //}
     }
 
 }
