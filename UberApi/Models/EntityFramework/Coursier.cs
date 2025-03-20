@@ -86,4 +86,8 @@ public partial class Coursier
 
     [InverseProperty("IdCoursierNavigation")]
     public virtual ICollection<Vehicule>? Vehicules { get; set; } = new List<Vehicule>();
+
+
+
+   
 }
