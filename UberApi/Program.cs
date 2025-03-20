@@ -2,6 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using UberApi.Models.DataManager;
 using UberApi.Models.EntityFramework;
 using UberApi.Models.Repository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace UberApi
 {
@@ -38,6 +41,12 @@ namespace UberApi
             builder.Services.AddScoped<IDataRepository<CategoriePrestation>, CategoriePrestationManager>();
             builder.Services.AddScoped<IDataRepository<CategorieProduit>, CategorieProduitManager>();
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            });
+
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())
@@ -45,6 +54,8 @@ namespace UberApi
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseCors("AllowAll");
 
             app.UseHttpsRedirection();
             app.UseAuthorization();
