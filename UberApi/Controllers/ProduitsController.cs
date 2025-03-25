@@ -111,7 +111,7 @@ namespace UberApi.Controllers
         public async Task<IActionResult> DeleteProduitAsync(int id)
         {
             var produit = await dataRepository.GetByIdAsync(id);
-            if (produit == null)
+            if (produit.Value == null)
             {
                 return NotFound();
 

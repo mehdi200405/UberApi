@@ -113,7 +113,7 @@ namespace UberApi.Controllers
         public async Task<IActionResult> DeleteLieuFavoriAsync(int id)
         {
             var lieuFavori = await dataRepository.GetByIdAsync(id);
-            if (lieuFavori == null)
+            if (lieuFavori.Value == null)
             {
                 return NotFound();
 
