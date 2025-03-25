@@ -1,22 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using UberApi.Models.EntityFramework;
-using UberApi.Models.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using UberApi.Models.EntityFramework;
-using UberApi.Models.DataManager;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using UberApi.Models.Repository;
 
 namespace UberApi.Controllers
@@ -32,15 +15,11 @@ namespace UberApi.Controllers
             dataRepository = dataRepo;
         }
 
-
-
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Restaurateur>>> GetRestaurateurs()
         {
             return await dataRepository.GetAllAsync();
         }
-
-
 
         [HttpGet]
         [Route("[action]/{id}")]
@@ -59,7 +38,6 @@ namespace UberApi.Controllers
 
         }
 
-
         [HttpGet]
         [Route("[action]/{email}")]
         [ActionName("GetByEmail")]
@@ -74,7 +52,6 @@ namespace UberApi.Controllers
             }
             return utilisateur;
         }
-
 
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -98,7 +75,6 @@ namespace UberApi.Controllers
             }
         }
 
-
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -109,9 +85,8 @@ namespace UberApi.Controllers
                 return BadRequest(ModelState);
             }
             await dataRepository.AddAsync(restaurateur);
-            return CreatedAtAction("GetById", new { id = restaurateur.IdRestaurateur }, restaurateur); // GetById : nom de l’action
+            return CreatedAtAction("GetById", new { id = restaurateur.IdRestaurateur }, restaurateur);
         }
-
 
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -127,6 +102,5 @@ namespace UberApi.Controllers
             await dataRepository.DeleteAsync(restaurateur.Value);
             return NoContent();
         }
-
     }
 }

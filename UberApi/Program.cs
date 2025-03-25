@@ -2,16 +2,17 @@ using Microsoft.EntityFrameworkCore;
 using UberApi.Models.DataManager;
 using UberApi.Models.EntityFramework;
 using UberApi.Models.Repository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace UberApi
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
-            // Add services to the container.
 
             builder.Services.AddDbContext<S221UberContext>(options =>
                 options.UseNpgsql(builder.Configuration.GetConnectionString("S221UberContext")));
@@ -19,6 +20,7 @@ namespace UberApi
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
             builder.Services.AddScoped<IDataRepository<Client>, ClientManager>();
             builder.Services.AddScoped<IDataRepository<Coursier>, CoursierManager>();
             builder.Services.AddScoped<IDataRepository<Restaurateur>, RestaurateurManager>();
@@ -39,22 +41,24 @@ namespace UberApi
             builder.Services.AddScoped<IDataRepository<CategoriePrestation>, CategoriePrestationManager>();
             builder.Services.AddScoped<IDataRepository<CategorieProduit>, CategorieProduitManager>();
 
-
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            });
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
 
+            app.UseCors("AllowAll");
+
             app.UseHttpsRedirection();
-
             app.UseAuthorization();
-
-
             app.MapControllers();
 
             app.Run();
