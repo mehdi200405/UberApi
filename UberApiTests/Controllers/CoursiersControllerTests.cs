@@ -248,7 +248,7 @@ namespace UberApi.Controllers.Tests
 
             // Assert
             Assert.IsNotNull(actionResult);
-            Assert.IsInstanceOfType(actionResult, typeof(NoContent));
+            Assert.IsInstanceOfType(actionResult, typeof(NoContentResult));
 
             _mockRepository.Verify(x => x.UpdateAsync(It.Is<Coursier>(c => c.IdCoursier == coursierUpdate.IdCoursier), coursierUpdate), Times.Once);
         }
