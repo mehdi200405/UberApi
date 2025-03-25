@@ -66,16 +66,6 @@ namespace UberApi.Models.DataManager
             await s221UberContext.SaveChangesAsync();
         }
 
-        public async Task<bool> VerifyPasswordAsync(string email, string password)
-        {
-            var user = await s221UberContext.Livreurs.FirstOrDefaultAsync(u => u.EmailUser.ToUpper() == email.ToUpper());
-
-            if (user == null)
-                return false;
-
-            return BCrypt.Net.BCrypt.Verify(password, user.MotDePasseUser);
-        }
-
         public async Task DeleteAsync(Livreur utilisateur)
         {
             s221UberContext.Livreurs.Remove(utilisateur);

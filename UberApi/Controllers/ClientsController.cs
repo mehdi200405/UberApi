@@ -151,45 +151,5 @@ namespace UberApi.Controllers
             public string Email { get; set; }
             public string Password { get; set; }
         }
-
-        [HttpPost("register")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> RegisterAsync([FromBody] RegisterModel model)
-        {
-            var existingUser = await dataRepository.GetByStringAsync(model.Email);
-            if (existingUser != null)
-            {
-                return BadRequest("Un utilisateur avec cet email existe déjà.");
-            }
-
-            var newUser = new Client
-            {
-                NomUser = model.Nom,
-                PrenomUser = model.Prenom,
-                EmailUser = model.Email,
-                MotDePasseUser = BCrypt.Net.BCrypt.HashPassword(model.Password),
-                GenreUser = model.Genre,
-                DateNaissance = model.DateNaissance,
-                Telephone = model.Telephone,
-                TypeClient = model.TypeClient
-            };
-
-            await dataRepository.AddAsync(newUser);
-
-            return CreatedAtAction("GetById", new { id = newUser.IdClient }, newUser);
-        }
-
-        public class RegisterModel
-        {
-            public string Nom { get; set; }
-            public string Prenom { get; set; }
-            public string Email { get; set; }
-            public string Password { get; set; }
-            public string Genre { get; set; }
-            public DateOnly DateNaissance { get; set; }
-            public string Telephone { get; set; }
-            public string TypeClient { get; set; }
-        }
     }
 }

@@ -34,7 +34,7 @@ namespace UberApi.Models.DataManager
 
         public async Task AddAsync(Coursier entity)
         {
-            entity.MotDePasseUser = BCrypt.Net.BCrypt.HashPassword(entity.MotDePasseUser); // Hachage du mot de passe
+            entity.MotDePasseUser = BCrypt.Net.BCrypt.HashPassword(entity.MotDePasseUser);
             await s221UberContext.Coursiers.AddAsync(entity);
             await s221UberContext.SaveChangesAsync();
         }
@@ -58,16 +58,6 @@ namespace UberApi.Models.DataManager
             }
 
             await s221UberContext.SaveChangesAsync();
-        }
-
-        public async Task<bool> VerifyPasswordAsync(string email, string password)
-        {
-            var user = await s221UberContext.Coursiers.FirstOrDefaultAsync(u => u.EmailUser.ToUpper() == email.ToUpper());
-
-            if (user == null)
-                return false;
-
-            return BCrypt.Net.BCrypt.Verify(password, user.MotDePasseUser);
         }
 
         public async Task DeleteAsync(Coursier utilisateur)
