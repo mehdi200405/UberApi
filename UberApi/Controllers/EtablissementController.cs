@@ -17,11 +17,15 @@ namespace UberApi.Controllers
     public class EtablissementsController : ControllerBase
     {
         private readonly IDataRepository<Etablissement> dataRepository;
+        private readonly IDataRepository<Adresse> dataRepositoryAdresse;
+        private readonly IDataRepository<Ville> dataRepositoryVille;
 
-        public EtablissementsController(IDataRepository<Etablissement> dataRepo)
+        public EtablissementsController(IDataRepository<Etablissement> dataRepo, IDataRepository<Adresse> data, IDataRepository<Ville> dataVille)
         {
             dataRepository = dataRepo;
-        }   
+            dataRepositoryAdresse = data;
+            dataRepositoryVille = dataVille;
+        }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Etablissement>>> GetEtablissementsAsync()
@@ -110,5 +114,47 @@ namespace UberApi.Controllers
             await dataRepository.DeleteAsync(etablissement.Value);
             return NoContent();
         }
+
+
+        [HttpGet]
+        [Route("[action]/{idEtablissement}")]
+        [ActionName("GetAdresseByIdEtablissement")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<Adresse>> GetAdresseByIdEtablissementAsync(int idEtablissement)
+        {
+            var etablissement = await dataRepository.GetByIdAsync(idEtablissement);
+
+            if (etablissement.Value == null)
+            {
+                return NotFound();
+            }
+
+            var idadresse = etablissement.Value.IdAdresse;
+
+            var adresse = await dataRepositoryAdresse.GetByIdAsync(idadresse);
+
+            if (adresse == null)
+            {
+                return NotFound();
+            }
+
+            var idville = adresse.Value.IdVille;
+
+            if (!idville.HasValue)
+            {
+                return NotFound(); 
+            }
+
+            var ville = await dataRepositoryVille.GetByIdAsync(idville.Value);
+
+            if (ville == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(ville.Value.NomVille);
+        }
+
     }
 }
