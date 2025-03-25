@@ -23,18 +23,11 @@ namespace UberApi.Controllers
             dataRepository = dataRepo;
         }   
 
-
-
-
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Etablissement>>> GetEtablissementsAsync()
         {
             return await dataRepository.GetAllAsync();
         }
-
-
-
-
 
         [HttpGet]
         [Route("[action]/{id}")]
@@ -53,7 +46,6 @@ namespace UberApi.Controllers
 
         }
 
-
         [HttpGet]
         [Route("[action]/{nomEtablissement}")]
         [ActionName("GetByNomEtablissement")]
@@ -68,7 +60,6 @@ namespace UberApi.Controllers
             }
             return etablissement;
         }
-
 
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -92,7 +83,6 @@ namespace UberApi.Controllers
             }
         }
 
-
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -103,9 +93,8 @@ namespace UberApi.Controllers
                 return BadRequest(ModelState);
             }
             await dataRepository.AddAsync(etablissement);
-            return CreatedAtAction("GetById", new { id = etablissement.IdEtablissement }, etablissement); // GetById : nom de l’action
+            return CreatedAtAction("GetById", new { id = etablissement.IdEtablissement }, etablissement);
         }
-
 
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
