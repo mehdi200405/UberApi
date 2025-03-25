@@ -113,7 +113,7 @@ namespace UberApi.Controllers
         public async Task<IActionResult> DeleteCarteBancaireAsync(int id)
         {
             var carteBancaire = await dataRepository.GetByIdAsync(id);
-            if (carteBancaire == null)
+            if (carteBancaire.Value == null)
             {
                 return NotFound();
 

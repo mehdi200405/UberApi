@@ -113,7 +113,7 @@ namespace UberApi.Controllers
         public async Task<IActionResult> DeleteCodePostalAsync(int id)
         {
             var codePostal = await dataRepository.GetByIdAsync(id);
-            if (codePostal == null)
+            if (codePostal.Value == null)
             {
                 return NotFound();
 

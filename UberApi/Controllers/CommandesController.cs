@@ -111,7 +111,7 @@ namespace UberApi.Controllers
         public async Task<IActionResult> DeleteCommandeAsync(int id)
         {
             var commande = await dataRepository.GetByIdAsync(id);
-            if (commande == null)
+            if (commande.Value == null)
             {
                 return NotFound();
 

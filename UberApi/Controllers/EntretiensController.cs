@@ -113,7 +113,7 @@ namespace UberApi.Controllers
         public async Task<IActionResult> DeleteEntretienAsync(int id)
         {
             var entretien = await dataRepository.GetByIdAsync(id);
-            if (entretien == null)
+            if (entretien.Value == null)
             {
                 return NotFound();
 

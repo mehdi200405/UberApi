@@ -113,7 +113,7 @@ namespace UberApi.Controllers
         public async Task<IActionResult> DeleteCategoriePrestationAsync(int id)
         {
             var categoriePrestation = await dataRepository.GetByIdAsync(id);
-            if (categoriePrestation == null)
+            if (categoriePrestation.Value == null)
             {
                 return NotFound();
 

@@ -102,7 +102,7 @@ namespace UberApi.Controllers
         public async Task<IActionResult> DeleteClientAsync(int id)
         {
             var client = await dataRepository.GetByIdAsync(id);
-            if (client == null)
+            if (client.Value == null)
             {
                 return NotFound();
 

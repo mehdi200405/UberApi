@@ -113,7 +113,7 @@ namespace UberApi.Controllers
         public async Task<IActionResult> DeleteFactureAsync(int id)
         {
             var facture = await dataRepository.GetByIdAsync(id);
-            if (facture == null)
+            if (facture.Value == null)
             {
                 return NotFound();
 
