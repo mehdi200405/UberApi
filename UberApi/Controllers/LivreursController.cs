@@ -102,7 +102,7 @@ namespace UberApi.Controllers
         public async Task<IActionResult> DeleteLivreurAsync(int id)
         {
             var livreur = await dataRepository.GetByIdAsync(id);
-            if (livreur == null)
+            if (livreur.Value == null)
             {
                 return NotFound();
 

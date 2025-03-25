@@ -113,7 +113,7 @@ namespace UberApi.Controllers
         public async Task<IActionResult> DeletePaysAsync(int id)
         {
             var pays = await dataRepository.GetByIdAsync(id);
-            if (pays == null)
+            if (pays.Value == null)
             {
                 return NotFound();
 

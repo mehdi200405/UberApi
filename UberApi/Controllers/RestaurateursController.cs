@@ -94,7 +94,7 @@ namespace UberApi.Controllers
         public async Task<IActionResult> DeleteRestaurateur(int id)
         {
             var restaurateur = await dataRepository.GetByIdAsync(id);
-            if (restaurateur == null)
+            if (restaurateur.Value == null)
             {
                 return NotFound();
 
