@@ -11,18 +11,22 @@ namespace UberApi.Models.DataManager
     {
         readonly S221UberContext? s221UberContext;
         public EtablissementManager() { }
+
         public EtablissementManager(S221UberContext context)
         {
             s221UberContext = context;
         }
+
         public async Task<ActionResult<IEnumerable<Etablissement>>> GetAllAsync()
         {
-            return await s221UberContext.Etablissements.ToListAsync();
+            return await s221UberContext.Etablissements.Include(a => a.IdAdresseNavigation).ThenInclude(n => n.IdVilleNavigation).ToListAsync();
         }
+
         public async Task<ActionResult<Etablissement>> GetByIdAsync(int id)
         {
             return await s221UberContext.Etablissements.FirstOrDefaultAsync(u => u.IdEtablissement == id);
         }
+
         public async Task<ActionResult<Etablissement>> GetByStringAsync(string libelle)
         {
             return await s221UberContext.Etablissements.FirstOrDefaultAsync(u => u.NomEtablissement.ToUpper() == libelle.ToUpper());

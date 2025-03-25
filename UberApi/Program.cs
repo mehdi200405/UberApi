@@ -5,6 +5,7 @@ using UberApi.Models.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace UberApi
 {
@@ -15,7 +16,7 @@ namespace UberApi
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddDbContext<S221UberContext>(options =>
-                options.UseNpgsql(builder.Configuration.GetConnectionString("S221UberContext")));
+                options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking).UseNpgsql(builder.Configuration.GetConnectionString("S221UberContext")));
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
@@ -45,6 +46,11 @@ namespace UberApi
             {
                 options.AddPolicy("AllowAll",
                     builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            });
+
+            builder.Services.AddControllers().AddJsonOptions(options => 
+            {
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
             });
 
             var app = builder.Build();
