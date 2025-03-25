@@ -63,7 +63,7 @@ namespace UberApi.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> PutCoursierAsync(int id, Coursier coursier)
+        public async Task<ActionResult<Coursier>> PutCoursierAsync(int id, Coursier coursier)
         {
             if (id != coursier.IdCoursier)
             {
@@ -100,7 +100,7 @@ namespace UberApi.Controllers
         public async Task<IActionResult> DeleteCoursierAsync(int id)
         {
             var coursier = await dataRepository.GetByIdAsync(id);
-            if (coursier == null)
+            if (coursier.Value == null)
             {
                 return NotFound();
 
