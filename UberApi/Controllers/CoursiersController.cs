@@ -21,18 +21,11 @@ namespace UberApi.Controllers
             dataRepository = dataRepo;
         }
 
-
-
-
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Coursier>>> GetCoursiersAsync()
         {
             return await dataRepository.GetAllAsync();
         }
-
-
-
-
 
         [HttpGet]
         [Route("[action]/{id}")]
@@ -51,7 +44,6 @@ namespace UberApi.Controllers
 
         }
 
-
         [HttpGet]
         [Route("[action]/{numeroCarteVTC}")]
         [ActionName("GetByNumeroCarteVTC")]
@@ -66,7 +58,6 @@ namespace UberApi.Controllers
             }
             return utilisateur;
         }
-
 
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -90,7 +81,6 @@ namespace UberApi.Controllers
             }
         }
 
-
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -103,7 +93,6 @@ namespace UberApi.Controllers
             await dataRepository.AddAsync(coursier);
             return CreatedAtAction("GetById", new { id = coursier.IdCoursier }, coursier); // GetById : nom de l’action
         }
-
 
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
