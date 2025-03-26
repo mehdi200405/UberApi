@@ -30,7 +30,7 @@ namespace UberApi.Controllers
         {
             var restaurateur = await dataRepository.GetByIdAsync(id);
 
-            if (restaurateur == null)
+            if (restaurateur.Value == null)
             {
                 return NotFound();
             }
@@ -46,7 +46,7 @@ namespace UberApi.Controllers
         public async Task<ActionResult<Restaurateur>> GetRestaurateurByEmail(string email)
         {
             var utilisateur = await dataRepository.GetByStringAsync(email);
-            if (utilisateur == null)
+            if (utilisateur.Value == null)
             {
                 return NotFound();
             }
@@ -64,7 +64,7 @@ namespace UberApi.Controllers
                 return BadRequest();
             }
             var userToUpdate = await dataRepository.GetByIdAsync(id);
-            if (userToUpdate == null)
+            if (userToUpdate.Value == null)
             {
                 return NotFound();
             }

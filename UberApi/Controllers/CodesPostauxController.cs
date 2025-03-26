@@ -45,7 +45,7 @@ namespace UberApi.Controllers
         {
             var codePostal = await dataRepository.GetByIdAsync(id);
 
-            if (codePostal == null)
+            if (codePostal.Value == null)
             {
                 return NotFound();
             }
@@ -62,7 +62,7 @@ namespace UberApi.Controllers
         public async Task<ActionResult<CodePostal>> GetCodePostalByCodePostalAsync(string cP)
         {
             var codePostal = await dataRepository.GetByStringAsync(cP);
-            if (codePostal == null)
+            if (codePostal.Value == null)
             {
                 return NotFound();
             }
@@ -81,7 +81,7 @@ namespace UberApi.Controllers
                 return BadRequest();
             }
             var userToUpdate = await dataRepository.GetByIdAsync(id);
-            if (userToUpdate == null)
+            if (userToUpdate.Value == null)
             {
                 return NotFound();
             }

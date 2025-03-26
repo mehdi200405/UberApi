@@ -43,7 +43,7 @@ namespace UberApi.Controllers
         {
             var vehicule = await dataRepository.GetByIdAsync(id);
 
-            if (vehicule == null)
+            if (vehicule.Value == null)
             {
                 return NotFound();
             }
@@ -60,7 +60,7 @@ namespace UberApi.Controllers
         public async Task<ActionResult<Vehicule>> GetVehiculeByImmatriculationAsync(string immatriculation)
         {
             var utilisateur = await dataRepository.GetByStringAsync(immatriculation);
-            if (utilisateur == null)
+            if (utilisateur.Value == null)
             {
                 return NotFound();
             }
@@ -79,7 +79,7 @@ namespace UberApi.Controllers
                 return BadRequest();
             }
             var userToUpdate = await dataRepository.GetByIdAsync(id);
-            if (userToUpdate == null)
+            if (userToUpdate.Value == null)
             {
                 return NotFound();
             }

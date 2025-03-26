@@ -389,61 +389,44 @@ namespace UberApi.Controllers.Tests
         public void GetCoursierById_NotExistingIdPassed_ReturnsRightItem_SansMoq()
         {
 
-            var mockRepository = new Mock<IDataRepository<Coursier>>();
-            var controller = new CoursiersController(mockRepository.Object);
+            var expected = _context.Coursiers.FirstOrDefault(u => u.IdCoursier == -5);
+
             // Act
-            var actionResult = controller.GetCoursierAsync(1).Result;
+            var actionResult = _controller.GetCoursierAsync(-5).Result;
             // Assert
+            Assert.IsNotNull(actionResult);
+            Assert.IsNull(actionResult.Value);
+            Assert.AreEqual(expected, actionResult.Value);
             Assert.IsInstanceOfType(actionResult.Result, typeof(NotFoundResult));
         }
 
         [TestMethod]
         public void GetCoursierByNumeroCarteVTC_ExistingIdPassed_AreEqual_SansMoq()
         {
-            Coursier coursier = new Coursier
-            {
-                IdCoursier = 1,
-                IdEntreprise = 1,
-                IdAdresse = 1,
-                GenreUser = "Homme",
-                NomUser = "Durant",
-                PrenomUser = "Julien",
-                DateNaissance = DateOnly.Parse("1988-04-25"),
-                Telephone = "0601010101",
-                EmailUser = "julien.durant@example.com",
-                MotDePasseUser = "hasedpassword123",
-                NumeroCarteVtc = "123456789012",
-                Iban = "FR7630006000011234567890189",
-                DateDebutActivite = DateOnly.Parse("2023-01-15"),
-                NoteMoyenne = 4.5m,
-                Courses = [],
-                Entretiens = [],
-                Horaires = [],
-                IdAdresseNavigation = null,
-                IdEntrepriseNavigation = null,
-                ReglementSalaires = [],
-                Vehicules = []
-            };
-            var mockRepository = new Mock<IDataRepository<Coursier>>();
-            mockRepository.Setup(x => x.GetByStringAsync("123456789012").Result).Returns(coursier);
-            var controller = new CoursiersController(mockRepository.Object);
+            var numeroCarteVtc = "123456789012";
+            var expected =  _context.Coursiers.FirstOrDefaultAsync(u => u.NumeroCarteVtc.ToUpper() == numeroCarteVtc.ToUpper());
+
             // Act
-            var actionResult = controller.GetCoursierByNumeroCarteVTCAsync("123456789012").Result;
+            var actionResult = _controller.GetCoursierByNumeroCarteVTCAsync("123456789012").Result;
             // Assert
             Assert.IsNotNull(actionResult);
             Assert.IsNotNull(actionResult.Value);
-            Assert.AreEqual(coursier, actionResult.Value as Coursier);
+            Assert.AreEqual(expected.Result, actionResult.Value);
+            Assert.IsInstanceOfType(actionResult.Result, typeof(NoContentResult));
         }
 
         [TestMethod]
         public void GetCoursierByNumeroCarteVTC_NotExistingIdPassed_ReturnsRightItem_SansMoq()
         {
 
-            var mockRepository = new Mock<IDataRepository<Coursier>>();
-            var controller = new CoursiersController(mockRepository.Object);
+            var numeroCarteVtc = "123456789012";
+            var expected = _context.Coursiers.FirstOrDefaultAsync(u => u.NumeroCarteVtc.ToUpper() == numeroCarteVtc.ToUpper());
             // Act
-            var actionResult = controller.GetCoursierByNumeroCarteVTCAsync("123456789012").Result;
+            var actionResult = _controller.GetCoursierByNumeroCarteVTCAsync("123456789013").Result;
             // Assert
+            Assert.IsNotNull(actionResult);
+            Assert.IsNull(actionResult.Value);
+            Assert.AreEqual(expected.Result, actionResult.Value);
             Assert.IsInstanceOfType(actionResult.Result, typeof(NotFoundResult));
         }
 

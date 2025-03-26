@@ -21,7 +21,7 @@ namespace UberApi.Controllers
         public VillesController(IDataRepository<Ville> dataRepo)
         {
             dataRepository = dataRepo;
-        }   
+        }
 
 
 
@@ -45,7 +45,7 @@ namespace UberApi.Controllers
         {
             var ville = await dataRepository.GetByIdAsync(id);
 
-            if (ville == null)
+            if (ville.Value == null)
             {
                 return NotFound();
             }
@@ -62,7 +62,7 @@ namespace UberApi.Controllers
         public async Task<ActionResult<Ville>> GetVilleByNomVilleAsync(string nomVille)
         {
             var ville = await dataRepository.GetByStringAsync(nomVille);
-            if (ville == null)
+            if (ville.Value == null)
             {
                 return NotFound();
             }
@@ -81,7 +81,7 @@ namespace UberApi.Controllers
                 return BadRequest();
             }
             var userToUpdate = await dataRepository.GetByIdAsync(id);
-            if (userToUpdate == null)
+            if (userToUpdate.Value == null)
             {
                 return NotFound();
             }

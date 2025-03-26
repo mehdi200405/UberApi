@@ -45,7 +45,7 @@ namespace UberApi.Controllers
         {
             var entreprise = await dataRepository.GetByIdAsync(id);
 
-            if (entreprise == null)
+            if (entreprise.Value == null)
             {
                 return NotFound();
             }
@@ -62,7 +62,7 @@ namespace UberApi.Controllers
         public async Task<ActionResult<Entreprise>> GetUtilisateurByLibelleEntrepriseAsync(string nomEntreprise)
         {
             var entreprise = await dataRepository.GetByStringAsync(nomEntreprise);
-            if (entreprise == null)
+            if (entreprise.Value == null)
             {
                 return NotFound();
             }
@@ -81,7 +81,7 @@ namespace UberApi.Controllers
                 return BadRequest();
             }
             var userToUpdate = await dataRepository.GetByIdAsync(id);
-            if (userToUpdate == null)
+            if (userToUpdate.Value == null)
             {
                 return NotFound();
             }
