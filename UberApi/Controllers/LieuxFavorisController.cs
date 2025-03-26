@@ -45,7 +45,7 @@ namespace UberApi.Controllers
         {
             var lieuFavori = await dataRepository.GetByIdAsync(id);
 
-            if (lieuFavori == null)
+            if (lieuFavori.Value == null)
             {
                 return NotFound();
             }
@@ -62,7 +62,7 @@ namespace UberApi.Controllers
         public async Task<ActionResult<LieuFavori>> GetLieuFavoriByNomLieuFavoriAsync(string nomLieu)
         {
             var lieuFavori = await dataRepository.GetByStringAsync(nomLieu);
-            if (lieuFavori == null)
+            if (lieuFavori.Value == null)
             {
                 return NotFound();
             }
@@ -81,7 +81,7 @@ namespace UberApi.Controllers
                 return BadRequest();
             }
             var userToUpdate = await dataRepository.GetByIdAsync(id);
-            if (userToUpdate == null)
+            if (userToUpdate.Value == null)
             {
                 return NotFound();
             }

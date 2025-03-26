@@ -45,7 +45,7 @@ namespace UberApi.Controllers
         {
             var categorieProduit = await dataRepository.GetByIdAsync(id);
 
-            if (categorieProduit == null)
+            if (categorieProduit.Value == null)
             {
                 return NotFound();
             }
@@ -62,7 +62,7 @@ namespace UberApi.Controllers
         public async Task<ActionResult<CategorieProduit>> GetCategorieProduitByNomCategorieProduitAsync(string nomCategorieProduit)
         {
             var categorieProduit = await dataRepository.GetByStringAsync(nomCategorieProduit);
-            if (categorieProduit == null)
+            if (categorieProduit.Value == null)
             {
                 return NotFound();
             }
@@ -81,7 +81,7 @@ namespace UberApi.Controllers
                 return BadRequest();
             }
             var userToUpdate = await dataRepository.GetByIdAsync(id);
-            if (userToUpdate == null)
+            if (userToUpdate.Value == null)
             {
                 return NotFound();
             }

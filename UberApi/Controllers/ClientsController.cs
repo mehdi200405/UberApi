@@ -38,7 +38,7 @@ namespace UberApi.Controllers
         {
             var client = await dataRepository.GetByIdAsync(id);
 
-            if (client == null)
+            if (client.Value == null)
             {
                 return NotFound();
             }
@@ -54,7 +54,7 @@ namespace UberApi.Controllers
         public async Task<ActionResult<Client>> GetUtilisateurByEmailAsync(string email)
         {
             var utilisateur = await dataRepository.GetByStringAsync(email);
-            if (utilisateur == null)
+            if (utilisateur.Value == null)
             {
                 return NotFound();
             }
@@ -72,7 +72,7 @@ namespace UberApi.Controllers
                 return BadRequest();
             }
             var userToUpdate = await dataRepository.GetByIdAsync(id);
-            if (userToUpdate == null)
+            if (userToUpdate.Value == null)
             {
                 return NotFound();
             }
@@ -121,7 +121,7 @@ namespace UberApi.Controllers
             {
                 var user = await dataRepository.GetByStringAsync(model.Email);
 
-                if (user == null || user.Value == null || !BCrypt.Net.BCrypt.Verify(model.Password, user.Value.MotDePasseUser))
+                if (user.Value == null || user.Value == null || !BCrypt.Net.BCrypt.Verify(model.Password, user.Value.MotDePasseUser))
                 {
                     return Unauthorized("Email ou mot de passe incorrect.");
                 }

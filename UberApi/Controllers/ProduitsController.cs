@@ -43,7 +43,7 @@ namespace UberApi.Controllers
         {
             var produit = await dataRepository.GetByIdAsync(id);
 
-            if (produit == null)
+            if (produit.Value == null)
             {
                 return NotFound();
             }
@@ -60,7 +60,7 @@ namespace UberApi.Controllers
         public async Task<ActionResult<Produit>> GetProduitByNameAsync(string nom)
         {
             var produit = await dataRepository.GetByStringAsync(nom);
-            if (produit == null)
+            if (produit.Value == null)
             {
                 return NotFound();
             }
@@ -79,7 +79,7 @@ namespace UberApi.Controllers
                 return BadRequest();
             }
             var userToUpdate = await dataRepository.GetByIdAsync(id);
-            if (userToUpdate == null)
+            if (userToUpdate.Value == null)
             {
                 return NotFound();
             }

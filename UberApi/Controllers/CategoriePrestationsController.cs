@@ -45,7 +45,7 @@ namespace UberApi.Controllers
         {
             var categoriePrestation = await dataRepository.GetByIdAsync(id);
 
-            if (categoriePrestation == null)
+            if (categoriePrestation.Value == null)
             {
                 return NotFound();
             }
@@ -62,7 +62,7 @@ namespace UberApi.Controllers
         public async Task<ActionResult<CategoriePrestation>> GetCategoriePrestationByLibelleCategoriePrestationAsync(string libelleCategoriePrestation)
         {
             var categoriePrestation = await dataRepository.GetByStringAsync(libelleCategoriePrestation);
-            if (categoriePrestation == null)
+            if (categoriePrestation.Value == null)
             {
                 return NotFound();
             }
