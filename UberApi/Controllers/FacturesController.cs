@@ -45,7 +45,7 @@ namespace UberApi.Controllers
         {
             var facture = await dataRepository.GetByIdAsync(id);
 
-            if (facture == null)
+            if (facture.Value == null)
             {
                 return NotFound();
             }
@@ -62,7 +62,7 @@ namespace UberApi.Controllers
         public async Task<ActionResult<IEnumerable<Facture>>> GetByDateFactureAsync(string dateFacture)
         {
             var facture = await ((FactureManager)dataRepository).GetByDateAsync(dateFacture);
-            if (facture == null)
+            if (facture.Value == null)
             {
                 return NotFound();
             }
@@ -81,7 +81,7 @@ namespace UberApi.Controllers
                 return BadRequest();
             }
             var userToUpdate = await dataRepository.GetByIdAsync(id);
-            if (userToUpdate == null)
+            if (userToUpdate.Value == null)
             {
                 return NotFound();
             }

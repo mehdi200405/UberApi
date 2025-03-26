@@ -45,7 +45,7 @@ namespace UberApi.Controllers
         {
             var carteBancaire = await dataRepository.GetByIdAsync(id);
 
-            if (carteBancaire == null)
+            if (carteBancaire.Value == null)
             {
                 return NotFound();
             }
@@ -62,7 +62,7 @@ namespace UberApi.Controllers
         public async Task<ActionResult<CarteBancaire>> GetCBByNumeroCbCarteBancaireAsync(string numeroCb)
         {
             var carteBancaire = await dataRepository.GetByStringAsync(numeroCb);
-            if (carteBancaire == null)
+            if (carteBancaire.Value == null)
             {
                 return NotFound();
             }
@@ -81,7 +81,7 @@ namespace UberApi.Controllers
                 return BadRequest();
             }
             var userToUpdate = await dataRepository.GetByIdAsync(id);
-            if (userToUpdate == null)
+            if (userToUpdate.Value == null)
             {
                 return NotFound();
             }
