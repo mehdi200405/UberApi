@@ -436,9 +436,6 @@ namespace UberApi.Controllers.Tests
             Assert.IsNotNull(actionResult.Value);
             Assert.AreEqual(expected, actionResult.Value);
         }
-/// <summary>
-/// LA SUITE A FAIRE /*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*///*/*/
-/// </summary>
 
 
         [TestMethod]
@@ -477,8 +474,8 @@ namespace UberApi.Controllers.Tests
             // Arrange
             Random rnd = new Random();
             int chiffreNew = rnd.Next(1, 9);
-            var coursier = _controller.GetCoursiersAsync().Result.Value.Last();
-            int derniereId = coursier.IdCoursier + 1;
+            var coursier = _controller.GetCoursiersAsync().Result.Value.Max(c => c.IdCoursier);
+            int derniereId = coursier + 1;
             string chiffreIban = "";
             string chiffreCarteNew = "";
             for (int i = 0; i < 12; i++) {
@@ -504,7 +501,7 @@ namespace UberApi.Controllers.Tests
                 PrenomUser = "Julien",
                 DateNaissance = DateOnly.Parse("1988-04-25"),
                 Telephone = "06010101"+ chiffreNew + "1",
-                EmailUser = "julien.durant" + derniereId+4 + "@example.com",
+                EmailUser = "julien.durant" + derniereId + "@example.com",
                 MotDePasseUser = "hasedpassword123",
                 NumeroCarteVtc = chiffreCarteNew,
                 Iban = "FR" +chiffreIban,
@@ -598,16 +595,26 @@ namespace UberApi.Controllers.Tests
         {
 
             Random rnd = new Random();
-            int chiffre = rnd.Next(1, 1000000000);
             int chiffreNew = rnd.Next(1, 9);
-            int chiffreIban = rnd.Next(1, 23);
-            int chiffreCarte = rnd.Next(1, 11);
+            var coursier = _controller.GetCoursiersAsync().Result.Value.Max(c => c.IdCoursier);
+            int derniereId = coursier + 20;
+            string chiffreIban = "";
+            string chiffreCarteNew = "";
+            for (int i = 0; i < 12; i++)
+            {
+                chiffreCarteNew += rnd.Next(1, 9);
+            }
+            for (int i = 0; i < 23; i++)
+            {
+                chiffreIban += rnd.Next(1, 9);
+            }
+
             // Le mail doit être unique donc 2 possibilités :
             // 1. on s'arrange pour que le mail soit unique en concaténant un random ou un timestamp
             // 2. On supprime le user après l'avoir créé. Dans ce cas, nous avons besoin d'appeler la méthode DELETE de l’API ou remove du DbSet.
             Coursier cousierATester = new Coursier()
             {
-                IdCoursier = chiffre,
+
                 IdEntreprise = 1,
                 IdAdresse = 1,
                 GenreUser = "Homme",
@@ -615,9 +622,9 @@ namespace UberApi.Controllers.Tests
                 PrenomUser = "Julien",
                 DateNaissance = DateOnly.Parse("1988-04-25"),
                 Telephone = "06010101" + chiffreNew + "1",
-                EmailUser = "julien.durant" + chiffre + "@example.com",
+                EmailUser = "julien.durant" + derniereId + "@example.com",
                 MotDePasseUser = "hasedpassword123",
-                NumeroCarteVtc = "9" + chiffreCarte,
+                NumeroCarteVtc = chiffreCarteNew,
                 Iban = "FR" + chiffreIban,
                 DateDebutActivite = DateOnly.Parse("2023-01-15"),
                 NoteMoyenne = 4.5m,
@@ -651,6 +658,7 @@ namespace UberApi.Controllers.Tests
         public void DeleteCoursier_NotValideIdPassed_ReturnsNotFound_SansMoq()
         {
             // Arrange : ID inexistant
+
             int idCoursierInvalide = 19;
 
             var actionResult = _controller.DeleteCoursierAsync(idCoursierInvalide).Result;
