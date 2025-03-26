@@ -30,11 +30,6 @@ namespace UberApi.Controllers.Tests
             _controller = new EntreprisesController(_entreprisesRepository);
         }
 
-        [TestMethod()]
-        public void GetEntreprisesAsyncTest()
-        {
-
-        }
 
         [TestMethod()]
         public void GetEntrepriseById_NotExistingIdPassed_ReturnsRightItem_AvecMoq()
@@ -48,6 +43,32 @@ namespace UberApi.Controllers.Tests
             Assert.IsInstanceOfType(actionResult.Result, typeof(NotFoundResult));
         }
 
-        
+        [TestMethod()]
+        public void GetEntrepriseById_ExistingIdPassed_AreEqual_AvecMoq()
+        {
+
+            Entreprise entreprise = new Entreprise
+            {
+                IdEntreprise = 1,
+                IdAdresse = 1,
+                SiretEntreprise = "12345678901234",
+                NomEntreprise = "Innovatech",
+                Taille = "Grande",
+                Clients = [],
+                Coursiers = [],
+                IdAdresseNavigation = null,
+            };
+            var mockRepository = new Mock<IDataRepository<Entreprise>>();
+            mockRepository.Setup(x => x.GetByIdAsync(1).Result).Returns(entreprise);
+            var controller = new EntreprisesController(mockRepository.Object);
+            // Act
+            var actionResult = controller.GetEntrepriseAsync(1).Result;
+            // Assert
+            Assert.IsNotNull(actionResult);
+            Assert.IsNotNull(actionResult.Value);
+            Assert.AreEqual(entreprise, actionResult.Value as Entreprise);
+        }
+
+
     }
 }
