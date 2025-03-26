@@ -476,15 +476,27 @@ namespace UberApi.Controllers.Tests
         { 
             // Arrange
             Random rnd = new Random();
-            int chiffre = rnd.Next(1, 1000000000);
             int chiffreNew = rnd.Next(1, 9);
-            int chiffreIban = rnd.Next(1, 23);
-            int chiffreCarte = rnd.Next(1, 11);
+            var coursier = _controller.GetCoursiersAsync().Result.Value.Last();
+            int derniereId = coursier.IdCoursier + 1;
+            string chiffreIban = "";
+            string chiffreCarteNew = "";
+            for (int i = 0; i < 12; i++) {
+                chiffreCarteNew += rnd.Next(1, 9);
+            }
+            for (int i = 0; i < 23; i++)
+            {
+                chiffreIban += rnd.Next(1, 9);
+            }
+
+
+
             // Le mail doit être unique donc 2 possibilités :
             // 1. on s'arrange pour que le mail soit unique en concaténant un random ou un timestamp
             // 2. On supprime le user après l'avoir créé. Dans ce cas, nous avons besoin d'appeler la méthode DELETE de l’API ou remove du DbSet.
             Coursier cousierATester = new Coursier()
             {
+
                 IdEntreprise = 1,
                 IdAdresse = 1,
                 GenreUser = "Homme",
@@ -492,9 +504,9 @@ namespace UberApi.Controllers.Tests
                 PrenomUser = "Julien",
                 DateNaissance = DateOnly.Parse("1988-04-25"),
                 Telephone = "06010101"+ chiffreNew + "1",
-                EmailUser = "julien.durant" + chiffre + "@example.com",
+                EmailUser = "julien.durant" + derniereId+4 + "@example.com",
                 MotDePasseUser = "hasedpassword123",
-                NumeroCarteVtc = "9" + chiffreCarte,
+                NumeroCarteVtc = chiffreCarteNew,
                 Iban = "FR" +chiffreIban,
                 DateDebutActivite = DateOnly.Parse("2023-01-15"),
                 NoteMoyenne = 4.5m,
@@ -533,7 +545,7 @@ namespace UberApi.Controllers.Tests
 
 
         [TestMethod]
-        public async void PutCoursier_ValideIdPassed_ReturnsNoContent_SansMoq()
+        public void PutCoursier_ValideIdPassed_ReturnsNoContent_SansMoq()
         {
             // Arrange
             Random rnd = new Random();
@@ -542,17 +554,18 @@ namespace UberApi.Controllers.Tests
             // Étape 1 : Créer un coursier et l'ajouter en base
             Coursier cousierATester = new Coursier()
             {
+                IdCoursier = 20,
                 IdEntreprise = 1,
                 IdAdresse = 1,
                 GenreUser = "Homme",
                 NomUser = "Durant",
                 PrenomUser = "Julien",
                 DateNaissance = DateOnly.Parse("1988-04-25"),
-                Telephone = "0601010101",
-                EmailUser = "julien.durant" + chiffre + "@example.com",
+                Telephone = "0601010181",
+                EmailUser = "julien.durant160077837@example.com",
                 MotDePasseUser = "hasedpassword123",
-                NumeroCarteVtc = "111111111111",
-                Iban = "FR76380600001294567890189",
+                NumeroCarteVtc = "128456789812",
+                Iban = "FR76380600001284567890189",
                 DateDebutActivite = DateOnly.Parse("2023-01-15"),
                 NoteMoyenne = 4.5m,
                 Courses = [],
@@ -564,43 +577,72 @@ namespace UberApi.Controllers.Tests
                 Vehicules = []
             };
 
-            // On ajoute le coursier en base AVANT la mise à jour
-            _controller.PostCoursierAsync(cousierATester); // ⚠️ On enregistre la création
-
-            // Maintenant qu'il existe en base, on récupère son ID
             int coursierUpdate = cousierATester.IdCoursier;
 
-            // Étape 2 : Modifier ses données et faire le PUT
-            cousierATester.Telephone = "0601020304"; // Modifier un champ pour tester
+            
+            cousierATester.Telephone = "0601020304"; 
             var actionResult = _controller.PutCoursierAsync(coursierUpdate, cousierATester).Result;
 
             // Assert
-            Coursier? userRecupere = _context.Coursiers
+            Coursier? cousierRecupere = _context.Coursiers
                 .Where(u => u.EmailUser.ToUpper() == cousierATester.EmailUser.ToUpper())
                 .FirstOrDefault();
 
-            Assert.IsNotNull(userRecupere, "Le coursier n'a pas été trouvé en base après la mise à jour");
+            Assert.IsNotNull(cousierRecupere, "Le coursier n'a pas été trouvé en base après la mise à jour");
             Assert.IsInstanceOfType(actionResult, typeof(NoContentResult));
-            Assert.AreEqual("0601020304", userRecupere.Telephone, "Le numéro de téléphone n'a pas été mis à jour correctement.");
+            Assert.AreEqual("0601020304", cousierRecupere.Telephone, "Le numéro de téléphone n'a pas été mis à jour correctement.");
 
         }
         [TestMethod]
         public void DeleteCoursier_ValideIdPassed_ReturnsNoContent_SansMoq()
         {
 
+            Random rnd = new Random();
+            int chiffre = rnd.Next(1, 1000000000);
+            int chiffreNew = rnd.Next(1, 9);
+            int chiffreIban = rnd.Next(1, 23);
+            int chiffreCarte = rnd.Next(1, 11);
+            // Le mail doit être unique donc 2 possibilités :
+            // 1. on s'arrange pour que le mail soit unique en concaténant un random ou un timestamp
+            // 2. On supprime le user après l'avoir créé. Dans ce cas, nous avons besoin d'appeler la méthode DELETE de l’API ou remove du DbSet.
+            Coursier cousierATester = new Coursier()
+            {
+                IdCoursier = chiffre,
+                IdEntreprise = 1,
+                IdAdresse = 1,
+                GenreUser = "Homme",
+                NomUser = "Durant",
+                PrenomUser = "Julien",
+                DateNaissance = DateOnly.Parse("1988-04-25"),
+                Telephone = "06010101" + chiffreNew + "1",
+                EmailUser = "julien.durant" + chiffre + "@example.com",
+                MotDePasseUser = "hasedpassword123",
+                NumeroCarteVtc = "9" + chiffreCarte,
+                Iban = "FR" + chiffreIban,
+                DateDebutActivite = DateOnly.Parse("2023-01-15"),
+                NoteMoyenne = 4.5m,
+                Courses = [],
+                Entretiens = [],
+                Horaires = [],
+                IdAdresseNavigation = null,
+                IdEntrepriseNavigation = null,
+                ReglementSalaires = [],
+                Vehicules = []
+            };
 
-            var IdCoursier = 2;
+            var result = _controller.PostCoursierAsync(cousierATester).Result;
 
 
             // Act : Suppression
-            var actionResult = _controller.DeleteCoursierAsync(IdCoursier).Result;
+            var actionResult = _controller.DeleteCoursierAsync(cousierATester.IdCoursier).Result;
 
             // Assert : Vérification de la réponse
             Assert.IsNotNull(actionResult);
             Assert.IsInstanceOfType(actionResult, typeof(NoContentResult));
 
 
-          
+
+
         }
 
 
