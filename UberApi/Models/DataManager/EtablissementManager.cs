@@ -24,7 +24,7 @@ namespace UberApi.Models.DataManager
 
         public async Task<ActionResult<Etablissement>> GetByIdAsync(int id)
         {
-            return await s221UberContext.Etablissements.FirstOrDefaultAsync(u => u.IdEtablissement == id);
+            return await s221UberContext.Etablissements.Include(a => a.IdRestaurateurNavigation).Include(r => r.IdAdresseNavigation).ThenInclude(e => e.IdVille).FirstOrDefaultAsync(u => u.IdEtablissement == id);
         }
 
         public async Task<ActionResult<Etablissement>> GetByStringAsync(string libelle)
