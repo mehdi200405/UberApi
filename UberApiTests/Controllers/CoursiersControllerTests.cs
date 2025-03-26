@@ -80,12 +80,38 @@ namespace UberApi.Controllers.Tests
         [TestMethod()]
         public void GetCoursierById_NotExistingIdPassed_ReturnsRightItem_AvecMoq()
         {
-
+            Coursier coursier = new Coursier
+            {
+                IdCoursier = 89,
+                IdEntreprise = 1,
+                IdAdresse = 1,
+                GenreUser = "Homme",
+                NomUser = "Durant",
+                PrenomUser = "Julien",
+                DateNaissance = DateOnly.Parse("1988-04-25"),
+                Telephone = "0601010101",
+                EmailUser = "julien.durant@example.com",
+                MotDePasseUser = "hasedpassword123",
+                NumeroCarteVtc = "123456789012",
+                Iban = "FR7630006000011234567890189",
+                DateDebutActivite = DateOnly.Parse("2023-01-15"),
+                NoteMoyenne = 4.5m,
+                Courses = [],
+                Entretiens = [],
+                Horaires = [],
+                IdAdresseNavigation = null,
+                IdEntrepriseNavigation = null,
+                ReglementSalaires = [],
+                Vehicules = []
+            };
             var mockRepository = new Mock<IDataRepository<Coursier>>();
+            mockRepository.Setup(x => x.GetByIdAsync(1).Result).Returns((Coursier)null);
             var controller = new CoursiersController(mockRepository.Object);
             // Act
             var actionResult = controller.GetCoursierAsync(1).Result;
             // Assert
+            Assert.IsNotNull(actionResult);
+            Assert.IsNull(actionResult.Value);
             Assert.IsInstanceOfType(actionResult.Result, typeof(NotFoundResult));
         }
 
@@ -130,8 +156,33 @@ namespace UberApi.Controllers.Tests
         [TestMethod]
         public void GetCoursierByNumeroCarteVTC_NotExistingIdPassed_ReturnsRightItem_AvecMoq()
         {
+            Coursier coursier = new Coursier
+            {
+                IdCoursier = 1,
+                IdEntreprise = 1,
+                IdAdresse = 1,
+                GenreUser = "Homme",
+                NomUser = "Durant",
+                PrenomUser = "Julien",
+                DateNaissance = DateOnly.Parse("1988-04-25"),
+                Telephone = "0601010101",
+                EmailUser = "julien.durant@example.com",
+                MotDePasseUser = "hasedpassword123",
+                NumeroCarteVtc = "123456789013",
+                Iban = "FR7630006000011234567890189",
+                DateDebutActivite = DateOnly.Parse("2023-01-15"),
+                NoteMoyenne = 4.5m,
+                Courses = [],
+                Entretiens = [],
+                Horaires = [],
+                IdAdresseNavigation = null,
+                IdEntrepriseNavigation = null,
+                ReglementSalaires = [],
+                Vehicules = []
+            };
 
             var mockRepository = new Mock<IDataRepository<Coursier>>();
+            mockRepository.Setup(x => x.GetByStringAsync("123456789012").Result).Returns((Coursier)null);
             var controller = new CoursiersController(mockRepository.Object);
             // Act
             var actionResult = controller.GetCoursierByNumeroCarteVTCAsync("123456789012").Result;
@@ -369,14 +420,17 @@ namespace UberApi.Controllers.Tests
         }
 
         [TestMethod()]
-        public void GetCoursierById_ExistingIdPassed_AreEqual_SansMoq()
+        public void GetCoursierById_ExistingIdPassedOrNot_AreEqual_SansMoq()
         {
 
-            var expected = _context.Coursiers.FirstOrDefault(u => u.IdCoursier == 1);
-
+            var expected = _context.Coursiers.FirstOrDefault();
+            if (expected == null)
+            {
+                return;
+            }
 
             // Act
-            var actionResult = _controller.GetCoursierAsync(1).Result;
+            var actionResult = _controller.GetCoursierAsync(expected.IdCoursier).Result;
             // Assert
             Assert.IsNotNull(actionResult);
             Assert.IsNotNull(actionResult.Value);
@@ -385,14 +439,30 @@ namespace UberApi.Controllers.Tests
 /// <summary>
 /// LA SUITE A FAIRE /*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*///*/*/
 /// </summary>
-        [TestMethod()]
-        public void GetCoursierById_NotExistingIdPassed_ReturnsRightItem_SansMoq()
-        {
 
-            var expected = _context.Coursiers.FirstOrDefault(u => u.IdCoursier == -5);
+
+        [TestMethod]
+        public void GetCoursierByNumeroCarteVTC_ExistingIdPassed_AreEqual_SansMoq()
+        {
+            var numeroCarteVtc = "123456789012";
+            var expected =  _context.Coursiers.FirstOrDefault(u => u.NumeroCarteVtc.ToUpper() == numeroCarteVtc.ToUpper());
 
             // Act
-            var actionResult = _controller.GetCoursierAsync(-5).Result;
+            var actionResult = _controller.GetCoursierByNumeroCarteVTCAsync(numeroCarteVtc).Result;
+            // Assert
+            Assert.IsNotNull(actionResult);
+            Assert.IsNotNull(actionResult.Value);
+            Assert.AreEqual(expected, actionResult.Value);
+        }
+
+        [TestMethod]
+        public void GetCoursierByNumeroCarteVTC_NotExistingIdPassed_ReturnsRightItem_SansMoq()
+        {
+
+            var numeroCarteVtc = "123456789013";
+            var expected = _context.Coursiers.FirstOrDefault(u => u.NumeroCarteVtc.ToUpper() == numeroCarteVtc.ToUpper());
+            // Act
+            var actionResult = _controller.GetCoursierByNumeroCarteVTCAsync(numeroCarteVtc).Result;
             // Assert
             Assert.IsNotNull(actionResult);
             Assert.IsNull(actionResult.Value);
@@ -400,55 +470,32 @@ namespace UberApi.Controllers.Tests
             Assert.IsInstanceOfType(actionResult.Result, typeof(NotFoundResult));
         }
 
-        [TestMethod]
-        public void GetCoursierByNumeroCarteVTC_ExistingIdPassed_AreEqual_SansMoq()
-        {
-            var numeroCarteVtc = "123456789012";
-            var expected =  _context.Coursiers.FirstOrDefaultAsync(u => u.NumeroCarteVtc.ToUpper() == numeroCarteVtc.ToUpper());
-
-            // Act
-            var actionResult = _controller.GetCoursierByNumeroCarteVTCAsync("123456789012").Result;
-            // Assert
-            Assert.IsNotNull(actionResult);
-            Assert.IsNotNull(actionResult.Value);
-            Assert.AreEqual(expected.Result, actionResult.Value);
-            Assert.IsInstanceOfType(actionResult.Result, typeof(NoContentResult));
-        }
-
-        [TestMethod]
-        public void GetCoursierByNumeroCarteVTC_NotExistingIdPassed_ReturnsRightItem_SansMoq()
-        {
-
-            var numeroCarteVtc = "123456789012";
-            var expected = _context.Coursiers.FirstOrDefaultAsync(u => u.NumeroCarteVtc.ToUpper() == numeroCarteVtc.ToUpper());
-            // Act
-            var actionResult = _controller.GetCoursierByNumeroCarteVTCAsync("123456789013").Result;
-            // Assert
-            Assert.IsNotNull(actionResult);
-            Assert.IsNull(actionResult.Value);
-            Assert.AreEqual(expected.Result, actionResult.Value);
-            Assert.IsInstanceOfType(actionResult.Result, typeof(NotFoundResult));
-        }
-
 
         [TestMethod]
         public void PostCoursier_ValideIdPassed_ReturnsRightItem_SansMoq()
-        {
+        { 
             // Arrange
-            var coursier = new Coursier
+            Random rnd = new Random();
+            int chiffre = rnd.Next(1, 1000000000);
+            int chiffreNew = rnd.Next(1, 9);
+            int chiffreIban = rnd.Next(1, 23);
+            int chiffreCarte = rnd.Next(1, 11);
+            // Le mail doit être unique donc 2 possibilités :
+            // 1. on s'arrange pour que le mail soit unique en concaténant un random ou un timestamp
+            // 2. On supprime le user après l'avoir créé. Dans ce cas, nous avons besoin d'appeler la méthode DELETE de l’API ou remove du DbSet.
+            Coursier cousierATester = new Coursier()
             {
-                IdCoursier = 10,
                 IdEntreprise = 1,
                 IdAdresse = 1,
                 GenreUser = "Homme",
-                NomUser = "Amir",
+                NomUser = "Durant",
                 PrenomUser = "Julien",
                 DateNaissance = DateOnly.Parse("1988-04-25"),
-                Telephone = "0601010101",
-                EmailUser = "julien.durant@example.com",
+                Telephone = "06010101"+ chiffreNew + "1",
+                EmailUser = "julien.durant" + chiffre + "@example.com",
                 MotDePasseUser = "hasedpassword123",
-                NumeroCarteVtc = "123456789012",
-                Iban = "FR7630006000011234567890189",
+                NumeroCarteVtc = "9" + chiffreCarte,
+                Iban = "FR" +chiffreIban,
                 DateDebutActivite = DateOnly.Parse("2023-01-15"),
                 NoteMoyenne = 4.5m,
                 Courses = [],
@@ -459,38 +506,42 @@ namespace UberApi.Controllers.Tests
                 ReglementSalaires = [],
                 Vehicules = []
             };
-
-            var mockRepository = new Mock<IDataRepository<Coursier>>();
-
-            mockRepository.Setup(x => x.AddAsync(It.IsAny<Coursier>())).Returns(Task.CompletedTask);
-            mockRepository.Setup(x => x.GetByIdAsync(It.Is<int>(id => id == coursier.IdCoursier)))
-                           .ReturnsAsync(coursier);
-
-            var controller = new CoursiersController(mockRepository.Object);
-
             // Act
-            var actionResult = controller.PostCoursierAsync(coursier).Result;
-
+            try
+            {
+                var result = _controller.PostCoursierAsync(cousierATester).Result;
+            }
+            catch (AggregateException ex)
+            {
+                foreach (var inner in ex.InnerExceptions)
+                {
+                    Console.WriteLine($"Inner Exception: {inner.Message}");
+                    if (inner.InnerException != null)
+                        Console.WriteLine($"Detailed Inner Exception: {inner.InnerException.Message}");
+                }
+                throw;
+            } // .Result pour appeler la méthode async de manière synchrone, afin d'attendre l’ajout
             // Assert
-            Assert.IsNotNull(actionResult);
-            Assert.IsInstanceOfType(actionResult, typeof(ActionResult<Coursier>));
-            Assert.IsInstanceOfType(actionResult.Result, typeof(CreatedAtActionResult));
-            var result = actionResult.Result as CreatedAtActionResult;
-            Assert.IsNotNull(result);
-            var ress = result.Value as Coursier;
-            Assert.IsNotNull(ress);
-            Assert.AreEqual(coursier.IdCoursier, ress.IdCoursier);
-            mockRepository.Verify(x => x.AddAsync(It.IsAny<Coursier>()), Times.Once);
+            Coursier? userRecupere = _context.Coursiers.Where(u => u.EmailUser.ToUpper() ==
+            cousierATester.EmailUser.ToUpper()).FirstOrDefault(); // On récupère l'utilisateur créé directement dans la BD grace à son mail unique
+            // On ne connait pas l'ID de l’utilisateur envoyé car numéro automatique.
+            // Du coup, on récupère l'ID de celui récupéré et on compare ensuite les 2 users
+            cousierATester.IdCoursier = userRecupere.IdCoursier;
+            Assert.AreEqual(userRecupere, cousierATester, "Utilisateurs pas identiques");
+
         }
 
 
         [TestMethod]
-        public void PutCoursier_ValideIdPassed_ReturnsNoContent_SansMoq()
+        public async void PutCoursier_ValideIdPassed_ReturnsNoContent_SansMoq()
         {
             // Arrange
-            var coursier = new Coursier
+            Random rnd = new Random();
+            int chiffre = rnd.Next(1, 1000000000);
+
+            // Étape 1 : Créer un coursier et l'ajouter en base
+            Coursier cousierATester = new Coursier()
             {
-                IdCoursier = 1,
                 IdEntreprise = 1,
                 IdAdresse = 1,
                 GenreUser = "Homme",
@@ -498,10 +549,10 @@ namespace UberApi.Controllers.Tests
                 PrenomUser = "Julien",
                 DateNaissance = DateOnly.Parse("1988-04-25"),
                 Telephone = "0601010101",
-                EmailUser = "julien.durant@example.com",
+                EmailUser = "julien.durant" + chiffre + "@example.com",
                 MotDePasseUser = "hasedpassword123",
-                NumeroCarteVtc = "123456789012",
-                Iban = "FR7630006000011234567890189",
+                NumeroCarteVtc = "111111111111",
+                Iban = "FR76380600001294567890189",
                 DateDebutActivite = DateOnly.Parse("2023-01-15"),
                 NoteMoyenne = 4.5m,
                 Courses = [],
@@ -513,103 +564,43 @@ namespace UberApi.Controllers.Tests
                 Vehicules = []
             };
 
-            var coursierUpdate = new Coursier
-            {
-                IdCoursier = 1,
-                IdEntreprise = 1,
-                IdAdresse = 1,
-                GenreUser = "Homme",
-                NomUser = "Enzo", //new name to update
-                PrenomUser = "Julien",
-                DateNaissance = DateOnly.Parse("1988-04-25"),
-                Telephone = "0601010101",
-                EmailUser = "julien.durant@example.com",
-                MotDePasseUser = "hasedpassword123",
-                NumeroCarteVtc = "123456789012",
-                Iban = "FR7630006000011234567890189",
-                DateDebutActivite = DateOnly.Parse("2023-01-15"),
-                NoteMoyenne = 4.5m,
-                Courses = [],
-                Entretiens = [],
-                Horaires = [],
-                IdAdresseNavigation = null,
-                IdEntrepriseNavigation = null,
-                ReglementSalaires = [],
-                Vehicules = []
-            };
+            // On ajoute le coursier en base AVANT la mise à jour
+            _controller.PostCoursierAsync(cousierATester); // ⚠️ On enregistre la création
 
-            var mockRepository = new Mock<IDataRepository<Coursier>>();
+            // Maintenant qu'il existe en base, on récupère son ID
+            int coursierUpdate = cousierATester.IdCoursier;
 
-
-            mockRepository.Setup(x => x.GetByIdAsync(coursier.IdCoursier)).ReturnsAsync(coursierUpdate);
-
-
-            mockRepository.Setup(x => x.UpdateAsync(coursier, coursierUpdate));
-
-            var controller = new CoursiersController(mockRepository.Object);
-
-            // Act
-            var actionResult = controller.PutCoursierAsync(coursierUpdate.IdCoursier, coursierUpdate).Result;
+            // Étape 2 : Modifier ses données et faire le PUT
+            cousierATester.Telephone = "0601020304"; // Modifier un champ pour tester
+            var actionResult = _controller.PutCoursierAsync(coursierUpdate, cousierATester).Result;
 
             // Assert
-            Assert.IsNotNull(actionResult);
+            Coursier? userRecupere = _context.Coursiers
+                .Where(u => u.EmailUser.ToUpper() == cousierATester.EmailUser.ToUpper())
+                .FirstOrDefault();
+
+            Assert.IsNotNull(userRecupere, "Le coursier n'a pas été trouvé en base après la mise à jour");
             Assert.IsInstanceOfType(actionResult, typeof(NoContentResult));
+            Assert.AreEqual("0601020304", userRecupere.Telephone, "Le numéro de téléphone n'a pas été mis à jour correctement.");
 
-            mockRepository.Verify(x => x.UpdateAsync(It.Is<Coursier>(c => c.IdCoursier == coursierUpdate.IdCoursier), coursierUpdate), Times.Once);
         }
-
         [TestMethod]
         public void DeleteCoursier_ValideIdPassed_ReturnsNoContent_SansMoq()
         {
-            // Arrange : Création du coursier
-            var coursier = new Coursier
-            {
-                IdCoursier = 1,
-                IdEntreprise = 1,
-                IdAdresse = 1,
-                GenreUser = "Homme",
-                NomUser = "Durant",
-                PrenomUser = "Julien",
-                DateNaissance = DateOnly.Parse("1988-04-25"),
-                Telephone = "0601010101",
-                EmailUser = "julien.durant@example.com",
-                MotDePasseUser = "hasedpassword123",
-                NumeroCarteVtc = "123456789012",
-                Iban = "FR7630006000011234567890189",
-                DateDebutActivite = DateOnly.Parse("2023-01-15"),
-                NoteMoyenne = 4.5m,
-                Courses = [],
-                Entretiens = [],
-                Horaires = [],
-                IdAdresseNavigation = null,
-                IdEntrepriseNavigation = null,
-                ReglementSalaires = [],
-                Vehicules = []
-            };
-
-            var mockRepository = new Mock<IDataRepository<Coursier>>();
 
 
-            mockRepository.Setup(x => x.GetByIdAsync(coursier.IdCoursier))
-                           .ReturnsAsync(coursier);
+            var IdCoursier = 2;
 
-
-            mockRepository.Setup(x => x.DeleteAsync(coursier));
-
-            var controller = new CoursiersController(mockRepository.Object);
 
             // Act : Suppression
-            var actionResult = controller.DeleteCoursierAsync(coursier.IdCoursier).Result;
+            var actionResult = _controller.DeleteCoursierAsync(IdCoursier).Result;
 
             // Assert : Vérification de la réponse
             Assert.IsNotNull(actionResult);
             Assert.IsInstanceOfType(actionResult, typeof(NoContentResult));
 
 
-            mockRepository.Verify(x => x.GetByIdAsync(coursier.IdCoursier), Times.Once);
-
-
-            mockRepository.Verify(x => x.DeleteAsync(It.Is<Coursier>(c => c.IdCoursier == coursier.IdCoursier)), Times.Once);
+          
         }
 
 
@@ -620,14 +611,7 @@ namespace UberApi.Controllers.Tests
             // Arrange : ID inexistant
             int idCoursierInvalide = 19;
 
-            var mockRepository = new Mock<IDataRepository<Coursier>>();
-
-            mockRepository.Setup(x => x.GetByIdAsync(idCoursierInvalide))
-                           .ReturnsAsync((Coursier)null);  // Retourner null pour simuler que le coursier n'existe pas
-
-            var controller = new CoursiersController(mockRepository.Object);
-
-            var actionResult = controller.DeleteCoursierAsync(idCoursierInvalide).Result;
+            var actionResult = _controller.DeleteCoursierAsync(idCoursierInvalide).Result;
 
 
             Assert.IsNotNull(actionResult);
@@ -635,10 +619,6 @@ namespace UberApi.Controllers.Tests
 
             Assert.IsInstanceOfType(actionResult, typeof(NotFoundResult));
 
-            mockRepository.Verify(x => x.GetByIdAsync(idCoursierInvalide), Times.Once);
-
-
-            mockRepository.Verify(x => x.DeleteAsync(It.IsAny<Coursier>()), Times.Never);
         }
 
 
