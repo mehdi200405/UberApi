@@ -36,7 +36,7 @@ namespace UberApi.Controllers
         {
             var coursier = await dataRepository.GetByIdAsync(id);
 
-            if (coursier == null)
+            if (coursier.Value == null)
             {
                 return NotFound();
             }
@@ -52,7 +52,7 @@ namespace UberApi.Controllers
         public async Task<ActionResult<Coursier>> GetCoursierByNumeroCarteVTCAsync(string numeroCarteVTC)
         {
             var utilisateur = await dataRepository.GetByStringAsync(numeroCarteVTC);
-            if (utilisateur == null)
+            if (utilisateur.Value == null)
             {
                 return NotFound();
             }
@@ -70,7 +70,7 @@ namespace UberApi.Controllers
                 return BadRequest();
             }
             var userToUpdate = await dataRepository.GetByIdAsync(id);
-            if (userToUpdate == null)
+            if (userToUpdate.Value == null)
             {
                 return NotFound();
             }
