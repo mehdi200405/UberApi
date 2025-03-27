@@ -5,24 +5,33 @@ using UberApi.Models.Repository;
 
 namespace UberApi.Models.DataManager
 {
-
-
     public class CarteBancaireManager : IDataRepository<CarteBancaire>
     {
         readonly S221UberContext? s221UberContext;
+
         public CarteBancaireManager() { }
+
         public CarteBancaireManager(S221UberContext context)
         {
             s221UberContext = context;
         }
+
         public async Task<ActionResult<IEnumerable<CarteBancaire>>> GetAllAsync()
         {
-            return await s221UberContext.CarteBancaires.ToListAsync();
+            return await s221UberContext.CarteBancaires
+                .Include(c => c.Courses)
+                .Include(c => c.IdClients)
+                .ToListAsync();
         }
+
         public async Task<ActionResult<CarteBancaire>> GetByIdAsync(int id)
         {
-            return await s221UberContext.CarteBancaires.FirstOrDefaultAsync(u => u.IdCb == id);
+            return await s221UberContext.CarteBancaires
+                .Include(c => c.Courses)
+                .Include(c => c.IdClients)
+                .FirstOrDefaultAsync(u => u.IdCb == id);
         }
+
         public async Task<ActionResult<CarteBancaire>> GetByStringAsync(string libelle)
         {
             return await s221UberContext.CarteBancaires.FirstOrDefaultAsync(u => u.NumeroCb.ToUpper() == libelle.ToUpper());
@@ -33,6 +42,7 @@ namespace UberApi.Models.DataManager
             await s221UberContext.CarteBancaires.AddAsync(entity);
             await s221UberContext.SaveChangesAsync();
         }
+
         public async Task UpdateAsync(CarteBancaire newCarteBancaire, CarteBancaire entity)
         {
             s221UberContext.Entry(newCarteBancaire).State = EntityState.Modified;
@@ -45,6 +55,7 @@ namespace UberApi.Models.DataManager
 
             await s221UberContext.SaveChangesAsync();
         }
+
         public async Task DeleteAsync(CarteBancaire cb)
         {
             s221UberContext.CarteBancaires.Remove(cb);
