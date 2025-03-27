@@ -5,8 +5,6 @@ using UberApi.Models.Repository;
 
 namespace UberApi.Models.DataManager
 {
-
-
     public class EtablissementManager : IDataRepository<Etablissement>
     {
         readonly S221UberContext? s221UberContext;
@@ -19,12 +17,32 @@ namespace UberApi.Models.DataManager
 
         public async Task<ActionResult<IEnumerable<Etablissement>>> GetAllAsync()
         {
-            return await s221UberContext.Etablissements.Include(a => a.IdAdresseNavigation).ThenInclude(n => n.IdVilleNavigation).ToListAsync();
+            return await s221UberContext.Etablissements
+                .Include(a => a.IdAdresseNavigation)
+                    .ThenInclude(n => n.IdVilleNavigation)
+                        .ThenInclude(i => i.IdCodePostalNavigation)
+                            .ThenInclude(o => o.IdPaysNavigation)
+                .Include(e => e.IdRestaurateurNavigation)
+                .Include(e => e.GestionEtablissements)
+                .Include(e => e.Horaires)
+                .Include(e => e.IdCategoriePrestations)
+                .Include(e => e.IdProduits)
+                .ToListAsync();
         }
 
         public async Task<ActionResult<Etablissement>> GetByIdAsync(int id)
         {
-            return await s221UberContext.Etablissements.Include(a => a.IdRestaurateurNavigation).Include(r => r.IdAdresseNavigation).ThenInclude(e => e.IdVille).FirstOrDefaultAsync(u => u.IdEtablissement == id);
+            return await s221UberContext.Etablissements
+                .Include(a => a.IdAdresseNavigation)
+                    .ThenInclude(n => n.IdVilleNavigation)
+                        .ThenInclude(i => i.IdCodePostalNavigation)
+                            .ThenInclude(o => o.IdPaysNavigation)
+                .Include(e => e.IdRestaurateurNavigation)
+                .Include(e => e.GestionEtablissements)
+                .Include(e => e.Horaires)
+                .Include(e => e.IdCategoriePrestations)
+                .Include(e => e.IdProduits)
+                .FirstOrDefaultAsync(u => u.IdEtablissement == id);
         }
 
         public async Task<ActionResult<Etablissement>> GetByStringAsync(string libelle)
@@ -37,6 +55,7 @@ namespace UberApi.Models.DataManager
             await s221UberContext.Etablissements.AddAsync(entity);
             await s221UberContext.SaveChangesAsync();
         }
+
         public async Task UpdateAsync(Etablissement newEtablissement, Etablissement entity)
         {
             s221UberContext.Entry(newEtablissement).State = EntityState.Modified;
@@ -52,6 +71,7 @@ namespace UberApi.Models.DataManager
 
             await s221UberContext.SaveChangesAsync();
         }
+
         public async Task DeleteAsync(Etablissement etablissement)
         {
             s221UberContext.Etablissements.Remove(etablissement);

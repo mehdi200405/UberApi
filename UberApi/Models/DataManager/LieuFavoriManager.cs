@@ -17,11 +17,11 @@ namespace UberApi.Models.DataManager
         }
         public async Task<ActionResult<IEnumerable<LieuFavori>>> GetAllAsync()
         {
-            return await s221UberContext.LieuFavoris.ToListAsync();
+            return await s221UberContext.LieuFavoris.Include(a => a.IdAdresseNavigation).ThenInclude(n => n.IdVilleNavigation).ThenInclude(i => i.IdCodePostalNavigation).ThenInclude(o => o.IdPaysNavigation).ToListAsync();
         }
         public async Task<ActionResult<LieuFavori>> GetByIdAsync(int id)
         {
-            return await s221UberContext.LieuFavoris.FirstOrDefaultAsync(u => u.IdLieuFavori == id);
+            return await s221UberContext.LieuFavoris.Include(a => a.IdAdresseNavigation).ThenInclude(n => n.IdVilleNavigation).ThenInclude(i => i.IdCodePostalNavigation).ThenInclude(o => o.IdPaysNavigation).FirstOrDefaultAsync(u => u.IdLieuFavori == id);
         }
         public async Task<ActionResult<LieuFavori>> GetByStringAsync(string libelle)
         {
