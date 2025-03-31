@@ -72,10 +72,11 @@ namespace UberApi
                  };
              });
 
-            builder.Services.AddAuthorization(config =>
+            builder.Services.AddAuthorization(options =>
             {
-                config.AddPolicy(Policies.Admin, Policies.AdminPolicy());
-                config.AddPolicy(Policies.User, Policies.UserPolicy());
+                options.AddPolicy("Client", policy => policy.RequireRole("Client"));
+                options.AddPolicy("Coursier", policy => policy.RequireRole("Coursier"));
+                options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
             });
 
             var app = builder.Build();
