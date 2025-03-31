@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using UberApi.Models;
+using UberApi.Models.EntityFramework;
 
 namespace UberApi.Controllers
 {
@@ -13,52 +15,73 @@ namespace UberApi.Controllers
     public class LoginController : ControllerBase
     {
         private readonly IConfiguration _config;
-        private List<User> appUsers = new List<User>
-        {
-            new User { FullName = "Vincent COUTURIER", UserName = "vince", Password = "1234", UserRole = "Admin" },
-            new User { FullName = "Marc MACHIN", UserName = "marc", Password = "1234", UserRole = "User" }
-        };
+        private readonly S221UberContext _context;
 
-        public LoginController(IConfiguration config)
+        public LoginController(IConfiguration config, S221UberContext context)
         {
             _config = config;
+            _context = context;
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult Login([FromBody] User login)
+        public async Task<ActionResult<UserResponse>> Login([FromBody] UserLogin userLogin)
         {
-            IActionResult response = Unauthorized();
-            User user = AuthenticateUser(login);
-
-            if (user != null)
+            var client = await _context.Clients.FirstOrDefaultAsync(c => c.EmailUser == userLogin.Email);
+            if (client != null && BCrypt.Net.BCrypt.Verify(userLogin.Password, client.MotDePasseUser))
             {
-                var tokenString = GenerateJwtToken(user);
-                response = Ok(new
-                {
-                    token = tokenString,
-                    userDetails = user,
-                });
+                return GenerateUserResponse(
+                    user: client,
+                    role: "Client",
+                    userId: client.IdClient
+                );
             }
-            return response;
+
+            var coursier = await _context.Coursiers.FirstOrDefaultAsync(c => c.EmailUser == userLogin.Email);
+            if (coursier != null && BCrypt.Net.BCrypt.Verify(userLogin.Password, coursier.MotDePasseUser))
+            {
+                return GenerateUserResponse(
+                    user: coursier,
+                    role: "Coursier",
+                    userId: coursier.IdCoursier
+                );
+            }
+
+            // 3. Vérification pour les Admins (si vous avez une table Admin)
+            // ... (même pattern)
+
+            return Unauthorized("Identifiants incorrects");
         }
 
-        private User AuthenticateUser(User user)
+        private ActionResult<UserResponse> GenerateUserResponse(dynamic user, string role, int userId)
         {
-            return appUsers.SingleOrDefault(x =>
-                x.UserName.ToUpper() == user.UserName.ToUpper() && x.Password == user.Password);
+            var token = GenerateJwtToken(
+                email: user.EmailUser,
+                role: role,
+                userId: userId.ToString(),
+                fullName: $"{user.PrenomUser} {user.NomUser}"
+            );
+
+            return new UserResponse
+            {
+                Token = token,
+                Role = role,
+                UserId = userId,
+                Email = user.EmailUser
+            };
         }
 
-        private string GenerateJwtToken(User userInfo)
+        private string GenerateJwtToken(string email, string role, string userId, string fullName)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:SecretKey"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, userInfo.UserName),
-                new Claim("fullName", userInfo.FullName.ToString()),
-                new Claim("role", userInfo.UserRole),
+                new Claim(JwtRegisteredClaimNames.Sub, email),
+                new Claim("fullName", fullName),
+                new Claim("role", role),
+                new Claim("userId", userId),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
@@ -66,7 +89,7 @@ namespace UberApi.Controllers
                 issuer: _config["Jwt:Issuer"],
                 audience: _config["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(30),
+                expires: DateTime.Now.AddHours(2),
                 signingCredentials: credentials
             );
 
