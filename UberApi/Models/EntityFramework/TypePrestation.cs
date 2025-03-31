@@ -26,9 +26,9 @@ public partial class TypePrestation
     public string? ImagePrestation { get; set; }
 
     [InverseProperty("IdPrestationNavigation")]
-    public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
+    public virtual ICollection<Course>? Courses { get; set; } = new List<Course>();
 
     [ForeignKey("IdPrestation")]
     [InverseProperty("IdPrestations")]
-    public virtual ICollection<Vehicule> IdVehicules { get; set; } = new List<Vehicule>();
+    public virtual ICollection<Vehicule>? IdVehicules { get; set; } = new List<Vehicule>();
 }
