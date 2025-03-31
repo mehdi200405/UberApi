@@ -15,7 +15,7 @@ namespace UberApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class LivreursController : ControllerBase
     {
         private readonly IDataRepository<Livreur> dataRepository;

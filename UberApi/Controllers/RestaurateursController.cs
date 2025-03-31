@@ -7,7 +7,7 @@ namespace UberApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class RestaurateursController : ControllerBase
     {
         private readonly IDataRepository<Restaurateur> dataRepository;
