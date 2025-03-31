@@ -10,6 +10,8 @@ using UberApi.Models.Repository;
 
 namespace UberApi.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class TypePrestationsController : Controller
     {
         private readonly IDataRepository<TypePrestation> dataRepository;
