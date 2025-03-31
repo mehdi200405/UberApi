@@ -74,9 +74,28 @@ namespace UberApi.Models.DataManager
             return await s221UberContext.Clients.FirstOrDefaultAsync(u => u.EmailUser.ToUpper() == mail.ToUpper());
         }
 
+        //public async Task AddAsync(Client entity)
+        //{
+        //    entity.MotDePasseUser = BCrypt.Net.BCrypt.HashPassword(entity.MotDePasseUser);
+        //    await s221UberContext.Clients.AddAsync(entity);
+        //    await s221UberContext.SaveChangesAsync();
+        //}
+
         public async Task AddAsync(Client entity)
         {
+            // Vérification de l'unicité de l'email avant insertion
+            var existingClient = await s221UberContext.Clients
+                .FirstOrDefaultAsync(u => u.EmailUser.ToUpper() == entity.EmailUser.ToUpper());
+
+            if (existingClient != null)
+            {
+                throw new Exception("Cet email est déjà utilisé.");
+            }
+
+            // Hachage du mot de passe
             entity.MotDePasseUser = BCrypt.Net.BCrypt.HashPassword(entity.MotDePasseUser);
+
+            // Ajout à la base de données
             await s221UberContext.Clients.AddAsync(entity);
             await s221UberContext.SaveChangesAsync();
         }
