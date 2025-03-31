@@ -9,11 +9,13 @@ using UberApi.Models.EntityFramework;
 using UberApi.Models.DataManager;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using UberApi.Models.Repository;
+using Microsoft.AspNetCore.Authorization;
 
 namespace UberApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ClientsController : ControllerBase
     {
         private readonly IDataRepository<Client> dataRepository;
@@ -109,47 +111,6 @@ namespace UberApi.Controllers
             }
             await dataRepository.DeleteAsync(client.Value);
             return NoContent();
-        }
-
-        [HttpPost("login")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> LoginAsync([FromBody] LoginModel model)
-        {
-            try
-            {
-                var user = await dataRepository.GetByStringAsync(model.Email);
-
-                if (user.Value == null || user.Value == null || !BCrypt.Net.BCrypt.Verify(model.Password, user.Value.MotDePasseUser))
-                {
-                    return Unauthorized("Email ou mot de passe incorrect.");
-                }
-
-                return Ok(new
-                {
-                    message = "Authentification réussie",
-                    user = new
-                    {
-                        user.Value.IdClient,
-                        user.Value.NomUser,
-                        user.Value.PrenomUser,
-                        user.Value.EmailUser,
-                        user.Value.GenreUser,
-                        user.Value.PhotoProfile
-                    }
-                });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Erreur serveur : " + ex.Message);
-            }
-        }
-
-        public class LoginModel
-        {
-            public string Email { get; set; }
-            public string Password { get; set; }
         }
     }
 }

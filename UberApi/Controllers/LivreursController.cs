@@ -9,11 +9,13 @@ using UberApi.Models.EntityFramework;
 using UberApi.Models.DataManager;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using UberApi.Models.Repository;
+using Microsoft.AspNetCore.Authorization;
 
 namespace UberApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class LivreursController : ControllerBase
     {
         private readonly IDataRepository<Livreur> dataRepository;

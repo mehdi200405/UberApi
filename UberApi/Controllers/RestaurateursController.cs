@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using UberApi.Models.EntityFramework;
 using UberApi.Models.Repository;
 
@@ -6,6 +7,7 @@ namespace UberApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RestaurateursController : ControllerBase
     {
         private readonly IDataRepository<Restaurateur> dataRepository;
