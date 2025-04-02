@@ -112,5 +112,29 @@ namespace UberApi.Controllers
             await dataRepository.DeleteAsync(client.Value);
             return NoContent();
         }
+
+        [HttpPost("register")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        public async Task<ActionResult<Client>> RegisterClientAsync(Client client)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Vérifier si l'email est déjà utilisé
+            var existingClient = await dataRepository.GetByStringAsync(client.EmailUser);
+            if (existingClient.Value != null)
+            {
+                return Conflict("Un compte avec cet email existe déjà.");
+            }
+
+            // Ajouter le client en base
+            await dataRepository.AddAsync(client);
+
+            return CreatedAtAction("GetById", new { id = client.IdClient }, client);
+        }
     }
 }
