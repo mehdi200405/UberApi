@@ -21,20 +21,13 @@ namespace UberApi.Controllers
         public CarteBancairesController(IDataRepository<CarteBancaire> dataRepo)
         {
             dataRepository = dataRepo;
-        }   
-
-
-
+        }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CarteBancaire>>> GetCarteBancairesAsync()
         {
             return await dataRepository.GetAllAsync();
         }
-
-
-
-
 
         [HttpGet]
         [Route("[action]/{id}")]
@@ -53,7 +46,6 @@ namespace UberApi.Controllers
 
         }
 
-
         [HttpGet]
         [Route("[action]/{numeroCb}")]
         [ActionName("GetByLibelleCarteBancaire")]
@@ -68,7 +60,6 @@ namespace UberApi.Controllers
             }
             return carteBancaire;
         }
-
 
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -113,11 +104,13 @@ namespace UberApi.Controllers
         public async Task<IActionResult> DeleteCarteBancaireAsync(int id)
         {
             var carteBancaire = await dataRepository.GetByIdAsync(id);
+
             if (carteBancaire.Value == null)
             {
                 return NotFound();
 
             }
+
             await dataRepository.DeleteAsync(carteBancaire.Value);
             return NoContent();
         }
