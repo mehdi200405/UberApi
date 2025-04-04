@@ -34,7 +34,8 @@ namespace UberApi.Models.DataManager
 
         public async Task<ActionResult<CarteBancaire>> GetByStringAsync(string libelle)
         {
-            return await s221UberContext.CarteBancaires.FirstOrDefaultAsync(u => u.NumeroCb.ToUpper() == libelle.ToUpper());
+            return await s221UberContext.CarteBancaires.Include(c => c.Courses)
+                            .Include(c => c.IdClients).FirstOrDefaultAsync(u => u.NumeroCb.ToUpper() == libelle.ToUpper());
         }
 
         public async Task AddAsync(CarteBancaire entity)
@@ -58,7 +59,11 @@ namespace UberApi.Models.DataManager
 
         public async Task DeleteAsync(CarteBancaire cb)
         {
-            s221UberContext.CarteBancaires.Remove(cb);
+            var carteBancaire = s221UberContext.CarteBancaires
+                            .Include(c => c.Courses)
+                            .Include(c => c.IdClients)
+                            .FirstOrDefault(c => c.IdCb == cb.IdCb);
+            s221UberContext.CarteBancaires.Remove(carteBancaire);
             await s221UberContext.SaveChangesAsync();
         }
     }

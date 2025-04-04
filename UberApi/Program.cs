@@ -43,6 +43,7 @@ namespace UberApi
             builder.Services.AddScoped<IDataRepository<CategoriePrestation>, CategoriePrestationManager>();
             builder.Services.AddScoped<IDataRepository<CategorieProduit>, CategorieProduitManager>();
             builder.Services.AddScoped<IDataRepository<TypePrestation>, TypePrestationManager>();
+            builder.Services.AddScoped<IDataRepository<Course>, CourseManager>();
 
             builder.Services.AddCors(options =>
             {
