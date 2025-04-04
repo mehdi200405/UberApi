@@ -44,6 +44,8 @@ namespace UberApi
             builder.Services.AddScoped<IDataRepository<CategorieProduit>, CategorieProduitManager>();
             builder.Services.AddScoped<IDataRepository<TypePrestation>, TypePrestationManager>();
             builder.Services.AddScoped<IDataRepository<Course>, CourseManager>();
+            builder.Services.AddScoped<ICarteBancaireRepository, CarteBancaireManager>();
+
 
             builder.Services.AddCors(options =>
             {
