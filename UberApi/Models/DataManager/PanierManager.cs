@@ -6,7 +6,7 @@ using BCrypt.Net;
 
 namespace UberApi.Models.DataManager
 {
-    public class PanierManager : IDataRepository<Panier>
+    public class PanierManager : IPanierRepository
     {
         readonly S221UberContext? s221UberContext;
 
@@ -19,13 +19,13 @@ namespace UberApi.Models.DataManager
 
         public async Task<ActionResult<IEnumerable<Panier>>> GetAllAsync()
         {
-            return await s221UberContext.Paniers
+            return await s221UberContext.Paniers.Include(a=>a.Contient2s).ThenInclude(b=>b.IdProduitNavigation)
                 .ToListAsync();
         }
 
         public async Task<ActionResult<Panier>> GetByIdAsync(int id)
         {
-            return await s221UberContext.Paniers
+            return await s221UberContext.Paniers.Include(a => a.Contient2s).ThenInclude(b => b.IdProduitNavigation)
                 .FirstOrDefaultAsync(u => u.IdPanier == id);
         }
 
@@ -40,7 +40,7 @@ namespace UberApi.Models.DataManager
             await s221UberContext.SaveChangesAsync();
         }
 
-        public async Task UpdateProduitPanierAsync(int panierId, int produitId ,int etablissementId, int quantite)
+        public async Task AddProduitPanierAsync(int panierId, int produitId ,int etablissementId)
         {
             var panier = await s221UberContext.Paniers.FindAsync(panierId);
             if (panier == null)
@@ -64,7 +64,7 @@ namespace UberApi.Models.DataManager
 
             await s221UberContext.Database.ExecuteSqlRawAsync(
                 "INSERT INTO t_j_contient2_c2 (pnr_id, pdt_id, etb_id, c2_quantite) VALUES ({0}, {1}, {2}, {3})",
-                panierId, produitId, etablissementId, quantite);
+                panierId, produitId, etablissementId, 1);
 
             await s221UberContext.SaveChangesAsync();
 

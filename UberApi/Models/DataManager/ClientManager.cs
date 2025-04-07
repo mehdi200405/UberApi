@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using UberApi.Models.EntityFramework;
 using UberApi.Models.Repository;
 using BCrypt.Net;
+using System.Collections.Generic;
 
 namespace UberApi.Models.DataManager
 {
@@ -67,6 +68,7 @@ namespace UberApi.Models.DataManager
             var existingClient = await s221UberContext.Clients
                 .FirstOrDefaultAsync(u => u.EmailUser.ToUpper() == entity.EmailUser.ToUpper());
 
+
             if (existingClient != null)
             {
                 throw new Exception("Cet email est déjà utilisé.");
@@ -77,6 +79,13 @@ namespace UberApi.Models.DataManager
 
             // Ajout à la base de données
             await s221UberContext.Clients.AddAsync(entity);
+            await s221UberContext.SaveChangesAsync();
+
+            var entityClient = await s221UberContext.Clients.FirstOrDefaultAsync(u => u.EmailUser.ToUpper() == entity.EmailUser.ToUpper());
+
+            await s221UberContext.Database.ExecuteSqlRawAsync(
+            "INSERT INTO public.t_e_panier_pnr(pnr_id, clt_id, pnr_prix) VALUES({0},{1},{2})",
+            entityClient.IdClient, entity.IdClient, 0);
             await s221UberContext.SaveChangesAsync();
         }
 

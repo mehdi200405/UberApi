@@ -16,9 +16,9 @@ namespace UberApi.Controllers
     [ApiController]
     public class PaniersController : ControllerBase
     {
-        private readonly IDataRepository<Panier> dataRepository;
+        private readonly IPanierRepository dataRepository;
 
-        public PaniersController(IDataRepository<Panier> dataRepo)
+        public PaniersController(IPanierRepository dataRepo)
         {
             dataRepository = dataRepo;
         }
@@ -92,7 +92,6 @@ namespace UberApi.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             try
             {
 
@@ -119,7 +118,6 @@ namespace UberApi.Controllers
                 return NotFound();
 
             }
-
             await dataRepository.DeleteAsync(Panier.Value);
             return NoContent();
         }
