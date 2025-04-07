@@ -64,45 +64,32 @@ namespace UberApi.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> PutPanierAsync(int id, Panier Panier)
+        public async Task<IActionResult> PutPanierAsync(int id,int produitId, int etablissementId ,int quantite)
         {
-            if (id != Panier.IdPanier)
-            {
-                return BadRequest();
-            }
-            var userToUpdate = await dataRepository.GetByIdAsync(id);
-            if (userToUpdate.Value == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                await dataRepository.UpdateAsync(userToUpdate.Value, Panier);
+
+                await dataRepository.UpdateProduitPanierQuantiteAsync(id,produitId, etablissementId,quantite);
                 return NoContent();
-            }
+            
         }
 
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<Panier>> PostPanierAsync(Panier Panier)
+        public async Task<ActionResult<Panier>> PostPanierAsync(int id, int produitId, int etablissementId)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+
             try
             {
 
-                await dataRepository.AddAsync(Panier);
+                await dataRepository.AddProduitPanierAsync(id, produitId,etablissementId);
             }
             catch (Exception ex)
             {
                 return BadRequest(new { message = ex.Message });
             }
 
-            return CreatedAtAction("GetById", new { id = Panier.IdPanier }, Panier);
+            return NoContent();
         }
 
 
