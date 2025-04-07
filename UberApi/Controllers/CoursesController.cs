@@ -14,9 +14,9 @@ namespace UberApi.Controllers
     [ApiController]
     public class CoursesController : Controller
     {
-        private readonly IDataRepository<Course> dataRepository;
+        private readonly ICourseRepository dataRepository;
 
-        public CoursesController(IDataRepository<Course> dataRepo)
+        public CoursesController(ICourseRepository dataRepo)
         {
             dataRepository = dataRepo;
         }
@@ -55,7 +55,7 @@ namespace UberApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<IEnumerable<Course>>> GetByStatut(string statut)
         {
-            return await dataRepository.GetByStringStatuAsync(statut);
+            return await dataRepository.GetByStringStatutCourseAsync(statut);
         }
 
 

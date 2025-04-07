@@ -5,6 +5,6 @@ namespace UberApi.Models.Repository
 {
     public interface ICarteBancaireRepository : IDataRepository<CarteBancaire>
     {
-        Task<ActionResult<CarteBancaire>> AddClientsCBAsync(CarteBancaire carteBancaire, int clientId);
+        Task AddClientsCBAsync(CarteBancaire carteBancaire, int clientId);
     }
 }
