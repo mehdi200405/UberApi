@@ -53,18 +53,9 @@ namespace UberApi.Controllers
         [ActionName("GetByStatut")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Course>> GetUtilisateurByEmailAsync(string statut)
+        public async Task<ActionResult<IEnumerable<Course>>> GetByStatut(string statut)
         {
-            var utilisateur = await dataRepository.GetByStringAsync(statut);
-            if (utilisateur.Value == null)
-            {
-
-
-
-
-                return NotFound();
-            }
-            return utilisateur;
+            return await dataRepository.GetByStringStatuAsync(statut);
         }
 
 

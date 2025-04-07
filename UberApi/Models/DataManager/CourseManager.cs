@@ -5,7 +5,7 @@ using UberApi.Models.Repository;
 
 namespace UberApi.Models.DataManager
 {
-    public class CourseManager : IDataRepository<Course>
+    public class CourseManager : ICourseRepository
     {
 
         readonly S221UberContext? s221UberContext;
@@ -25,6 +25,10 @@ namespace UberApi.Models.DataManager
         public async Task<ActionResult<Course>> GetByStringAsync(string statutCourse)
         {
             return await s221UberContext.Courses.FirstOrDefaultAsync(u => u.StatutCourse.ToUpper() == statutCourse.ToUpper());
+        }
+        public async Task<ActionResult<IEnumerable<Course>>> GetByStringStatutCourseAsync(string statutCourse)
+        {
+            return await s221UberContext.Courses.Where(u => u.StatutCourse.ToUpper() == statutCourse.ToUpper()).ToListAsync();
         }
 
         public async Task AddAsync(Course entity)
