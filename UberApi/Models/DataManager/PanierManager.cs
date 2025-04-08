@@ -40,79 +40,87 @@ namespace UberApi.Models.DataManager
             await s221UberContext.SaveChangesAsync();
         }
 
-        public async Task AddProduitPanierAsync(int panierId, int produitId ,int etablissementId)
+        public async Task AddProduitPanierAsync(int panierId, int produitId, int etablissementId)
         {
             var panier = await s221UberContext.Paniers.FindAsync(panierId);
             if (panier == null)
             {
-                throw new Exception("produit introuvable !");
+                throw new Exception("Panier introuvable !");
             }
-
 
             var produit = await s221UberContext.Produits.FindAsync(produitId);
             if (produit == null)
             {
-                throw new Exception("produit introuvable !");
+                throw new Exception("Produit introuvable !");
             }
 
             var etablissement = await s221UberContext.Etablissements.FindAsync(etablissementId);
             if (etablissement == null)
             {
-                throw new Exception("etablissement introuvable !");
+                throw new Exception("Établissement introuvable !");
             }
 
-            produit.PrixProduit += produit.PrixProduit;
+            // Calcul du prix actuel du panier
+            var prixPanier = produit.PrixProduit;
 
-            await s221UberContext.Database.ExecuteSqlRawAsync(
-                "UPDATE t_e_panier_pnr SET pnr_prix = {1} WHERE pnr_id = {0} ",
-                panierId, produit.PrixProduit);
-
-            await s221UberContext.SaveChangesAsync();
-
-
+            // Requête pour ajouter le produit dans la table de jointure
             await s221UberContext.Database.ExecuteSqlRawAsync(
                 "INSERT INTO t_j_contient2_c2 (pnr_id, pdt_id, etb_id, c2_quantite) VALUES ({0}, {1}, {2}, {3})",
                 panierId, produitId, etablissementId, 1);
 
+            // Mise à jour du prix du panier
+            await s221UberContext.Database.ExecuteSqlRawAsync(
+                "UPDATE t_e_panier_pnr SET pnr_prix = (SELECT SUM(p.PrixProduit * c2.c2_quantite) " +
+                "FROM t_j_contient2_c2 c2 JOIN t_e_panier_pnr p ON c2.pnr_id = p.pnr_id " +
+                "WHERE c2.pnr_id = {0}) WHERE pnr_id = {0}",
+                panierId);
+
             await s221UberContext.SaveChangesAsync();
-
-
         }
+
 
         public async Task UpdateProduitPanierQuantiteAsync(int panierId, int produitId, int etablissementId, int quantite)
         {
             var panier = await s221UberContext.Paniers.FindAsync(panierId);
             if (panier == null)
             {
-                throw new Exception("produit introuvable !");
+                throw new Exception("Panier introuvable !");
             }
-
 
             var produit = await s221UberContext.Produits.FindAsync(produitId);
             if (produit == null)
             {
-                throw new Exception("produit introuvable !");
+                throw new Exception("Produit introuvable !");
             }
 
             var etablissement = await s221UberContext.Etablissements.FindAsync(etablissementId);
             if (etablissement == null)
             {
-                throw new Exception("etablissement introuvable !");
+                throw new Exception("Établissement introuvable !");
             }
-            produit.PrixProduit += produit.PrixProduit*quantite;
 
-            await s221UberContext.Database.ExecuteSqlRawAsync(
-                "UPDATE t_e_panier_pnr SET pnr_prix = {1} WHERE pnr_id = {0} ",
-                panierId, produit.PrixProduit);
+            // Rechercher si l'entrée existe dans la table de jointure
+            var contient = await s221UberContext.Set<Contient2>()
+                .FirstOrDefaultAsync(c => c.IdPanier == panierId && c.IdProduit == produitId && c.IdEtablissement == etablissementId);
 
+            if (contient == null)
+            {
+                throw new Exception("Le produit n'est pas présent dans le panier !");
+            }
+
+            // Mise à jour de la quantité
+            contient.Quantite = quantite;
+
+            // Mise à jour du prix du panier avec SQL brut
             await s221UberContext.Database.ExecuteSqlRawAsync(
-                "UPDATE t_j_contient2_c2 SET c2_quantite = {3} WHERE pnr_id = {0} AND pdt_id = {1} AND etb_id = {2}",
-                panierId, produitId, etablissementId, quantite);
+                "UPDATE t_e_panier_pnr SET pnr_prix = (SELECT SUM(p.PrixProduit * c2.c2_quantite) " +
+                "FROM t_j_contient2_c2 c2 JOIN t_e_panier_pnr p ON c2.pnr_id = p.pnr_id " +
+                "WHERE c2.pnr_id = {0}) WHERE pnr_id = {0}",
+                panierId);
 
             await s221UberContext.SaveChangesAsync();
-
-
         }
+
 
         public async Task UpdateAsync(Panier newPanier, Panier entity)
         {
@@ -150,12 +158,23 @@ namespace UberApi.Models.DataManager
                 throw new Exception("Établissement introuvable !");
             }
 
+            // Supprimer le produit de la table de jointure
             await s221UberContext.Database.ExecuteSqlRawAsync(
                 "DELETE FROM t_j_contient2_c2 WHERE pnr_id = {0} AND pdt_id = {1} AND etb_id = {2}",
                 panierId, produitId, etablissementId
             );
 
+            // Mettre à jour le prix du panier après suppression
+            await s221UberContext.Database.ExecuteSqlRawAsync(
+                "UPDATE t_e_panier_pnr SET pnr_prix = (SELECT SUM(p.PrixProduit * c2.c2_quantite) " +
+                "FROM t_j_contient2_c2 c2 JOIN t_e_panier_pnr p ON c2.pnr_id = p.pnr_id " +
+                "WHERE c2.pnr_id = {0}) WHERE pnr_id = {0}",
+                panierId
+            );
+
+            await s221UberContext.SaveChangesAsync();
         }
+
 
     }
 }
