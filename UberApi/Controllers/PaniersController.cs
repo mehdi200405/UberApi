@@ -96,16 +96,16 @@ namespace UberApi.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeletePanierAsync(int panierId,int produitID,int etablissementID)
+        public async Task<IActionResult> DeletePanierAsync(int id, int produitID,int etablissementID)
         {
-            var Panier = await dataRepository.GetByIdAsync(panierId);
+            var Panier = await dataRepository.GetByIdAsync(id);
 
             if (Panier.Value == null)
             {
                 return NotFound();
 
             }
-            await dataRepository.DeleteProduitPanierAsync(panierId, produitID, etablissementID);
+            await dataRepository.DeleteProduitPanierAsync(id, produitID, etablissementID);
             return NoContent();
         }
     }
