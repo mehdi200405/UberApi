@@ -170,11 +170,13 @@ namespace UberApi.Models.DataManager
 
             // Recalculer et mettre à jour le prix du panier après suppression
             await s221UberContext.Database.ExecuteSqlRawAsync(
-                "UPDATE t_e_panier_pnr SET pnr_prix = (SELECT SUM(p.pdt_prix * c2.c2_quantite) " +
+                "UPDATE t_e_panier_pnr SET pnr_prix = COALESCE(" +
+                "(SELECT SUM(p.pdt_prix * c2.c2_quantite) " +
                 "FROM t_j_contient2_c2 c2 JOIN t_e_produit_pdt p ON c2.pdt_id = p.pdt_id " +
-                "WHERE c2.pnr_id = {0}) WHERE pnr_id = {0}",
+                "WHERE c2.pnr_id = {0}), 0) WHERE pnr_id = {0}",
                 panierId
             );
+
 
             await s221UberContext.SaveChangesAsync();
         }
