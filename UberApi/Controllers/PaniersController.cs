@@ -64,12 +64,31 @@ namespace UberApi.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> PutPanierAsync(int id,int produitId, int etablissementId ,int quantite)
+        public async Task<IActionResult> PutPanierProduitAsync(int id,int produitId, int etablissementId ,int quantite)
         {
 
                 await dataRepository.UpdateProduitPanierQuantiteAsync(id,produitId, etablissementId,quantite);
                 return NoContent();
             
+        }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> PutPanierAsync(int id, Panier panierNew)
+        {
+            var Panier = await dataRepository.GetByIdAsync(id);
+
+            if (Panier.Value == null)
+            {
+                return NotFound();
+
+            }
+
+            await dataRepository.UpdateAsync(Panier.Value, panierNew);
+            return NoContent();
+
         }
 
 
@@ -96,16 +115,16 @@ namespace UberApi.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeletePanierAsync(int id)
+        public async Task<IActionResult> DeletePanierAsync(int panierId,int produitID,int etablissementID)
         {
-            var Panier = await dataRepository.GetByIdAsync(id);
+            var Panier = await dataRepository.GetByIdAsync(panierId);
 
             if (Panier.Value == null)
             {
                 return NotFound();
 
             }
-            await dataRepository.DeleteAsync(Panier.Value);
+            await dataRepository.DeleteProduitPanierAsync(panierId, produitID, etablissementID);
             return NoContent();
         }
     }

@@ -117,5 +117,33 @@ namespace UberApi.Models.DataManager
             s221UberContext.Paniers.Remove(utilisateur);
             await s221UberContext.SaveChangesAsync();
         }
+
+        public async Task DeleteProduitPanierAsync(int panierId, int produitId, int etablissementId)
+        {
+            var panier = await s221UberContext.Paniers.FindAsync(panierId);
+            if (panier == null)
+            {
+                throw new Exception("Panier introuvable !");
+            }
+
+            var produit = await s221UberContext.Produits.FindAsync(produitId);
+            if (produit == null)
+            {
+                throw new Exception("Produit introuvable !");
+            }
+
+            var etablissement = await s221UberContext.Etablissements.FindAsync(etablissementId);
+            if (etablissement == null)
+            {
+                throw new Exception("Établissement introuvable !");
+            }
+
+            await s221UberContext.Database.ExecuteSqlRawAsync(
+                "DELETE FROM t_j_contient2_c2 WHERE pnr_id = {0} AND pdt_id = {1} AND etb_id = {2}",
+                panierId, produitId, etablissementId
+            );
+
+        }
+
     }
 }
