@@ -61,6 +61,12 @@ namespace UberApi.Models.DataManager
                 throw new Exception("etablissement introuvable !");
             }
 
+            await s221UberContext.Database.ExecuteSqlRawAsync(
+                "UPDATE t_e_panier_pnr SET pnr_prix = {1} WHERE pnr_id = {0} ",
+                panierId, produit.PrixProduit);
+
+            await s221UberContext.SaveChangesAsync();
+
 
             await s221UberContext.Database.ExecuteSqlRawAsync(
                 "INSERT INTO t_j_contient2_c2 (pnr_id, pdt_id, etb_id, c2_quantite) VALUES ({0}, {1}, {2}, {3})",
@@ -92,6 +98,9 @@ namespace UberApi.Models.DataManager
                 throw new Exception("etablissement introuvable !");
             }
 
+            await s221UberContext.Database.ExecuteSqlRawAsync(
+                "UPDATE t_e_panier_pnr SET pnr_prix = {1} WHERE pnr_id = {0} ",
+                panierId, produit.PrixProduit);
 
             await s221UberContext.Database.ExecuteSqlRawAsync(
                 "UPDATE t_j_contient2_c2 SET c2_quantite = {3} WHERE pnr_id = {0} AND pdt_id = {1} AND etb_id = {2}",

@@ -72,25 +72,6 @@ namespace UberApi.Controllers
             
         }
 
-        [HttpPut("{id}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> PutPanierAsync(int id, Panier panierNew)
-        {
-            var Panier = await dataRepository.GetByIdAsync(id);
-
-            if (Panier.Value == null)
-            {
-                return NotFound();
-
-            }
-
-            await dataRepository.UpdateAsync(Panier.Value, panierNew);
-            return NoContent();
-
-        }
-
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
