@@ -99,7 +99,7 @@ namespace UberApi.Models.DataManager
             {
                 throw new Exception("etablissement introuvable !");
             }
-            produit.PrixProduit = produit.PrixProduit*quantite;
+            produit.PrixProduit += produit.PrixProduit*quantite;
 
             await s221UberContext.Database.ExecuteSqlRawAsync(
                 "UPDATE t_e_panier_pnr SET pnr_prix = {1} WHERE pnr_id = {0} ",
