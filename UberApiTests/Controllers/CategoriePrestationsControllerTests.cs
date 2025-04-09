@@ -452,7 +452,7 @@ namespace UberApi.Controllers.Tests
         {
             // Arrange : ID inexistant
 
-            int idCategoriePrestationInvalide = 19;
+            int idCategoriePrestationInvalide = 80;
 
             var actionResult = _controller.DeleteCategoriePrestationAsync(idCategoriePrestationInvalide).Result;
 
