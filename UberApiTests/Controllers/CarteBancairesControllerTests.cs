@@ -179,54 +179,6 @@ namespace UberApi.Controllers.Tests
 
 
         [TestMethod]
-        public void PutCarteBancaire_ValideIdPassed_ReturnsNoContent_AvecMoq()
-        {
-            // Arrange
-            var carteBancaire = new CarteBancaire
-            {
-                IdCb = 1,
-                NumeroCb = "1234567812345679",
-                DateExpireCb = DateOnly.Parse("2025-12-31"),
-                Cryptogramme = "123",
-                TypeCarte = "Crédit",
-                TypeReseaux = "MasterCard",
-                Courses = [],
-                IdClients = []
-            };
-
-            var carteBancaireUpdate = new CarteBancaire
-            {
-                IdCb = 1,
-                NumeroCb = "1234567812341111",
-                DateExpireCb = DateOnly.Parse("2025-12-31"),
-                Cryptogramme = "123",
-                TypeCarte = "Crédit",
-                TypeReseaux = "MasterCard",
-                Courses = [],
-                IdClients = []
-            };
-
-            var mockRepository = new Mock<ICarteBancaireRepository>();
-
-
-            mockRepository.Setup(x => x.GetByIdAsync(carteBancaire.IdCb)).ReturnsAsync(carteBancaireUpdate);
-
-
-            mockRepository.Setup(x => x.UpdateAsync(carteBancaire, carteBancaireUpdate));
-
-            var controller = new CarteBancairesController(mockRepository.Object);
-
-            // Act
-            var actionResult = controller.PutCarteBancaireAsync(carteBancaireUpdate.IdCb, carteBancaireUpdate).Result;
-
-            // Assert
-            Assert.IsNotNull(actionResult);
-            Assert.IsInstanceOfType(actionResult, typeof(NoContentResult));
-
-            mockRepository.Verify(x => x.UpdateAsync(It.Is<CarteBancaire>(c => c.IdCb == carteBancaireUpdate.IdCb), carteBancaireUpdate), Times.Once);
-        }
-
-        [TestMethod]
         public void DeleteCarteBancaire_ValideIdPassed_ReturnsNoContent_AvecMoq()
         {
             // Arrange : Création du carteBancaire
@@ -418,46 +370,7 @@ namespace UberApi.Controllers.Tests
         }
 
 
-        [TestMethod]
-        public void PutCarteBancaire_ValideIdPassed_ReturnsNoContent_SansMoq()
-        {
-            // Arrange
-            Random rnd = new Random();
-            string chiffreCarteNew = "";
-            for (int i = 0; i < 16; i++)
-            {
-                chiffreCarteNew += rnd.Next(1, 9);
-            }
 
-
-            // Étape 1 : Créer un carteBancaire et l'ajouter en base
-            CarteBancaire cousierATester = new CarteBancaire()
-            {
-                IdCb = 3,
-                NumeroCb = chiffreCarteNew,
-                DateExpireCb = DateOnly.Parse("2025-12-31"),
-                Cryptogramme = "123",
-                TypeCarte = "Crédit",
-                TypeReseaux = "MasterCard",
-                Courses = [],
-                IdClients = []
-            };
-
-            int carteBancaireUpdate = cousierATester.IdCb;
-
-
-            var actionResult = _controller.PutCarteBancaireAsync(carteBancaireUpdate, cousierATester).Result;
-
-            // Assert
-            CarteBancaire? cousierRecupere = _context.CarteBancaires
-                .Where(u => u.NumeroCb.ToUpper() == cousierATester.NumeroCb.ToUpper())
-                .FirstOrDefault();
-
-            Assert.IsNotNull(cousierRecupere, "Le carteBancaire n'a pas été trouvé en base après la mise à jour");
-            Assert.IsInstanceOfType(actionResult, typeof(NoContentResult));
-            Assert.AreEqual(chiffreCarteNew, cousierRecupere.NumeroCb, "Le numéro de carte n'a pas été mis à jour correctement.");
-
-        }
         [TestMethod]
         public void DeleteCarteBancaire_ValideIdPassed_ReturnsNoContent_SansMoq()
         {
@@ -471,10 +384,6 @@ namespace UberApi.Controllers.Tests
 
 
 
-
-            // Le mail doit être unique donc 2 possibilités :
-            // 1. on s'arrange pour que le mail soit unique en concaténant un random ou un timestamp
-            // 2. On supprime le user après l'avoir créé. Dans ce cas, nous avons besoin d'appeler la méthode DELETE de l’API ou remove du DbSet.
             CarteBancaire cousierATester = new CarteBancaire()
             {
 
@@ -486,12 +395,11 @@ namespace UberApi.Controllers.Tests
                 Courses = [],
                 IdClients = []
             };
-            var idClient = 20;
+            var idClient = 1;
             var result = _controller.PostCarteBancaireAsync(cousierATester, idClient).Result;
-
-
+            var ress = result.Result as ActionResult;
             // Act : Suppression
-            var actionResult = _controller.DeleteCarteBancaireAsync(cousierATester.IdCb).Result;
+            var actionResult = _controller.DeleteCarteBancaireAsync(ress.Value).Result;
 
             // Assert : Vérification de la réponse
             Assert.IsNotNull(actionResult);

@@ -107,19 +107,5 @@ namespace UberApi.Controllers
         }
 
 
-        [HttpDelete("{id}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeletePaysAsync(int id)
-        {
-            var pays = await dataRepository.GetByIdAsync(id);
-            if (pays.Value == null)
-            {
-                return NotFound();
-
-            }
-            await dataRepository.DeleteAsync(pays.Value);
-            return NoContent();
-        }
     }
 }

@@ -65,55 +65,6 @@ namespace UberApi.Controllers
             return etablissement;
         }
 
-        [HttpPut("{id}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> PutEtablissementAsync(int id, Etablissement etablissement)
-        {
-            if (id != etablissement.IdEtablissement)
-            {
-                return BadRequest();
-            }
-            var userToUpdate = await dataRepository.GetByIdAsync(id);
-            if (userToUpdate.Value == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                await dataRepository.UpdateAsync(userToUpdate.Value, etablissement);
-                return NoContent();
-            }
-        }
-
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<Etablissement>> PostEtablissementAsync(Etablissement etablissement)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            await dataRepository.AddAsync(etablissement);
-            return CreatedAtAction("GetById", new { id = etablissement.IdEtablissement }, etablissement);
-        }
-
-        [HttpDelete("{id}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteEtablissementAsync(int id)
-        {
-            var etablissement = await dataRepository.GetByIdAsync(id);
-            if (etablissement.Value == null)
-            {
-                return NotFound();
-
-            }
-            await dataRepository.DeleteAsync(etablissement.Value);
-            return NoContent();
-        }
 
 
         [HttpGet]
