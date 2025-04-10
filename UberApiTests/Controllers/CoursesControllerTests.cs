@@ -14,6 +14,10 @@ using Moq;
 
 namespace UberApi.Controllers.Tests
 {
+    /// <summary>
+    /// Classe de tests pour le contrôleur CoursesController.
+    /// </summary>
+
     [TestClass()]
     public class CoursesControllerTests
     {
