@@ -66,7 +66,6 @@ namespace UberApi.Controllers
         }
 
 
-
         [HttpGet]
         [Route("[action]/{idEtablissement}")]
         [ActionName("GetAdresseByIdEtablissement")]
@@ -74,38 +73,41 @@ namespace UberApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Adresse>> GetAdresseByIdEtablissementAsync(int idEtablissement)
         {
+            // Obtenez l'établissement
             var etablissement = await dataRepository.GetByIdAsync(idEtablissement);
-
-            if (etablissement.Value == null)
+            if (etablissement == null || etablissement.Value == null)
             {
-                return NotFound();
+                Console.WriteLine($"Etablissement not found for ID: {idEtablissement}");
+                return NotFound("Etablissement not found.");
             }
 
-            var idadresse = etablissement.Value.IdAdresse;
-
-            var adresse = await dataRepositoryAdresse.GetByIdAsync(idadresse);
-
-            if (adresse.Value == null)
+            // Obtenez l'adresse associée à l'établissement
+            var idAdresse = etablissement.Value.IdAdresse;
+            var adresse = await dataRepositoryAdresse.GetByIdAsync(idAdresse);
+            if (adresse == null || adresse.Value == null)
             {
-                return NotFound();
+                Console.WriteLine($"Adresse not found for ID: {idAdresse}");
+                return NotFound("Adresse not found.");
             }
 
-            var idville = adresse.Value.IdVille;
-
-            if (!idville.HasValue)
+            // Vérifiez si l'adresse a une ville associée
+            var idVille = adresse.Value.IdVille;
+            if (!idVille.HasValue)
             {
-                return NotFound(); 
+                Console.WriteLine($"Ville ID not found for address ID: {idAdresse}");
+                return NotFound("Ville ID not found for the address.");
             }
 
-            var ville = await dataRepositoryVille.GetByIdAsync(idville.Value);
-
-            if (ville.Value == null)
+            // Obtenez la ville associée à l'adresse
+            var ville = await dataRepositoryVille.GetByIdAsync(idVille.Value);
+            if (ville == null || ville.Value == null)
             {
-                return NotFound();
+                Console.WriteLine($"Ville not found for ID: {idVille.Value}");
+                return NotFound("Ville not found.");
             }
 
+            // Retournez le nom de la ville
             return Ok(ville.Value.NomVille);
         }
-
     }
 }
