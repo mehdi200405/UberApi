@@ -29,8 +29,10 @@ namespace UberApi.Controllers.Tests
         private CoursesController _controller;
         private ICourseRepository _coursesRepository;
 
-        
 
+        /// <summary>
+        /// Initialise les composants nécessaires pour les tests.
+        /// </summary>
         [TestInitialize]
         public void Init()
         {
@@ -41,6 +43,9 @@ namespace UberApi.Controllers.Tests
         }
 
 
+        /// <summary>
+        /// Teste la récupération d'un cours par ID existant avec Moq.
+        /// </summary>
         [TestMethod()]
         public void GetCourseById_ExistingIdPassed_AreEqual_AvecMoq()
         {
@@ -80,6 +85,11 @@ namespace UberApi.Controllers.Tests
             Assert.AreEqual(course, actionResult.Value as Course);
         }
 
+
+
+        /// <summary>
+        /// Teste la récupération d'un cours par ID inexistant avec Moq.
+        /// </summary>
         [TestMethod()]
         public void GetCourseById_NotExistingIdPassed_ReturnsRightItem_AvecMoq()
         {
@@ -120,7 +130,9 @@ namespace UberApi.Controllers.Tests
         }
 
 
-
+        /// <summary>
+        /// Teste l'ajout d'un cours avec Moq.
+        /// </summary>
         [TestMethod]
         public void PostCourse_ValideIdPassed_ReturnsRightItem_AvecMoq()
         {
@@ -175,6 +187,9 @@ namespace UberApi.Controllers.Tests
         }
 
 
+        /// <summary>
+        /// Teste la mise à jour d'un cours avec Moq.
+        /// </summary>
         [TestMethod]
         public void PutCourse_ValideIdPassed_ReturnsNoContent_AvecMoq()
         {
@@ -251,7 +266,9 @@ namespace UberApi.Controllers.Tests
             mockRepository.Verify(x => x.UpdateAsync(It.Is<Course>(c => c.IdCourse == courseUpdate.IdCourse), courseUpdate), Times.Once);
         }
 
-
+        /// <summary>
+        /// Teste la suppression d'un cours avec Moq.
+        /// </summary>
         [TestMethod]
         public void DeleteCourse_ValideIdPassed_ReturnsNoContent_AvecMoq()
         {
@@ -309,6 +326,9 @@ namespace UberApi.Controllers.Tests
         }
 
 
+        /// <summary>
+        /// Teste la suppression d'un cours avec un ID invalide avec Moq.
+        /// </summary>
         [TestMethod]
         public void DeleteCourse_NotValideIdPassed_ReturnsNotFound_AvecMoq()
         {
@@ -342,6 +362,10 @@ namespace UberApi.Controllers.Tests
         /// SANS MOQ /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// </summary>
 
+
+        /// <summary>
+        /// Teste la récupération de tous les cours sans Moq.
+        /// </summary>
         [TestMethod()]
         public void GetCoursiers_SansMoq()
         {
@@ -356,6 +380,9 @@ namespace UberApi.Controllers.Tests
         }
 
 
+        /// <summary>
+        /// Teste la récupération d'un cours par ID existant ou non sans Moq.
+        /// </summary>
         [TestMethod()]
         public void GetCourseById_ExistingIdPassedOrNot_AreEqual_SansMoq()
         {
